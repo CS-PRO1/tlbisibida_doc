@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:tlbisibida_doc/components/site_layout.dart';
@@ -6,6 +7,7 @@ import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
+import 'package:tlbisibida_doc/view/appointments/calendar_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
 
 void main() {
@@ -37,10 +39,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.teal,
         primaryColor: cyan300,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: HomePage(), // Set home directly
+      home: CalendarScreen(), // Set home directly
     );
   }
 }
