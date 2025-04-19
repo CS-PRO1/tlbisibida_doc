@@ -2,7 +2,7 @@ name: tlbisibida_doc
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -31,10 +31,28 @@ dependencies:
   flutter:
     sdk: flutter
 
+  google_fonts:
+  get:
+  shared_preferences:
+  dio:
+  flutter_animate:
+  flutter_shapes:
+  data_table_2:
+  buildcondition:
+  choice:
+  fl_chart:
+  percent_indicator:
+  flip_card:
+  info_popup:
+  image_picker_web:
+  cross_file:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  chat_bubbles: ^1.7.0
+  timelines_plus: ^1.0.6
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +70,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
