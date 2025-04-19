@@ -9,6 +9,7 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/view/appointments/calendar_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
+import 'package:tlbisibida_doc/view/patients/patient_info_screen.dart';
 import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
 
 void main() {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: CalendarScreen(), // Set home directly
+      home: PatientInfoScreen(), // Set home directly
     );
   }
 }
