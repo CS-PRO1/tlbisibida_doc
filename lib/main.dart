@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
+import 'package:tlbisibida_doc/view/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       // Remove initialRoute to prevent double initialization
-      //TODO onGenerateRoute: (settings) => generateRoute(settings),
+      //onGenerateRoute: (settings) => generateRoute(settings),
       title: 'LambdaDent Doctor App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: SiteLayout(), // Set home directly
+      home: HomePage(), // Set home directly
     );
   }
 }
