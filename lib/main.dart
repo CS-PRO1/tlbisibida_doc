@@ -7,6 +7,7 @@ import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
+import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: HomePage(), // Set home directly
+      home: PatientsListScreen(), // Set home directly
     );
   }
 }
