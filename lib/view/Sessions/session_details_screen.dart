@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/Sessions/teeth_chart.dart';
@@ -13,48 +14,213 @@ class SessionDetailsScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            'المريض: تحسين التحسيني',
-            style: TextStyle(fontSize: 20),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'نوع المعالجة: سحب عصب',
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'تاريخ المعالجة: 22/4/2025',
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'الوصف:',
-            style: TextStyle(fontSize: 18),
-          ),
-          SizedBox(
-            height: 5,
-          ),
           Container(
-            width: MediaQuery.of(context).size.width / 1.2,
             decoration: BoxDecoration(
-              color: cyan100,
-              border: Border.all(
-                color: cyan400,
-                width: .45,
-              ),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+                color: cyan100, borderRadius: BorderRadius.circular(30)),
+            height: MediaQuery.of(context).size.height / 1.85,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  'قلع جراحي مع تخدير عام لأن المريض بموت اذا شاف نقطة دم :)'),
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'اسماعيل احمد كنباوي',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: cyan600,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'الاسم',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          '0996677881',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: cyan600,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'الرقم',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      color: cyan400,
+                      height: .5,
+                      width: 250,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'مدخن؟',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'نعم',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: cyan600,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Container(
+                          color: cyan400,
+                          width: .5,
+                          height: 50,
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'العمر',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '26',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: cyan600,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      color: cyan400,
+                      height: .5,
+                      width: 250,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'الادوية',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'هيبارين',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: cyan600,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Container(
+                          color: cyan400,
+                          width: .5,
+                          height: 50,
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'الامراض',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'سكري',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: cyan600,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      color: cyan400,
+                      height: .5,
+                      width: 250,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          '-250 000',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: cyan600,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'الرصيد الحالي',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           SizedBox(

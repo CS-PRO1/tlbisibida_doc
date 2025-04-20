@@ -35,7 +35,7 @@ dependencies:
   choice: null
   cross_file: null
   cupertino_icons: ^1.0.8
-  data_table_2: null
+  data_table_2:
   dio: null
   fl_chart: null
   flip_card: null
