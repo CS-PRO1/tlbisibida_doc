@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tlbisibida_doc/components/float_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/add_patient_dialog%20.dart';
+import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
 import 'package:tlbisibida_doc/view/patients/buttom_action_buttons.dart';
 
 class PatientsListScreen extends StatelessWidget {

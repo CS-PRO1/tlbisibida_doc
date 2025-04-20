@@ -12,6 +12,8 @@ import 'package:tlbisibida_doc/view/Sessions/session_details_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/calendar_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
+import 'package:tlbisibida_doc/view/labs/labs_list_screen.dart';
+import 'package:tlbisibida_doc/view/patients/patient_info_screen.dart';
 import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
 
 void main() {
