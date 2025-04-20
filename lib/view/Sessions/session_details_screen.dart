@@ -13,11 +13,12 @@ class SessionDetailsScreen extends StatelessWidget {
       appBar: TopNavigationBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             decoration: BoxDecoration(
                 color: cyan100, borderRadius: BorderRadius.circular(30)),
-            height: MediaQuery.of(context).size.height / 1.85,
+            height: MediaQuery.of(context).size.height / 2.5,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -37,26 +38,7 @@ class SessionDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'الاسم',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '0996677881',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: cyan600,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'الرقم',
+                          'اسم المريض',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -79,14 +61,14 @@ class SessionDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'مدخن؟',
+                              'تاريخ المعالجة',
                               style: TextStyle(fontSize: 16),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                              'نعم',
+                              '22/4/2025',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
@@ -109,14 +91,14 @@ class SessionDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'العمر',
+                              'نوع المعالجة',
                               style: TextStyle(fontSize: 16),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                              '26',
+                              'سحب عصب',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
@@ -137,106 +119,42 @@ class SessionDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 15,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'الادوية',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'هيبارين',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: cyan600,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        Container(
-                          color: cyan400,
-                          width: .5,
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'الامراض',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'سكري',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: cyan600,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
+                    Text(
+                      'الوصف',
+                      style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      color: cyan400,
-                      height: .5,
-                      width: 250,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '-250 000',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: cyan600,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'الرصيد الحالي',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        'سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
           Container(
             height: .5,
             width: double.infinity,
             color: cyan400,
           ),
-          ImageGallery(
-            imageUrls: [
-              'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
-              'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
-              'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: ImageGallery(
+                imageUrls: [
+                  'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
+                  'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
+                  'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
+                ],
+              ),
+            ),
           )
         ],
       ),
