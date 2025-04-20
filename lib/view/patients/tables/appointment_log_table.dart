@@ -6,8 +6,8 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 /// Example without datasource
 // ignore: must_be_immutable
 class AppointmentLogTable extends StatelessWidget {
-  const AppointmentLogTable({super.key});
-
+  AppointmentLogTable({super.key});
+  int count = 10;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,13 +24,13 @@ class AppointmentLogTable extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: (56 * 50) + 40,
+            height: (56 * count) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,
               headingRowHeight: 40,
               horizontalMargin: 12,
-              minWidth: 600,
+              minWidth: 300,
               columns: const [
                 DataColumn(
                   label: Center(
@@ -62,7 +62,7 @@ class AppointmentLogTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                50,
+                count,
                 (index) => DataRow(
                   cells: [
                     DataCell(Center(
