@@ -55,14 +55,14 @@ class CalendarScreen extends StatelessWidget {
                     activeDayColor: Colors.white,
                     activeBackgroundDayColor: cyan300,
                     dotColor: cyan200,
-      
+
                     //dayNameColor: cyan300,
                     //selectableDayPredicate: (date) => date.day != 23,
                     locale: 'en_ISO',
                   ),
                   SizedBox(
                       height: 900,
-                      width: 600,
+                      width: 900,
                       child: DayView(
                         controller: EventController(),
                         showVerticalLine: true,
