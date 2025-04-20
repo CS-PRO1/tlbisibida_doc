@@ -11,152 +11,164 @@ class SessionDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopNavigationBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: cyan100, borderRadius: BorderRadius.circular(30)),
-            height: MediaQuery.of(context).size.height / 2.5,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: cyan100, borderRadius: BorderRadius.circular(30)),
+                height: MediaQuery.of(context).size.height / 2.9,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        Text(
-                          'اسماعيل احمد كنباوي',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: cyan600,
-                              fontWeight: FontWeight.bold),
+                        SizedBox(
+                          height: 15,
                         ),
-                        Text(
-                          'اسم المريض',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      color: cyan400,
-                      height: .5,
-                      width: 250,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Column(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'تاريخ المعالجة',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '22/4/2025',
+                              'اسماعيل احمد كنباوي',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
                                   fontWeight: FontWeight.bold),
                             ),
+                            Text(
+                              'اسم المريض',
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ],
                         ),
-                        const SizedBox(
-                          width: 50,
+                        SizedBox(
+                          height: 15,
                         ),
                         Container(
                           color: cyan400,
-                          width: .5,
-                          height: 50,
+                          height: .5,
+                          width: 250,
                         ),
-                        const SizedBox(
-                          width: 50,
+                        SizedBox(
+                          height: 15,
                         ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'نوع المعالجة',
-                              style: TextStyle(fontSize: 16),
+                            const Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'تاريخ المعالجة',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  '22/4/2025',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: cyan600,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 10,
+                            const SizedBox(
+                              width: 50,
                             ),
-                            Text(
-                              'سحب عصب',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: cyan600,
-                                  fontWeight: FontWeight.bold),
+                            Container(
+                              color: cyan400,
+                              width: .5,
+                              height: 50,
+                            ),
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            const Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'نوع المعالجة',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'سحب عصب',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: cyan600,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          color: cyan400,
+                          height: .5,
+                          width: 250,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SingleChildScrollView(
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'الوصف',
+                                style: TextStyle(fontSize: 16, color: cyan600),
+                              ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  'سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      color: cyan400,
-                      height: .5,
-                      width: 250,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      'الوصف',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        'سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            height: .5,
-            width: double.infinity,
-            color: cyan400,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: ImageGallery(
-                imageUrls: [
-                  'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
-                  'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
-                  'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
-                ],
+              SizedBox(
+                height: 10,
               ),
-            ),
-          )
-        ],
+              Container(
+                decoration: BoxDecoration(
+                    color: cyan100, borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ImageGallery(
+                    imageUrls: [
+                      'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
+                      'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
+                      'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -197,22 +209,26 @@ class _ImageGalleryState extends State<ImageGallery> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Image.network(
-            widget.imageUrls[_selectedIndex],
-            fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) =>
-                const Icon(Icons.error),
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            child: Image.network(
+              widget.imageUrls[_selectedIndex],
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.error),
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -233,6 +249,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                   });
                 },
                 child: Container(
+                  clipBehavior: Clip.antiAlias,
                   width: widget.thumbnailSize,
                   height: widget.thumbnailSize,
                   decoration: BoxDecoration(
@@ -242,7 +259,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                             width: 3,
                           )
                         : null,
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(2),

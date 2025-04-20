@@ -22,26 +22,26 @@ class CalendarScreen extends StatelessWidget {
             child: SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'My Schedule',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    DateFormat.MMMMEEEEd().format(currentdate),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: cyan500),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        DateFormat.MMMMEEEEd().format(currentdate),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
+                  Container(
+                    height: .5,
+                    width: 200,
+                    color: cyan400,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   CalendarTimeline(
                     initialDate: DateTime.now(),
@@ -58,7 +58,7 @@ class CalendarScreen extends StatelessWidget {
 
                     //dayNameColor: cyan300,
                     //selectableDayPredicate: (date) => date.day != 23,
-                    locale: 'en_ISO',
+                    locale: 'ar',
                   ),
                   SizedBox(
                       height: 900,

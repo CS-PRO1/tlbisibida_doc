@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: SessionDetailsScreen(), // Set home directly
+      home: NewAppointmentScreen(), // Set home directly
     );
   }
 }
