@@ -1,5 +1,6 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:tlbisibida_doc/components/site_layout.dart';
@@ -17,8 +18,15 @@ import 'package:tlbisibida_doc/view/home_page.dart';
 import 'package:tlbisibida_doc/view/labs/labs_list_screen.dart';
 import 'package:tlbisibida_doc/view/patients/patient_info_screen.dart';
 import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
+import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: cyan200,
+      systemNavigationBarColor: cyan400,
+    ),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   setupLocator();
@@ -51,7 +59,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: AddEditSessionDetailsScreen(), // Set home directly
+      home: SafeArea(
+        child: ProfileScreen(),
+        top: false,
+      ), // Set home directly
     );
   }
 }

@@ -8,6 +8,7 @@ Widget imagePicker(List images) {
   return StatefulBuilder(
     builder: (context, setState) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // ElevatedButton(
           //   onPressed: () async {
@@ -34,6 +35,7 @@ Widget imagePicker(List images) {
           //   child: Text('التقاط صورة'),
           // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'إضافة صور',
