@@ -8,7 +8,9 @@ import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
+import 'package:tlbisibida_doc/view/Sessions/add_edit_session_details_screen.dart';
 import 'package:tlbisibida_doc/view/Sessions/session_details_screen.dart';
+import 'package:tlbisibida_doc/view/Sessions/teeth_selection_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/calendar_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: InventoryScreen(), // Set home directly
+      home: AddEditSessionDetailsScreen(), // Set home directly
     );
   }
 }
