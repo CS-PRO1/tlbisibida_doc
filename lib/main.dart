@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: AddEditSessionDetailsScreen(), // Set home directly
+      home: InventoryScreen(), // Set home directly
     );
   }
 }
