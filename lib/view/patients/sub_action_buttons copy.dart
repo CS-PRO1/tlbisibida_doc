@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-Widget bottomActionButton(BuildContext context) {
+Widget subcatActionButton(BuildContext context, String t) {
   return InkWell(
     onTap: () {
       // showDialog(
@@ -15,18 +15,14 @@ Widget bottomActionButton(BuildContext context) {
         width: double.infinity,
         height: 30,
         decoration: const BoxDecoration(
-          color: cyan300,
+          color: cyan100,
         ),
         child: Center(
-            child: Icon(
-          Icons.edit_rounded,
-          color: cyan100,
-        )
-            //  Text(
-            //   'تعديل',
-            //   style: TextStyle(color: cyan50, fontSize: 16),
-            //   textAlign: TextAlign.center,
-            // ),
-            )),
+          child: Text(
+            t,
+            style: TextStyle(color: cyan500, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        )),
   );
 }
