@@ -6,7 +6,7 @@ Widget percentCircle(BuildContext context, Map pageInfo) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: CircularPercentIndicator(
-      radius: 75,
+      radius: 50,
       lineWidth: 5,
       percent: pageInfo['quantity'] / pageInfo['standard_quantity'] > 1
           ? 1

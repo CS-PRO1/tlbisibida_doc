@@ -1,11 +1,12 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/bottom_action_payments_log_buttons.dart';
+import 'package:tlbisibida_doc/view/inventory/components/bottom_action_payments_log_buttons.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
-import 'package:tlbisibida_doc/view/inventory/percent_gauge.dart';
-import 'package:tlbisibida_doc/view/inventory/triangle_card.dart';
+import 'package:tlbisibida_doc/view/inventory/components/percent_gauge.dart';
+import 'package:tlbisibida_doc/view/inventory/components/triangle_card.dart';
 
 // ignore: must_be_immutable
 class ItemsListScreen extends StatelessWidget {
@@ -41,47 +42,37 @@ class ItemsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: cyan50,
+      appBar: TopNavigationBar(),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            // SizedBox(
-            //   width: 700,
-            //   child: const InteractiveDonutChart()
-            //       .animate()
-            //       .rotate(duration: const Duration(minutes: 60), begin: -20),
-            // ),
-            Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: SizedBox(
-                width: 300,
-                child: GridView.count(
-                    childAspectRatio: 1,
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 7,
-                    mainAxisSpacing: 15,
-                    children: List.generate(
-                            info.length,
-                            (index) =>
-                                itemcard(context, info, index, onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => InventoryPage()));
-                                }))
-                        .animate(
-                          interval: const Duration(milliseconds: 50),
-                        )
-                        .slide(duration: const Duration(milliseconds: 300))
-                        .fadeIn(
-                            curve: Curves.easeInOut,
-                            duration: const Duration(milliseconds: 250))
-                        .flip(duration: const Duration(milliseconds: 200))),
-              ),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SizedBox(
+            width: 300,
+            child: GridView.count(
+                childAspectRatio: 1,
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 7,
+                mainAxisSpacing: 15,
+                children: List.generate(
+                        info.length,
+                        (index) => itemcard(context, info, index, onTap: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => InventoryPage()));
+                            }))
+                    .animate(
+                      interval: const Duration(milliseconds: 50),
+                    )
+                    .slide(duration: const Duration(milliseconds: 300))
+                    .fadeIn(
+                        curve: Curves.easeInOut,
+                        duration: const Duration(milliseconds: 250))
+                    .flip(duration: const Duration(milliseconds: 200))),
+          ),
         ),
       ),
     );
@@ -99,7 +90,7 @@ class ItemsListScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(11.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -119,8 +110,7 @@ class ItemsListScreen extends StatelessWidget {
                       height: 10,
                     ),
                     SizedBox(
-                        height: 170,
-                        child: percentCircle(context, info[index])),
+                        height: 20, child: percentCircle(context, info[index])),
                   ],
                 ),
               ),

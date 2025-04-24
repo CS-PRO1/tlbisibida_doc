@@ -24,11 +24,11 @@ class ItemLogTable extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         // margin: const EdgeInsets.only(bottom: 30),
         child: DataTable2(
-          columnSpacing: 12,
-          dataRowHeight: 56,
+          columnSpacing: 0,
+          dataRowHeight: 70,
           headingRowHeight: 40,
-          horizontalMargin: 12,
-          minWidth: 100,
+          horizontalMargin: 0,
+          minWidth: 350,
           columns: const [
             DataColumn(
               label: Center(
@@ -73,11 +73,28 @@ class ItemLogTable extends StatelessWidget {
                 DataCell(Center(
                     child: CustomText(
                   text: '50',
+                  size: 14,
                 ))),
-                DataCell(Center(child: CustomText(text: '+300'))),
-                DataCell(Center(child: CustomText(text: '350'))),
-                DataCell(Center(child: CustomText(text: '1000'))),
-                DataCell(Center(child: CustomText(text: '7/8/2024'))),
+                DataCell(Center(
+                    child: CustomText(
+                  text: '+300',
+                  size: 14,
+                ))),
+                DataCell(Center(
+                    child: CustomText(
+                  text: '350',
+                  size: 14,
+                ))),
+                DataCell(Center(
+                    child: CustomText(
+                  text: '1000',
+                  size: 14,
+                ))),
+                DataCell(Center(
+                    child: CustomText(
+                  text: '7/8/2024',
+                  size: 14,
+                ))),
               ],
             ),
           ),
