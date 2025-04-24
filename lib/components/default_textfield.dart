@@ -6,7 +6,7 @@ Widget defaultTextField(
     TextEditingController controller, BuildContext context, String label,
     {Icon? prefixIcon,
     int height = 1,
-    int maxLines = 1,
+    //int maxLines = 1,
     Widget? postfixicon,
     bool obscureText = false,
     String? Function(String?)? validator,
@@ -15,7 +15,7 @@ Widget defaultTextField(
   return TextFormField(
     autofocus: autofocus,
     minLines: height,
-    maxLines: maxLines,
+    maxLines: height,
     controller: controller,
     validator: validator,
     keyboardType: keyboardType,

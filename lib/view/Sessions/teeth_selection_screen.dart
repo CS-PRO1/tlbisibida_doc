@@ -155,7 +155,6 @@ class TeethSelectionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                 
                 ],
               ),
             );
