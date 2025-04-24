@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_drawing/path_drawing.dart';
-import 'package:tlbisibida_doc/BloC/Cubit/States/teeth_state.dart';
+import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:xml/xml.dart';
 
 
