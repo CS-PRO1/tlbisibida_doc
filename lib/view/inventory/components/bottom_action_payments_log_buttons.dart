@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/add_quantity_for_item_dialog.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/item_log_dialog.dart';
 import 'package:tlbisibida_doc/view/inventory/item_log_table.dart';
 
 Row bottomActionPaymentsLogButtons(BuildContext context) {
