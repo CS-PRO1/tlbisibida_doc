@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/add_quantity_for_item_dialog.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/item_log_dialog.dart';
+import 'package:tlbisibida_doc/view/inventory/dialogs/add_quantity_for_item_dialog.dart';
+import 'package:tlbisibida_doc/view/inventory/item_log_table.dart';
 
 Row bottomActionPaymentsLogButtons(BuildContext context) {
   return Row(
@@ -10,11 +10,13 @@ Row bottomActionPaymentsLogButtons(BuildContext context) {
       Expanded(
         child: InkWell(
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return itemLogDialog(context);
-                });
+            // showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return itemLogDialog(context);
+            //     });
+
+            showItemLog(context);
           },
           child: Container(
             height: 50,
@@ -46,5 +48,29 @@ Row bottomActionPaymentsLogButtons(BuildContext context) {
         ),
       ),
     ],
+  );
+}
+
+showItemLog(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: const Text(
+              'سجل المادة',
+              style: TextStyle(
+                  color: cyan400, fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            height: 440, // Set your desired height
+            child: ItemLogTable(),
+          ),
+        ],
+      );
+    },
   );
 }

@@ -50,7 +50,7 @@ Dialog addQuantityForItem(BuildContext context) {
                           width: 20,
                         ),
                         SizedBox(
-                          width: 200,
+                          width: 140,
                           child: defaultTextField(
                             itemnamecontroller,
                             context,
