@@ -1,4 +1,4 @@
-import 'package:tlbisibida_doc/BloC/Cubit/teeth_cubit.dart';
+import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 
 abstract class TeethState {
   const TeethState();

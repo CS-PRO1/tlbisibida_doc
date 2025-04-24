@@ -14,6 +14,7 @@ import 'package:tlbisibida_doc/view/Sessions/session_details_screen.dart';
 import 'package:tlbisibida_doc/view/Sessions/teeth_selection_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/calendar_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
+import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
 import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
 import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: ItemListScreen(), // Set home directly
+      home: FinanceCenterScreen(), // Set home directly
     );
   }
 }

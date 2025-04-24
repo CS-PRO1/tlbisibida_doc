@@ -1,7 +1,5 @@
 import 'package:flip_card/flip_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
@@ -9,10 +7,7 @@ import 'package:tlbisibida_doc/view/inventory/components/add_subcat_button.dart'
 import 'package:tlbisibida_doc/view/inventory/dialogs/add_cat_dialog%20.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/edit_subcat_dialog%20%20copy.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/subcat_delete_dialog.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
-import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/components/sub_action_buttons%20copy.dart';
 
 // ignore: must_be_immutable
 class InventoryScreen extends StatelessWidget {

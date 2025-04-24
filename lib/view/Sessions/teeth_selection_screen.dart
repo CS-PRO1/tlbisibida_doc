@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tlbisibida_doc/BloC/Cubit/States/teeth_state.dart';
-import 'package:tlbisibida_doc/BloC/Cubit/teeth_cubit.dart';
+import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
+import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 
 class TeethSelectionScreen extends StatelessWidget {
   final String asset;
