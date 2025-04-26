@@ -8,7 +8,7 @@ import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/Sessions/teeth_selection_screen.dart';
+import 'package:tlbisibida_doc/view/Sessions/components/teeth_selection_screen.dart';
 
 class AddEditSessionDetailsScreen extends StatelessWidget {
   AddEditSessionDetailsScreen({super.key});

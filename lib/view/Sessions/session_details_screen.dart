@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/Sessions/teeth_chart.dart';
+import 'package:tlbisibida_doc/view/Sessions/components/teeth_chart.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
   const SessionDetailsScreen({super.key});

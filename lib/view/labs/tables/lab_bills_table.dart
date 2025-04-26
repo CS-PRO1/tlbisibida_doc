@@ -1,12 +1,13 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class AppointmentLogTable extends StatelessWidget {
-  AppointmentLogTable({super.key});
+class LabBillsTable extends StatelessWidget {
+  LabBillsTable({super.key});
   int count = 10;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class AppointmentLogTable extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(16),
-        //margin: const EdgeInsets.only(bottom: 30),
+        // margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
             height: (56 * count) + 40,
@@ -35,28 +36,21 @@ class AppointmentLogTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
+                    'تاريخ الفاتورة',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'المبلغ',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
                     'التفاصيل',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                // DataColumn(
-                //   label: Center(
-                //       child: Text(
-                //     'رقم الفاتورة',
-                //     style: TextStyle(color: cyan300),
-                //   )),
-                // ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'الجلسة',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ الموعد',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -66,22 +60,29 @@ class AppointmentLogTable extends StatelessWidget {
                 (index) => DataRow(
                   cells: [
                     DataCell(Center(
+                        child: CustomText(
+                      text: DateFormat.yMd().format(DateTime.now()),
+                      size: 14,
+                      alignment: TextAlign.center,
+                    ))),
+                    DataCell(Center(
+                        child: CustomText(
+                      text: '3,500,000',
+                      size: 14,
+                      alignment: TextAlign.center,
+                    ))),
+                    DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        // showDialog(context: context, builder:(context) => const BillDetailsDialog(), );
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => PatientInfoScreen(),
+                        // ));
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
                         color: cyan300,
                       ),
                     ))),
-                    // const DataCell(Center(
-                    //     child: CustomText(
-                    //   text: '001',
-                    // ))),
-                    const DataCell(Center(child: CustomText(text: 'قلع ضرس'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),
