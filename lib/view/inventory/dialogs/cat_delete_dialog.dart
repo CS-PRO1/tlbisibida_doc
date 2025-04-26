@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-Dialog itemDeleteConfirmationDialog(BuildContext context) {
+Dialog catDeleteConfirmationDialog(BuildContext context) {
   return Dialog(
       child: Padding(
           padding: const EdgeInsets.all(16.0),

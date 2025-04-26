@@ -11,6 +11,7 @@ import 'package:tlbisibida_doc/view/inventory/components/percent_gauge.dart';
 import 'package:tlbisibida_doc/view/inventory/components/triangle_card.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/add_cat_dialog%20.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/edit_subcat_dialog%20%20copy.dart';
+import 'package:tlbisibida_doc/view/inventory/dialogs/item_add_edit_dialog.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/subcat_delete_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
@@ -107,7 +108,7 @@ class ItemListScreen extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) {
-              return addCatDialog(context);
+              return itemAddEditDialog(context, 'إضافة مادة');
             },
           );
         },
