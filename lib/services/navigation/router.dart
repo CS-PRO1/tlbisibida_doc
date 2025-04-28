@@ -117,7 +117,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   // return _getPageRoute(StatisticsPage());
 
     default:
-      return _getPageRoute(const HomePage(), homePageDisplayName);
+      return _getPageRoute(AppointmentsCalendarScreen(), appointmentRoute);
   }
 }
 

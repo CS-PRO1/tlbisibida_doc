@@ -16,12 +16,10 @@ class SiteLayout extends StatelessWidget {
       key: scaffoldKey,
       extendBodyBehindAppBar: false,
       appBar: TopNavigationBar(),
-      body: ResponsiveWidget(
-        largeScreen: Navigator(
-          key: locator<NavigationService>().navigatorKey,
-          onGenerateRoute: generateRoute,
-          initialRoute: appointmentRoute, // Change to rootRoute
-        ),
+      body: Navigator(
+        key: locator<NavigationService>().navigatorKey,
+        onGenerateRoute: generateRoute,
+        initialRoute: appointmentRoute, // Change to rootRoute
       ),
     );
   }
