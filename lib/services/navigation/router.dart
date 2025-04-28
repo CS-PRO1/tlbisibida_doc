@@ -28,12 +28,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     // case authenticationPageRoute:
     //   return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
 
-    case '/':
-      return _getPageRoute(
-          AppointmentsCalendarScreen(), appointmentDisplayName);
-
     case addAppointmentRoute:
       return _getPageRoute(NewAppointmentScreen(), addAppointmentDisplayName);
+
+    case appointmentRoute:
+      return _getPageRoute(
+          AppointmentsCalendarScreen(), appointmentDisplayName);
 
     case financeRoute:
       return _getPageRoute(FinanceCenterScreen(), financeDisplayName);
