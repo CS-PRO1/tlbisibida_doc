@@ -1,13 +1,12 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:intl/intl.dart';
 
-class CalendarScreen extends StatelessWidget {
-  CalendarScreen({super.key});
+class AppointmentsCalendarScreen extends StatelessWidget {
+  AppointmentsCalendarScreen({super.key});
   DateTime currentdate = DateTime.now();
 
   @override

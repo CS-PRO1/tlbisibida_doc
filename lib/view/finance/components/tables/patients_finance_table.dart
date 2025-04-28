@@ -2,7 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/patient_info_screen.dart';
+import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable

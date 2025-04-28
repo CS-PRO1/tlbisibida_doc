@@ -15,7 +15,7 @@ import 'package:tlbisibida_doc/view/inventory/dialogs/item_add_edit_dialog.dart'
 import 'package:tlbisibida_doc/view/inventory/dialogs/subcat_delete_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
-import 'package:tlbisibida_doc/view/patients/patients_list_screen.dart';
+import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
 import 'package:tlbisibida_doc/view/inventory/components/sub_action_buttons%20copy.dart';
 
 // ignore: must_be_immutable

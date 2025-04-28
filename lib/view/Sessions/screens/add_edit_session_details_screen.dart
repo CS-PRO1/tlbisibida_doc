@@ -26,7 +26,7 @@ class AddEditSessionDetailsScreen extends StatelessWidget {
         appBar: TopNavigationBar(),
         backgroundColor: cyan50,
         body: SingleChildScrollView(
-          // physics: BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

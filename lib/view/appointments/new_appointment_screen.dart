@@ -2,7 +2,6 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
