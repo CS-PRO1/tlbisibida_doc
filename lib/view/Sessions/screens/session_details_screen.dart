@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
+import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/Sessions/teeth_chart.dart';
+import 'package:tlbisibida_doc/view/Sessions/components/teeth_chart.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
   const SessionDetailsScreen({super.key});
@@ -174,114 +175,3 @@ class SessionDetailsScreen extends StatelessWidget {
   }
 }
 
-class ImageGallery extends StatefulWidget {
-  final List<String> imageUrls;
-  final double mainImageHeight;
-  final double thumbnailSize;
-  final double thumbnailSpacing;
-  final Color selectedBorderColor;
-
-  const ImageGallery({
-    Key? key,
-    required this.imageUrls,
-    this.mainImageHeight = 300,
-    this.thumbnailSize = 60,
-    this.thumbnailSpacing = 8,
-    this.selectedBorderColor = Colors.blue,
-  }) : super(key: key);
-
-  @override
-  _ImageGalleryState createState() => _ImageGalleryState();
-}
-
-class _ImageGalleryState extends State<ImageGallery> {
-  int _selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Main image display
-        Container(
-          height: widget.mainImageHeight,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: Image.network(
-              widget.imageUrls[_selectedIndex],
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.error),
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        // Thumbnail list
-        SizedBox(
-          height: widget.thumbnailSize + 8, // Extra space for border
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.imageUrls.length,
-            separatorBuilder: (context, index) =>
-                SizedBox(width: widget.thumbnailSpacing),
-            itemBuilder: (context, index) {
-              final isSelected = index == _selectedIndex;
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  width: widget.thumbnailSize,
-                  height: widget.thumbnailSize,
-                  decoration: BoxDecoration(
-                    border: isSelected
-                        ? Border.all(
-                            color: widget.selectedBorderColor,
-                            width: 3,
-                          )
-                        : null,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(2),
-                    child: Image.network(
-                      widget.imageUrls[index],
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}

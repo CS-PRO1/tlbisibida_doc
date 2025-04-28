@@ -21,7 +21,7 @@ class PatientInfoScreen extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                   color: cyan100, borderRadius: BorderRadius.circular(30)),
-              height: MediaQuery.of(context).size.height / 1.85,
+              height: MediaQuery.of(context).size.height / 2,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SingleChildScrollView(

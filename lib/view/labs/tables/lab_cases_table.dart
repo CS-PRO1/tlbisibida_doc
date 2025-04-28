@@ -1,13 +1,13 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class PatientsFinanceTable extends StatelessWidget {
-  PatientsFinanceTable({super.key});
+class LabCasesTable extends StatelessWidget {
+  LabCasesTable({super.key});
   int count = 10;
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,14 @@ class PatientsFinanceTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم المريض',
+                    'تاريخ الحالة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'الرصيد',
+                    'المريض',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -59,24 +59,24 @@ class PatientsFinanceTable extends StatelessWidget {
                 count,
                 (index) => DataRow(
                   cells: [
-                    const DataCell(Center(
+                    DataCell(Center(
                         child: CustomText(
-                      text: 'تحسين التحسيني',
-                      alignment: TextAlign.center,
+                      text: DateFormat.yMd().format(DateTime.now()),
                       size: 14,
+                      alignment: TextAlign.center,
                     ))),
                     DataCell(Center(
                         child: CustomText(
-                      text: '-350000',
-                      alignment: TextAlign.center,
+                      text: 'تحسين التحسيني',
                       size: 14,
+                      alignment: TextAlign.center,
                     ))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PatientInfoScreen(),
-                        ));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => PatientInfoScreen(),
+                        // ));
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
