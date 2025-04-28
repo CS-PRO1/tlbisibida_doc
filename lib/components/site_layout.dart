@@ -19,7 +19,7 @@ class SiteLayout extends StatelessWidget {
       body: ResponsiveWidget(
         largeScreen: Navigator(
           key: locator<NavigationService>().navigatorKey,
-          //TODO onGenerateRoute: generateRoute,
+          onGenerateRoute: generateRoute,
           initialRoute: rootRoute, // Change to rootRoute
         ),
       ),
