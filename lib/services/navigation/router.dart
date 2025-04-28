@@ -117,7 +117,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   // return _getPageRoute(StatisticsPage());
 
     default:
-      return _getPageRoute(AppointmentsCalendarScreen(), appointmentRoute);
+      return _getPageRoute(
+          AppointmentsCalendarScreen(), appointmentDisplayName);
   }
 }
 
