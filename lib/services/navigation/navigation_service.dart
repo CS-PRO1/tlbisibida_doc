@@ -53,7 +53,7 @@ class NavigationService {
       if (routeName != null && routeName.isNotEmpty && routeName != '/') {
         currentTitle.value = _getTitleForRoute(routeName);
       } else {
-        currentTitle.value = homePageDisplayName;
+        currentTitle.value = appointmentDisplayName;
       }
     }
     showBackButton.value = navigatorKey.currentState?.canPop() ?? false;

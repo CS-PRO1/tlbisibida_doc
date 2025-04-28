@@ -14,7 +14,6 @@ class AppointmentsCalendarScreen extends StatelessWidget {
     return CalendarControllerProvider(
       controller: EventController(),
       child: Scaffold(
-          appBar: TopNavigationBar(),
           backgroundColor: cyan50,
           body: Padding(
             padding: const EdgeInsets.all(16.0),

@@ -19,7 +19,7 @@ class SiteLayout extends StatelessWidget {
       body: Navigator(
         key: locator<NavigationService>().navigatorKey,
         onGenerateRoute: generateRoute,
-        initialRoute: appointmentRoute, // Change to rootRoute
+        initialRoute: rootRoute, // Change to rootRoute
       ),
     );
   }

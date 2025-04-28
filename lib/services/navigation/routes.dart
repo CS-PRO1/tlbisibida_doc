@@ -1,5 +1,5 @@
 //TODO
-const rootRoute = "/";
+//const rootRoute = "/";
 
 const authenticationPageDisplayName = "Authentication";
 const authenticationPageRoute = "/auth";
@@ -11,7 +11,7 @@ const addAppointmentDisplayName = "اضافة موعد";
 const addAppointmentRoute = "/add_appointment";
 
 const appointmentDisplayName = " المواعيد";
-const appointmentRoute = "/appointment";
+const rootRoute = "/";
 
 const financeDisplayName = " قسم المالية";
 const financeRoute = "/finance";

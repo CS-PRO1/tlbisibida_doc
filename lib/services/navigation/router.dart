@@ -31,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case addAppointmentRoute:
       return _getPageRoute(NewAppointmentScreen(), addAppointmentDisplayName);
 
-    case appointmentRoute:
+    case rootRoute:
       return _getPageRoute(
           AppointmentsCalendarScreen(), appointmentDisplayName);
 
