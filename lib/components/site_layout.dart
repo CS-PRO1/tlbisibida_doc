@@ -6,7 +6,6 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
-
 class SiteLayout extends StatelessWidget {
   SiteLayout({super.key});
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -20,7 +19,7 @@ class SiteLayout extends StatelessWidget {
       body: ResponsiveWidget(
         largeScreen: Navigator(
           key: locator<NavigationService>().navigatorKey,
-         //TODO onGenerateRoute: generateRoute,
+          //TODO onGenerateRoute: generateRoute,
           initialRoute: rootRoute, // Change to rootRoute
         ),
       ),

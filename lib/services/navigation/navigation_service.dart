@@ -51,7 +51,7 @@ class NavigationService {
     if (currentRoute != null) {
       final routeName = currentRoute.settings.name;
       if (routeName != null && routeName.isNotEmpty && routeName != '/') {
-        currentTitle.value = routeName;
+        currentTitle.value = _getTitleForRoute(routeName);
       } else {
         currentTitle.value = homePageDisplayName;
       }
