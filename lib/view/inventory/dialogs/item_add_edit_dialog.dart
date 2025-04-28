@@ -33,7 +33,7 @@ Dialog itemAddEditDialog(BuildContext context, String title) {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: cyan400,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
@@ -44,7 +44,7 @@ Dialog itemAddEditDialog(BuildContext context, String title) {
                   color: cyan200,
                   margin: const EdgeInsets.symmetric(vertical: 5),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 DropdownMenu<String>(
