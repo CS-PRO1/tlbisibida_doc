@@ -23,17 +23,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch (settings.name) {
     //   //Auth
-    case '/':
-      return _getPageRoute(const HomePage(), homePageDisplayName);
+    // case '/':
+    //   return _getPageRoute(const HomePage(), homePageDisplayName);
     // case authenticationPageRoute:
     //   return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
 
-    case addAppointmentRoute:
-      return _getPageRoute(NewAppointmentScreen(), addAppointmentDisplayName);
-
-    case appointmentRoute:
+    case '/':
       return _getPageRoute(
           AppointmentsCalendarScreen(), appointmentDisplayName);
+
+    case addAppointmentRoute:
+      return _getPageRoute(NewAppointmentScreen(), addAppointmentDisplayName);
 
     case financeRoute:
       return _getPageRoute(FinanceCenterScreen(), financeDisplayName);
