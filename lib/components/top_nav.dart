@@ -4,7 +4,6 @@ import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
-
 class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -39,13 +38,13 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: const Icon(Icons.home_rounded),
                 ),
                 IconButton(
-                  onPressed: () =>
-                      navigationService.navigateTo(profilePageRoute),
+                  onPressed: () {},
+                  //navigationService.navigateTo(profilePageRoute),
                   icon: const Icon(Icons.person),
                 ),
                 IconButton(
-                  onPressed: () =>
-                      navigationService.navigateTo(clientPageRoute),
+                  onPressed: () {},
+                  //navigationService.navigateTo(clientPageRoute),
                   icon: const Icon(Icons.people),
                 ),
                 IconButton(

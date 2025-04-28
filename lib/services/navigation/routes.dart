@@ -1,4 +1,3 @@
-
 //TODO
 const rootRoute = "/";
 
@@ -8,34 +7,47 @@ const authenticationPageRoute = "/auth";
 const homePageDisplayName = "Home";
 const homePageRoute = "/home";
 
-const billsPageDisplayName = "Bills";
-const billsPageRoute = "/bills";
+const addAppointmentDisplayName = "اضافة موعد";
+const addAppointmentRoute = "/add_appointment";
 
-const casesPageDisplayName = "Cases";
-const casesPageRoute = "/cases";
-const caseDetailsPageDisplayName = 'Case Details';
-const caseDetailsPageRoute =  '/case_details';
+const appointmentDisplayName = " المواعيد";
+const appointmentRoute = "/appointment";
 
-const clientPageDisplayName = "Clients";
-const clientPageRoute = "/clients";
-const clientDetailsPageDisplayName = "Client Details";
-const clientDetailsPageRoute = "/client_details";
+const financeDisplayName = " قسم المالية";
+const financeRoute = "/finance";
 
+const inventoryDisplayName = "المخزن";
+const inventoryRoute = "/inventory";
 
-const employeesPageDisplayName = 'Employees';
-const employeesPageRoute = '/employees';
+const itemListDisplayName = "قائمة العناصر";
+const itemListRoute = "/item_list";
 
-const inventoryPageDisplayName = 'Inventory';
-const inventoryPageRoute = '/inventory';
+const caseDetailsDisplayName = "تفاصيل الحالة";
+const caseDetailsRoute = "/case_details";
 
-const paymentsLogPageDisplayName = 'Payments';
-const paymentsLogPageRoute = '/payments_log';
+const labsListDisplayName = "قائمة المخابر";
+const labsListRoute = "/labs_list";
 
-const statisticsPageDisplayName = 'Statistics';
-const statisticsPageRoute = '/stats';
+const labInfoDisplayName = "معلومات المخبر";
+const labInfoRoute = "/lab_info";
 
-const profilePageDisplayName = 'Profile';
-const profilePageRoute = '/profile';
+const patientInfoDisplayName = "معلومات المريض";
+const patientInfoRoute = "/patient_info";
+
+const patientListDisplayName = "قائمة المرضى";
+const patientListRoute = "/patient_list";
+
+const profileEditDisplayName = "تعديل الملف الشخصي";
+const profileEditRoute = "/profile_edit";
+
+const profileDisplayName = "الملف الشخصي";
+const profileRoute = "/doc_profile";
+
+const addEditSessionDetailsDisplayName = "تعديل تفاصيل الجلسة";
+const addEditSessionDetailsRoute = "/add_edit_session_detail";
+
+const sessionDetailsDisplayName = "تفاصيل الجلسة";
+const sessionDetailsRoute = "/sessions_details";
 
 
 // class MenuItem {

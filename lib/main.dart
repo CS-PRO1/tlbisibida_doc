@@ -1,4 +1,3 @@
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -7,28 +6,10 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
-import 'package:tlbisibida_doc/services/navigation/router.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/add_edit_session_details_screen.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/session_details_screen.dart';
-import 'package:tlbisibida_doc/view/Sessions/components/teeth_selection_screen.dart';
-import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
-import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
-import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
-import 'package:tlbisibida_doc/view/home_page.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/items_list_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/cases/case_details_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/cases/cases_list_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/lab_info_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/labs_list_screen.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
-import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: cyan200,
       systemNavigationBarColor: cyan400,
     ),
@@ -66,7 +47,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: PatientInfoScreen(), // Set home directly
+      home: SiteLayout(), // Set home directly
     );
   }
 }

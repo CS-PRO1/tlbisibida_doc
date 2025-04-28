@@ -2,7 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
+import 'package:tlbisibida_doc/view/Sessions/screens/add_edit_session_details_screen.dart';
+import 'package:tlbisibida_doc/view/Sessions/screens/session_details_screen.dart';
+import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
+import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
+import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
+import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
+import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/cases/case_details_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/lab_info_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/labs_list_screen.dart';
+import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
+import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
+import 'package:tlbisibida_doc/view/profile/profile_edit_screen.dart';
+import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
@@ -10,7 +24,55 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     //   //Auth
     case '/':
-      return _getPageRoute(HomePage(), homePageDisplayName);
+      return _getPageRoute(const HomePage(), homePageDisplayName);
+    // case authenticationPageRoute:
+    //   return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
+
+    case addAppointmentRoute:
+      return _getPageRoute(NewAppointmentScreen(), addAppointmentDisplayName);
+
+    case appointmentRoute:
+      return _getPageRoute(
+          AppointmentsCalendarScreen(), appointmentDisplayName);
+
+    case financeRoute:
+      return _getPageRoute(FinanceCenterScreen(), financeDisplayName);
+
+    case inventoryRoute:
+      return _getPageRoute(InventoryScreen(), inventoryDisplayName);
+
+    case itemListRoute:
+      return _getPageRoute(ItemListScreen(), itemListDisplayName);
+
+    case caseDetailsRoute:
+      return _getPageRoute(CaseDetailsScreen(), caseDetailsDisplayName);
+
+    case labsListRoute:
+      return _getPageRoute(const LabsListScreen(), labsListDisplayName);
+
+    case labInfoRoute:
+      return _getPageRoute(LabInfoScreen(), labInfoDisplayName);
+
+    case patientInfoRoute:
+      return _getPageRoute(const PatientInfoScreen(), patientInfoDisplayName);
+
+    case patientListRoute:
+      return _getPageRoute(PatientsListScreen(), patientListDisplayName);
+
+    case profileEditRoute:
+      return _getPageRoute(ProfileEditScreen(), profileEditDisplayName);
+
+    case profileRoute:
+      return _getPageRoute(ProfileScreen(), profileDisplayName);
+
+    case addEditSessionDetailsRoute:
+      return _getPageRoute(
+          AddEditSessionDetailsScreen(), addEditSessionDetailsDisplayName);
+
+    case sessionDetailsRoute:
+      return _getPageRoute(
+          const SessionDetailsScreen(), sessionDetailsDisplayName);
+
     //   case authenticationPageRoute:
     //     return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
 

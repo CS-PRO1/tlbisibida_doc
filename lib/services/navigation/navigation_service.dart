@@ -65,20 +65,7 @@ class NavigationService {
         return authenticationPageDisplayName;
       case homePageRoute:
         return homePageDisplayName;
-      case billsPageRoute:
-        return billsPageDisplayName;
-      case clientPageRoute:
-        return clientPageDisplayName;
-      case clientDetailsPageRoute:
-        return clientDetailsPageDisplayName;
-      case casesPageRoute:
-        return casesPageDisplayName;
-      case inventoryPageRoute:
-        return inventoryPageDisplayName;
-      case paymentsLogPageRoute:
-        return paymentsLogPageDisplayName;
-      case statisticsPageRoute:
-        return statisticsPageDisplayName;
+
       // Add all your other routes here
       default:
         return homePageDisplayName;
