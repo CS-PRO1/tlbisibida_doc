@@ -2,6 +2,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/locator.dart';
+import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 
 /// Example without datasource
@@ -74,9 +77,7 @@ class LabsFinanceTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => PatientInfoScreen(),
-                        // ));
+                        locator<NavigationService>().navigateTo(labInfoRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
