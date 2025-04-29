@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: StatisticsScreen(), // Set home directly
+      home: SiteLayout(), // Set home directly
     );
   }
 }

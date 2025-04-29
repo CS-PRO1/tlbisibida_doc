@@ -55,6 +55,7 @@ class InventoryScreen extends StatelessWidget {
             displayClearIcon: true,
             closeKeyboardWhenScrolling: true,
             textAlign: TextAlign.center,
+            textStyle: TextStyle(fontSize: 14),
             // searchFieldWidth: 30,
             searchFieldHeight: 50,
             searchFieldPadding: EdgeInsets.symmetric(horizontal: 60),

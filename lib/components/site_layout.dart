@@ -64,7 +64,6 @@ class _SiteLayoutState extends State<SiteLayout> {
           blurShadowRadius: 3,
           tabs: [
             TabData(
-              
               icon: Icons.people_rounded,
               iconSize: 20,
               title: 'المرضى',
@@ -94,7 +93,7 @@ class _SiteLayoutState extends State<SiteLayout> {
             ),
             TabData(
               icon: TuskIcons.lab_icon,
-              iconSize: 40,
+              iconSize: 18,
               title: 'المخابر',
               fontSize: 14,
               fontWeight: FontWeight.bold,
