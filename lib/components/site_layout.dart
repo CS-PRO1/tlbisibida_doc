@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/reponsiveness.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
+import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
@@ -92,8 +93,8 @@ class _SiteLayoutState extends State<SiteLayout> {
               fontWeight: FontWeight.bold,
             ),
             TabData(
-              icon: CupertinoIcons.building_2_fill,
-              iconSize: 20,
+              icon: TuskIcons.lab_icon,
+              iconSize: 40,
               title: 'المخابر',
               fontSize: 14,
               fontWeight: FontWeight.bold,
