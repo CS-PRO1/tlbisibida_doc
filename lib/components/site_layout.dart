@@ -29,14 +29,13 @@ class _SiteLayoutState extends State<SiteLayout> {
   final NavigationService _navigationService = locator<NavigationService>();
   int currentPage = 2;
 
-  // Map of bottom nav index to corresponding route
-  final Map<int, String> _navIndexToRoute = {
-    0: patientListRoute,
-    1: financeRoute,
-    2: rootRoute,
-    3: inventoryRoute,
-    4: labsListRoute
-  };
+  final List _routes = [
+    patientListRoute,
+    financeRoute,
+    rootRoute,
+    inventoryRoute,
+    labsListRoute
+  ];
 
   @override
   void initState() {
@@ -65,6 +64,7 @@ class _SiteLayoutState extends State<SiteLayout> {
           blurShadowRadius: 3,
           tabs: [
             TabData(
+              
               icon: Icons.people_rounded,
               iconSize: 20,
               title: 'المرضى',
@@ -103,7 +103,7 @@ class _SiteLayoutState extends State<SiteLayout> {
           onTabChangedListener: (index) {
             setState(() => currentPage = index);
             // Navigate to the corresponding route instead of switching pages
-            final route = _navIndexToRoute[index];
+            final route = _routes[index];
             if (route != null) {
               _navigationService.navigateTo(route);
             }

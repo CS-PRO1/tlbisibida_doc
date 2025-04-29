@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: SiteLayout(), // Set home directly
+      home: StatisticsScreen(), // Set home directly
     );
   }
 }
