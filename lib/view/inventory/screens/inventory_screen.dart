@@ -57,7 +57,7 @@ class InventoryScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             textStyle: TextStyle(fontSize: 14),
             // searchFieldWidth: 30,
-            searchFieldHeight: 50,
+            searchFieldHeight: 60,
             searchFieldPadding: EdgeInsets.symmetric(horizontal: 60),
             // defaultSuffixIconColor: cyan300,
             defaultSuffixIconSize: 0,
