@@ -17,7 +17,7 @@ Dialog addPatientDialog(BuildContext context) {
               border: Border.all(width: 2, color: cyan200),
               borderRadius: BorderRadius.circular(20)),
           width: MediaQuery.of(context).size.width / 1.1,
-          height: MediaQuery.of(context).size.height / 1.25,
+          height: MediaQuery.of(context).size.height / 1.3,
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
               child: Padding(
@@ -65,7 +65,7 @@ Dialog addPatientDialog(BuildContext context) {
                             context, 'المواليد'),
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -111,7 +111,7 @@ Dialog addPatientDialog(BuildContext context) {
                         ),
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       SizedBox(
                         // width: 250,

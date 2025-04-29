@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
+import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 class LabsListScreen extends StatelessWidget {
@@ -63,7 +64,7 @@ class LabsListScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.home_repair_service_rounded,
+                                TuskIcons.lab_icon,
                                 size: 100,
                                 color: cyan500,
                               ),
