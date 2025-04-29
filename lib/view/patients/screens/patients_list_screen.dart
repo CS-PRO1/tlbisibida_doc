@@ -8,6 +8,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons%20_patients.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
+import 'package:tlbisibida_doc/view/patients/components/dialogs/patient_info_button.dart';
 
 class PatientsListScreen extends StatelessWidget {
   PatientsListScreen({super.key});
@@ -201,6 +202,7 @@ Widget itemcard(BuildContext context, List info, int index,
     ),
 
     back: Card(
+      clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -231,10 +233,12 @@ Widget itemcard(BuildContext context, List info, int index,
                   Icons.smoke_free_rounded,
                   color: cyan300,
                 ),
-          // info[index]['icon'],
           const SizedBox(
             height: 5,
           ),
+          // IconButton(
+          //     onPressed: () {}, icon: Icon(Icons.perm_contact_cal_rounded))
+          patientInfoButton(context)
         ],
       ),
     ),
