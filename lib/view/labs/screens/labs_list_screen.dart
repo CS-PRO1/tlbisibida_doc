@@ -10,7 +10,7 @@ class LabsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      appBar: TopNavigationBar(),
+      // appBar: TopNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -392,7 +392,10 @@ class LabsListScreen extends StatelessWidget {
                             //   context: context,
                             //   builder: (context) => PaymentManagementDialog(),
                             // );
-                          })
+                          }),
+                      const SizedBox(
+                        height: 50,
+                      ),
                     ],
                   ),
                 ),

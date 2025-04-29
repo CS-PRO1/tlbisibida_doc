@@ -38,15 +38,14 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: const Icon(Icons.home_rounded),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  //navigationService.navigateTo(profilePageRoute),
+                  onPressed: () => navigationService.navigateTo(profileRoute),
                   icon: const Icon(Icons.person),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  //navigationService.navigateTo(clientPageRoute),
-                  icon: const Icon(Icons.people),
-                ),
+                // IconButton(
+                //   onPressed: () {},
+                //   //navigationService.navigateTo(clientPageRoute),
+                //   icon: const Icon(Icons.people),
+                // ),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.notifications_none_rounded),

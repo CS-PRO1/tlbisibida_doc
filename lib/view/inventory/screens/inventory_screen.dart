@@ -47,7 +47,7 @@ class InventoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      appBar: TopNavigationBar(),
+      // appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
@@ -222,7 +222,7 @@ class InventoryScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return editSubcatDialog(context);
+                      return subcatDeleteConfirmationDialog(context);
                     },
                   );
                 },
@@ -235,7 +235,7 @@ class InventoryScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return subcatDeleteConfirmationDialog(context);
+                      return editSubcatDialog(context);
                     },
                   );
                 },

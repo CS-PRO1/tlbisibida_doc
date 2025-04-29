@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tlbisibida_doc/components/float_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons%20_patients.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
 
@@ -89,7 +90,6 @@ class PatientsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SizedBox(
@@ -195,7 +195,7 @@ Widget itemcard(BuildContext context, List info, int index,
           const SizedBox(
             height: 5,
           ),
-          bottomActionButtons(context),
+          bottomActionButtonsPatients(context),
         ],
       ),
     ),

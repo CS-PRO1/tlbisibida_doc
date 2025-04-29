@@ -46,7 +46,6 @@ class ProfileEditScreen extends StatelessWidget {
     addressController.text = userInfo[3]['info'];
 
     return Scaffold(
-      appBar: TopNavigationBar(),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: SingleChildScrollView(

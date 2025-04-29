@@ -27,7 +27,7 @@ Dialog editCatDialog(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
-                      'تعديل صنف رئيسي',
+                      'اضافة صنف فرعي',
                       style: TextStyle(
                           color: cyan400,
                           fontSize: 18,
@@ -42,7 +42,7 @@ Dialog editCatDialog(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text('أدخل الاسم الجديد'),
+                    Text('أدخل  اسم الصنف الفرعي'),
                     SizedBox(
                       width: 250,
                       child: defaultTextField(
@@ -52,7 +52,7 @@ Dialog editCatDialog(BuildContext context) {
                       height: 10,
                     ),
                     defaultButton(
-                        text: 'تعديل',
+                        text: 'تم',
                         function: () {
                           Navigator.of(context).pop();
                         })

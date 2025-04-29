@@ -14,65 +14,63 @@ class FinanceCenterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopNavigationBar(),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(children: [
-              SizedBox(
-                width: double.infinity,
-                child: InlineChoice<String>.single(
-                    value: _financetype.value,
-                    onChanged: (value) {
-                      _financetype.value = value!;
-                      print(_financetype.toString());
-                    },
-                    clearable: false,
-                    itemCount: _choices.length,
-                    itemBuilder: (state, i) {
-                      return ChoiceChip(
-                        selectedColor: cyan200,
-                        side: const BorderSide(color: cyan300),
-                        selected: state.selected(_choices[i]),
-                        onSelected: state.onSelected(_choices[i]),
-                        label: Text(_choices[i]),
-                      );
-                    },
-                    listBuilder: ChoiceList.createWrapped(
-                        runAlignment: WrapAlignment.center,
-                        alignment: WrapAlignment.center,
-                        direction: Axis.horizontal,
-                        textDirection: TextDirection.rtl,
-                        //spacing: 10,
-                        //runSpacing: 10,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 5,
-                        ))),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              AnimatedBuilder(
-                animation: _financetype,
-                builder: (context, child) => Container(
-                    clipBehavior: Clip.antiAlias,
-                    // width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 1.3,
-                    decoration: BoxDecoration(
-                        color: cyan100,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: SingleChildScrollView(
-                      child: (_financetype.value == 'المرضى')
-                          ? showpatientstable()
-                          : (_financetype.value == 'المخابر')
-                              ? showlabstable()
-                              : showshowclinicstable(),
-                    )),
-              )
-            ]),
+      padding: EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(children: [
+          SizedBox(
+            width: double.infinity,
+            child: InlineChoice<String>.single(
+                value: _financetype.value,
+                onChanged: (value) {
+                  _financetype.value = value!;
+                  print(_financetype.toString());
+                },
+                clearable: false,
+                itemCount: _choices.length,
+                itemBuilder: (state, i) {
+                  return ChoiceChip(
+                    selectedColor: cyan200,
+                    side: const BorderSide(color: cyan300),
+                    selected: state.selected(_choices[i]),
+                    onSelected: state.onSelected(_choices[i]),
+                    label: Text(_choices[i]),
+                  );
+                },
+                listBuilder: ChoiceList.createWrapped(
+                    runAlignment: WrapAlignment.center,
+                    alignment: WrapAlignment.center,
+                    direction: Axis.horizontal,
+                    textDirection: TextDirection.rtl,
+                    //spacing: 10,
+                    //runSpacing: 10,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 5,
+                    ))),
           ),
-        ));
+          SizedBox(
+            height: 20,
+          ),
+          AnimatedBuilder(
+            animation: _financetype,
+            builder: (context, child) => Container(
+                clipBehavior: Clip.antiAlias,
+                // width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 1.3,
+                decoration: BoxDecoration(
+                    color: cyan100, borderRadius: BorderRadius.circular(30)),
+                child: SingleChildScrollView(
+                  child: (_financetype.value == 'المرضى')
+                      ? showpatientstable()
+                      : (_financetype.value == 'المخابر')
+                          ? showlabstable()
+                          : showshowclinicstable(),
+                )),
+          )
+        ]),
+      ),
+    ));
   }
 
   Widget showpatientstable() {

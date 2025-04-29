@@ -47,6 +47,7 @@ dependencies:
   #google_fonts: null
   get_it: ^8.0.3
   image_picker: ^1.1.2
+  circle_bottom_navigation: ^2.0.0
   image_picker_web: null
   searchable_listview:
   info_popup: null
@@ -61,7 +62,7 @@ dependencies:
   flutter_bloc:
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
