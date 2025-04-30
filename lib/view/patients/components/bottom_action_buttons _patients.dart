@@ -21,7 +21,11 @@ Row bottomActionButtonsPatients(BuildContext context) {
           child: Container(
             height: 30,
             decoration: const BoxDecoration(color: redbackground),
-            child: const Icon(Icons.delete_outline_rounded, color: redmain),
+            child: const Icon(
+              Icons.delete_outline_rounded,
+              color: redmain,
+              size: 16,
+            ),
           ),
         ),
       ),
@@ -41,6 +45,7 @@ Row bottomActionButtonsPatients(BuildContext context) {
               color: cyan200,
             ),
             child: const Icon(
+              size: 16,
               Icons.edit_rounded,
               color: cyan400,
             ),

@@ -27,6 +27,7 @@ Widget patientInfoButton(BuildContext context) {
       child: const Icon(
         Icons.perm_contact_cal_rounded,
         color: white,
+        size: 16,
       ),
     ),
   );
