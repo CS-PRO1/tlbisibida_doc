@@ -182,7 +182,7 @@ Widget itemcard(BuildContext context, List info, int index,
             children: [
               Icon(
                 CupertinoIcons.phone_circle_fill,
-                size: 16,
+                size: 14,
                 color: cyan500,
               ),
               SizedBox(
@@ -190,7 +190,7 @@ Widget itemcard(BuildContext context, List info, int index,
               ),
               Text(
                 info[index]['number'],
-                style: const TextStyle(color: cyan400, fontSize: 16),
+                style: const TextStyle(color: cyan400, fontSize: 14),
               ),
             ],
           ),
