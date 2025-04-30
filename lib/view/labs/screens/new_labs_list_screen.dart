@@ -18,7 +18,7 @@ class LabsListScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Container(
                 color: cyan200,
                 height: 200,
@@ -26,6 +26,9 @@ class LabsListScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
                       Container(
                         decoration: BoxDecoration(
                             color: cyan100,
@@ -37,7 +40,7 @@ class LabsListScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.home_repair_service_rounded,
+                                TuskIcons.lab_icon,
                                 size: 100,
                                 color: cyan500,
                               ),
@@ -112,119 +115,6 @@ class LabsListScreen extends StatelessWidget {
                       ),
                       const SizedBox(
                         width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(30)),
-                        height: 180,
-                        child: const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.home_repair_service_rounded,
-                                size: 100,
-                                color: cyan500,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'مخبر الحموي',
-                                style: TextStyle(color: cyan600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(30)),
-                        height: 180,
-                        child: const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.home_repair_service_rounded,
-                                size: 100,
-                                color: cyan500,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'مخبر الحموي',
-                                style: TextStyle(color: cyan600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(30)),
-                        height: 200,
-                        child: const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.home_repair_service_rounded,
-                                size: 100,
-                                color: cyan500,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'مخبر الحموي',
-                                style: TextStyle(color: cyan600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(30)),
-                        height: 200,
-                        child: const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.home_repair_service_rounded,
-                                size: 100,
-                                color: cyan500,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'مخبر الحموي',
-                                style: TextStyle(color: cyan600),
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                       const SizedBox(
                         width: 20,

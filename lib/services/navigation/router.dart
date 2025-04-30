@@ -12,7 +12,8 @@ import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
 import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
 import 'package:tlbisibida_doc/view/labs/screens/cases/case_details_screen.dart';
 import 'package:tlbisibida_doc/view/labs/screens/lab_info_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/labs_list_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/mylabs_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/new_labs_list_screen.dart';
 import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
 import 'package:tlbisibida_doc/view/labs/screens/cases/send_case_to_lab_screen.dart';
@@ -76,6 +77,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case sessionDetailsRoute:
       return _getPageRoute(
           const SessionDetailsScreen(), sessionDetailsDisplayName);
+
+    case myLabsListRoute:
+      return _getPageRoute(MylabsScreen(), myLabsListDisplayName);
 
     //   case authenticationPageRoute:
     //     return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);

@@ -27,6 +27,9 @@ const caseDetailsRoute = "/case_details";
 const labsListDisplayName = "قائمة المخابر";
 const labsListRoute = "/labs_list";
 
+const myLabsListDisplayName = "قائمة مخابري";
+const myLabsListRoute = "/my_labs_list";
+
 const labInfoDisplayName = "معلومات المخبر";
 const labInfoRoute = "/lab_info";
 
