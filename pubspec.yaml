@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/teeth.svg
     - assets/user_default.jpg
+    - assets/icons/arrow-up.png
     - assets/sec/bg_day.png
     - assets/sec/bg_night.png
   #   - images/a_dot_burr.jpeg
