@@ -34,7 +34,7 @@ class _SiteLayoutState extends State<SiteLayout> {
     financeRoute,
     rootRoute,
     inventoryRoute,
-    labsListRoute
+    myLabsListRoute
   ];
 
   @override
@@ -85,7 +85,7 @@ class _SiteLayoutState extends State<SiteLayout> {
               fontWeight: FontWeight.bold,
             ),
             TabData(
-              icon: CupertinoIcons.bag,
+              icon: CupertinoIcons.lab_flask_solid,
               iconSize: 20,
               title: 'المخزن',
               fontSize: 14,
