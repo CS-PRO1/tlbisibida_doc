@@ -3,7 +3,7 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/payment_management_dialog.dart';
-import 'package:tlbisibida_doc/view/patients/tables/appointment_log_table.dart';
+import 'package:tlbisibida_doc/view/patients/components/tables/appointment_log_table.dart';
 
 class PatientInfoScreen extends StatelessWidget {
   const PatientInfoScreen({super.key});

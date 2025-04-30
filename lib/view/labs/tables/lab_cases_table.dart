@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/locator.dart';
+import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -74,9 +77,8 @@ class LabCasesTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => PatientInfoScreen(),
-                        // ));
+                        locator<NavigationService>()
+                            .navigateTo(caseDetailsRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

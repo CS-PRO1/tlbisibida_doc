@@ -2,6 +2,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/locator.dart';
+import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -21,7 +24,6 @@ class AppointmentLogTable extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(16),
-        //margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
             height: (56 * count) + 40,
@@ -68,7 +70,8 @@ class AppointmentLogTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        // showDialog(context: context, builder:(context) => const BillDetailsDialog(), );
+                        locator<NavigationService>()
+                            .navigateTo(sessionDetailsRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

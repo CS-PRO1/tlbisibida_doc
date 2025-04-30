@@ -17,7 +17,7 @@ Widget datePicker(BuildContext context) {
   }
 
   return SizedBox(
-    width: 200,
+    width: 175,
     child: Card(
       clipBehavior: Clip.antiAlias,
       color: cyan100,
@@ -28,13 +28,13 @@ Widget datePicker(BuildContext context) {
       child: InkWell(
         onTap: getDatePicker,
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${dateTime.year}/${dateTime.month}/${dateTime.day}',
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 16),
               ),
               const Icon(Icons.calendar_month_outlined),
             ],

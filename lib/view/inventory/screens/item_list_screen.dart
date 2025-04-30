@@ -52,7 +52,6 @@ class ItemListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(

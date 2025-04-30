@@ -17,6 +17,7 @@ class FinanceCenterScreen extends StatelessWidget {
         body: Padding(
       padding: EdgeInsets.all(16.0),
       child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(children: [
           SizedBox(
             width: double.infinity,
@@ -57,7 +58,7 @@ class FinanceCenterScreen extends StatelessWidget {
             builder: (context, child) => Container(
                 clipBehavior: Clip.antiAlias,
                 // width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.3,
+                height: MediaQuery.of(context).size.height / 1.52,
                 decoration: BoxDecoration(
                     color: cyan100, borderRadius: BorderRadius.circular(30)),
                 child: SingleChildScrollView(

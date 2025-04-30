@@ -43,7 +43,6 @@ class ItemsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      appBar: TopNavigationBar(),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Padding(

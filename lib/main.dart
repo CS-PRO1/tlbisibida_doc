@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/view/labs/screens/cases/send_case_to_lab_screen.dart';
 import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
 
 void main() {
