@@ -68,7 +68,6 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
       bottom: true,
       maintainBottomViewPadding: true,
       child: Scaffold(
-        appBar: TopNavigationBar(),
         backgroundColor: cyan50,
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),

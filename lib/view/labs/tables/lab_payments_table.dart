@@ -47,13 +47,6 @@ class LabPaymentsTable extends StatelessWidget {
                     style: TextStyle(color: cyan300),
                   )),
                 ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'التفاصيل',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
               ],
               rows: List<DataRow>.generate(
                 count,
@@ -70,18 +63,6 @@ class LabPaymentsTable extends StatelessWidget {
                       text: '2,600,000',
                       size: 14,
                       alignment: TextAlign.center,
-                    ))),
-                    DataCell(Center(
-                        child: IconButton(
-                      onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => PatientInfoScreen(),
-                        // ));
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: cyan300,
-                      ),
                     ))),
                   ],
                 ),

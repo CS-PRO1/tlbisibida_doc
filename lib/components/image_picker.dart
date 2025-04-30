@@ -34,44 +34,56 @@ Widget imagePicker(List images) {
           //   },
           //   child: Text('التقاط صورة'),
           // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'إضافة صور',
-                style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold, color: cyan500),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              IconButton(
-                onPressed: () async {
-                  final pickedFile = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (pickedFile != null) {
-                    setState(() {
-                      images.add(File(pickedFile.path));
-                    });
-                  }
-                },
-                icon: Icon(Icons.image_search_rounded),
-                color: cyan500,
-              ),
-              IconButton(
-                onPressed: () async {
-                  final pickedFile =
-                      await ImagePicker().pickImage(source: ImageSource.camera);
-                  if (pickedFile != null) {
-                    setState(() {
-                      images.add(File(pickedFile.path));
-                    });
-                  }
-                },
-                icon: Icon(Icons.camera_alt_rounded),
-                color: cyan500,
-              ),
-            ],
+          SizedBox(
+            width: 150,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // Text(
+                //   'إضافة صور',
+                //   style: TextStyle(
+                //       fontSize: 18, fontWeight: FontWeight.bold, color: cyan500),
+                // ),
+                // SizedBox(
+                //   width: 5,
+                // ),
+                CircleAvatar(
+                  backgroundColor: cyan200,
+                  child: IconButton(
+                    onPressed: () async {
+                      final pickedFile = await ImagePicker()
+                          .pickImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        setState(() {
+                          images.add(File(pickedFile.path));
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.image_search_rounded),
+                    color: cyan500,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                CircleAvatar(
+                  backgroundColor: cyan200,
+                  child: IconButton(
+                    onPressed: () async {
+                      final pickedFile = await ImagePicker()
+                          .pickImage(source: ImageSource.camera);
+                      if (pickedFile != null) {
+                        setState(() {
+                          images.add(File(pickedFile.path));
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.camera_alt_rounded),
+                    color: cyan500,
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 10),
           SingleChildScrollView(

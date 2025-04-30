@@ -15,6 +15,7 @@ import 'package:tlbisibida_doc/view/labs/screens/lab_info_screen.dart';
 import 'package:tlbisibida_doc/view/labs/screens/labs_list_screen.dart';
 import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
+import 'package:tlbisibida_doc/view/labs/screens/cases/send_case_to_lab_screen.dart';
 import 'package:tlbisibida_doc/view/profile/profile_edit_screen.dart';
 import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
 
@@ -52,6 +53,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case labInfoRoute:
       return _getPageRoute(LabInfoScreen(), labInfoDisplayName);
+
+    case sendCaseToLabRoute:
+      return _getPageRoute(SendCaseToLabScreen(), sendCaseToLabDisplayName);
 
     case patientInfoRoute:
       return _getPageRoute(const PatientInfoScreen(), patientInfoDisplayName);

@@ -7,7 +7,7 @@ import 'package:tlbisibida_doc/view/labs/tables/lab_bills_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_cases_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_payments_table.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/payment_management_dialog.dart';
-import 'package:tlbisibida_doc/view/patients/tables/appointment_log_table.dart';
+import 'package:tlbisibida_doc/view/patients/components/tables/appointment_log_table.dart';
 
 class LabInfoScreen extends StatelessWidget {
   LabInfoScreen({super.key});
@@ -18,10 +18,9 @@ class LabInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      // appBar: TopNavigationBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.start,
             children: [

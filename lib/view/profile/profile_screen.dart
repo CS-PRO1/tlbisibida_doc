@@ -49,7 +49,6 @@ class ProfileScreen extends StatelessWidget {
             side: BorderSide(color: cyan600, width: 1.5),
             borderRadius: BorderRadius.circular(10)),
       ),
-      // appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
         child: Column(

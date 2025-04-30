@@ -1,7 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/inventory/components/add_subcat_button.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/add_cat_dialog%20.dart';
@@ -47,7 +46,6 @@ class InventoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      // appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(

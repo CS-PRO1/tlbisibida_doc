@@ -3,6 +3,9 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/locator.dart';
+import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LabsListScreen extends StatelessWidget {
   const LabsListScreen({super.key});
@@ -11,7 +14,6 @@ class LabsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cyan50,
-      // appBar: TopNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -393,6 +395,8 @@ class LabsListScreen extends StatelessWidget {
                             //   context: context,
                             //   builder: (context) => PaymentManagementDialog(),
                             // );
+                            locator<NavigationService>()
+                                .navigateTo(labInfoRoute);
                           }),
                       const SizedBox(
                         height: 50,

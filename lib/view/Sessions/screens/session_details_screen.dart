@@ -3,6 +3,9 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/locator.dart';
+import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/Sessions/components/teeth_chart.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -11,7 +14,6 @@ class SessionDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -166,6 +168,14 @@ class SessionDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              defaultButton(
+                text: 'إرسال الحالة إلى مخبر',
+                function: () =>
+                    locator<NavigationService>().navigateTo(sendCaseToLabRoute),
               )
             ],
           ),
@@ -174,4 +184,3 @@ class SessionDetailsScreen extends StatelessWidget {
     );
   }
 }
-

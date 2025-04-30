@@ -3,7 +3,7 @@ import 'package:tlbisibida_doc/components/date_picker.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/tables/payments_log_table%20copy.dart';
+import 'package:tlbisibida_doc/view/patients/components/tables/payments_log_table%20copy.dart';
 
 class PaymentManagementDialog extends StatelessWidget {
   PaymentManagementDialog({

@@ -1,5 +1,4 @@
 //TODO
-//const rootRoute = "/";
 
 const authenticationPageDisplayName = "Authentication";
 const authenticationPageRoute = "/auth";
@@ -30,6 +29,9 @@ const labsListRoute = "/labs_list";
 
 const labInfoDisplayName = "معلومات المخبر";
 const labInfoRoute = "/lab_info";
+
+const sendCaseToLabDisplayName = "إرسال إلى مخبر";
+const sendCaseToLabRoute = "/send_case_to_lab";
 
 const patientInfoDisplayName = "معلومات المريض";
 const patientInfoRoute = "/patient_info";

@@ -162,6 +162,7 @@ Widget itemcard(BuildContext context, List info, int index,
           ),
           Text(
             info[index]['name'],
+            textAlign: TextAlign.center,
             style: const TextStyle(
                 color: cyan400, fontSize: 18, fontWeight: FontWeight.w500),
           ),
