@@ -19,7 +19,7 @@ Row bottomActionButtonsPatients(BuildContext context) {
                 });
           },
           child: Container(
-            height: 50,
+            height: 30,
             decoration: const BoxDecoration(color: redbackground),
             child: const Icon(Icons.delete_outline_rounded, color: redmain),
           ),
@@ -36,7 +36,7 @@ Row bottomActionButtonsPatients(BuildContext context) {
             );
           },
           child: Container(
-            height: 50,
+            height: 30,
             decoration: const BoxDecoration(
               color: cyan200,
             ),

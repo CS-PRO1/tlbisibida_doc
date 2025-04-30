@@ -20,7 +20,7 @@ Widget patientInfoButton(BuildContext context) {
     child: Container(
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
-      height: 50,
+      height: 30,
       decoration: const BoxDecoration(
         color: cyan300,
       ),
