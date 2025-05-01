@@ -55,6 +55,13 @@ const sessionDetailsDisplayName = "تفاصيل الجلسة";
 const sessionDetailsRoute = "/sessions_details";
 
 
+const secretaryDisplayName = "السكرتاريا";
+const secretaryRoute = "/secretary";
+
+const statisticsDisplayName = "إحصائيات";
+const statisticsRoute = "/stats";
+
+
 // class MenuItem {
 //   final String name;
 //   final String route;

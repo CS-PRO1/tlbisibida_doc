@@ -65,18 +65,21 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 //     ))
                 SizedBox(
                   width: 50,
-                  child: DropdownSearch<(IconData, String)>(
+                  child: DropdownSearch<(IconData, String, String)>(
                     mode: Mode.custom,
                     // selectedItem: (Icons.menu, ''),
                     compareFn: (item1, item2) => item1.$1 == item2.$2,
                     items: (f, cs) => [
-                      (CupertinoIcons.chart_pie, 'الاحصائيات'),
-                      (TuskIcons.secretary, 'السكرتاريا'),
-                      (Icons.person, 'الملف الشخصي'),
-                      (Icons.settings, 'الإعدادات'),
-                      (Icons.info_outline_rounded, 'حول'),
-                      (Icons.logout_rounded, 'تسجيل الخروج'),
+                      (CupertinoIcons.chart_pie, 'الاحصائيات', statisticsRoute),
+                      (TuskIcons.secretary, 'السكرتاريا', secretaryRoute),
+                      (Icons.person, 'الملف الشخصي', profileRoute),
+                      (Icons.settings, 'الإعدادات', profileRoute),
+                      (Icons.info_outline_rounded, 'حول', profileRoute),
+                      (Icons.logout_rounded, 'تسجيل الخروج', profileRoute),
                     ],
+                    onChanged: (value) {
+                      locator<NavigationService>().navigateTo(value!.$3);
+                    },
                     // decoratorProps: DropDownDecoratorProps(
                     //   decoration: InputDecoration(
                     //     contentPadding: EdgeInsets.symmetric(vertical: 6),

@@ -19,6 +19,8 @@ import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
 import 'package:tlbisibida_doc/view/labs/screens/cases/send_case_to_lab_screen.dart';
 import 'package:tlbisibida_doc/view/profile/profile_edit_screen.dart';
 import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
+import 'package:tlbisibida_doc/view/secretary/secretary_screen.dart';
+import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
@@ -80,6 +82,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case myLabsListRoute:
       return _getPageRoute(MylabsScreen(), myLabsListDisplayName);
+
+    case secretaryRoute:
+      return _getPageRoute(SecretaryScreen(), secretaryDisplayName);
+
+    case statisticsRoute:
+      return _getPageRoute(StatisticsScreen(), statisticsDisplayName);
 
     //   case authenticationPageRoute:
     //     return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);

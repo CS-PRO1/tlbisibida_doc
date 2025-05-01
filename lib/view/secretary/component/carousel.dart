@@ -358,10 +358,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
       body: Column(children: [
         Expanded(
           child: CarouselSlider(
+            
             items: imageSliders,
             carouselController: _controller,
             options: CarouselOptions(
-                autoPlay: true,
+                autoPlay: false,
                 enlargeCenterPage: true,
                 aspectRatio: 0.720,
                 onPageChanged: (index, reason) {
