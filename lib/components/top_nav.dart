@@ -74,8 +74,12 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                       (TuskIcons.secretary, 'السكرتاريا', secretaryRoute),
                       (Icons.person, 'الملف الشخصي', profileRoute),
                       (Icons.settings, 'الإعدادات', profileRoute),
-                      (Icons.info_outline_rounded, 'حول', profileRoute),
-                      (Icons.logout_rounded, 'تسجيل الخروج', profileRoute),
+                      (Icons.info_outline_rounded, 'حول', aboutRoute),
+                      (
+                        Icons.logout_rounded,
+                        'تسجيل الخروج',
+                        authenticationPageRoute
+                      ),
                     ],
                     onChanged: (value) {
                       locator<NavigationService>().navigateTo(value!.$3);
