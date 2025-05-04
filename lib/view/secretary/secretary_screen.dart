@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/secretary/component/carousel.dart';
 import 'package:tlbisibida_doc/view/secretary/dialogs/sec_add_edit_dialog.dart';
@@ -10,7 +9,6 @@ class SecretaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopNavigationBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

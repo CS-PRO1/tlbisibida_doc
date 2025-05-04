@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/secretary/component/carousel.dart';
 import 'package:tlbisibida_doc/view/secretary/secretary_screen.dart';
 import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
@@ -38,9 +39,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Remove initialRoute to prevent double initialization
-      //onGenerateRoute: (settings) => generateRoute(settings),
-
       title: 'LambdaDent Doctor App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -50,7 +48,20 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      home: SiteLayout(), // Set home directly
+      home: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) {
+              print('didpop = true');
+            }
+            print('didpop = false');
+            if (locator<NavigationService>().currentTitle.value !=
+                appointmentDisplayName) {
+              locator<NavigationService>().goBack();
+              print('goback is initiated');
+            }
+          },
+          child: SiteLayout()), // Set home directly
     );
   }
 }
