@@ -1,8 +1,5 @@
 //TODO
 
-const authenticationPageDisplayName = "Authentication";
-const authenticationPageRoute = "/auth";
-
 const homePageDisplayName = "Home";
 const homePageRoute = "/home";
 
@@ -53,7 +50,6 @@ const addEditSessionDetailsRoute = "/add_edit_session_detail";
 
 const sessionDetailsDisplayName = "تفاصيل الجلسة";
 const sessionDetailsRoute = "/sessions_details";
-
 
 const secretaryDisplayName = "السكرتاريا";
 const secretaryRoute = "/secretary";

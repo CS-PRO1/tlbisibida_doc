@@ -23,7 +23,11 @@ class AuthenticationPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 12),
-                    child: Image.asset("assets/icons/logo.png"),
+                    child: Image.asset(
+                      "assets/icons/logo_v2.png",
+                      width: 200,
+                      height: 200,
+                    ),
                   ),
                   Expanded(child: Container()),
                 ],

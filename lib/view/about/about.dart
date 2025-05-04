@@ -17,26 +17,10 @@ class About extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-            title: Text(
-              'About',
-              style: TextStyle(color: white),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: white,
-              ),
-              onPressed: () {
-                // Get.back();
-              },
-            )),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
-            padding: const EdgeInsets.only(top: 250),
+            padding: const EdgeInsets.only(top: 220),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +28,7 @@ class About extends StatelessWidget {
               children: [
                 Image(
                   image: AssetImage(
-                    'assets/logo_v2.png',
+                    'assets/icons/logo_v2.png',
                   ),
                   width: 150,
                   height: 150,
@@ -57,7 +41,7 @@ class About extends StatelessWidget {
                   style: TextStyle(color: cyan500),
                 ),
                 SizedBox(
-                  height: 140,
+                  height: 100,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +54,7 @@ class About extends StatelessWidget {
                       onPressed: () {},
                     ),
                     Text(
-                      'contact us',
+                      'اتصل بنا',
                       style: TextStyle(color: white),
                     ),
                   ],
@@ -86,7 +70,7 @@ class About extends StatelessWidget {
                       onPressed: () {},
                     ),
                     Text(
-                      'Follow us on facebook',
+                      'تابعنا على فيسبوك',
                       style: TextStyle(color: white),
                     ),
                   ],

@@ -61,8 +61,8 @@ class NavigationService {
 
   String _getTitleForRoute(String routeName) {
     switch (routeName) {
-      case authenticationPageRoute:
-        return authenticationPageDisplayName;
+      case authRoute:
+        return authDisplayName;
       case homePageRoute:
         return homePageDisplayName;
 

@@ -29,7 +29,7 @@ Widget defaultTextField(
       prefixIcon: prefixIcon,
       suffixIcon: postfixicon,
       enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+          borderSide: const BorderSide(color: cyan300, width: .5),
           borderRadius: standardBorderRadius),
       focusedBorder: OutlineInputBorder(
         borderSide:

@@ -48,6 +48,8 @@ dependencies:
   flutter_animate: null
   flutter_bloc: null
   flutter_shapes: null
+  flutter_native_splash: ^2.4.4
+
   get_it: ^8.0.3
   image_picker: ^1.1.2
   image_picker_web: null
@@ -81,6 +83,7 @@ flutter:
     - assets/icons/arrow-up.png
     - assets/sec/bg_day.png
     - assets/sec/bg_night.png
+    - assets/icons/logo_v2.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
