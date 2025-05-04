@@ -24,6 +24,7 @@ final List<Map> imgList = [
       size: 100,
       color: cyan500,
     ),
+    'credit': 5000000,
   },
   {
     'name': 'مخبر الحموي',
@@ -32,6 +33,7 @@ final List<Map> imgList = [
       size: 100,
       color: cyan500,
     ),
+    'credit': -5000000,
   },
 ];
 
@@ -78,109 +80,34 @@ final List<Widget> imageSliders = imgList
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(20)),
-                        //height: MediaQuery.of(context).size.height / 6,
-                        // child: Padding(
-                        //   padding: const EdgeInsets.all(16.0),
-                        //   child: Column(
-                        //     children: [
-                        //       const Row(
-                        //         mainAxisAlignment:
-                        //             MainAxisAlignment.spaceAround,
-                        //         children: [
-                        //           Row(
-                        //             mainAxisAlignment:
-                        //                 MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Text(
-                        //                 '-600,000',
-                        //                 style: TextStyle(
-                        //                     fontSize: 18,
-                        //                     color: cyan600,
-                        //                     fontWeight: FontWeight.bold),
-                        //               ),
-                        //               Text(
-                        //                 ' :الرصيد',
-                        //                 style: TextStyle(fontSize: 16),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           Text(
-                        //             'مخبر الحموي',
-                        //             style: TextStyle(
-                        //                 fontSize: 18,
-                        //                 color: cyan600,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: InlineChoice<String>.single(
-                            value: _table.value,
-                            onChanged: (value) {
-                              _table.value = value!;
-                              print(_table.toString());
-                            },
-                            clearable: false,
-                            itemCount: _choices.length,
-                            itemBuilder: (state, i) {
-                              return ChoiceChip(
-                                selectedColor: cyan200,
-                                side: const BorderSide(color: cyan300),
-                                selected: state.selected(_choices[i]),
-                                onSelected: state.onSelected(_choices[i]),
-                                label: Text(_choices[i]),
-                              );
-                            },
-                            listBuilder: ChoiceList.createWrapped(
-                                runAlignment: WrapAlignment.center,
-                                alignment: WrapAlignment.center,
-                                direction: Axis.horizontal,
-                                textDirection: TextDirection.rtl,
-                                //spacing: 10,
-                                //runSpacing: 10,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 5,
-                                ))),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        clipBehavior: Clip.antiAlias,
-                        child: SingleChildScrollView(
-                          child: AnimatedBuilder(
-                            animation: _table,
-                            builder: (context, child) =>
-                                (_table.value == 'الحالات')
-                                    ? LabCasesTable()
-                                    : (_table.value == 'الفواتير')
-                                        ? LabBillsTable()
-                                        : LabPaymentsTable(),
+                  child: Container(
+                    height: 170,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: .5, color: cyan200),
+                        // color: cyan100,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'الرصيد الحالي',
+                            style: TextStyle(fontSize: 16, color: cyan400),
                           ),
-                        ),
-                        width: 400,
-                        height: MediaQuery.of(context).size.height / 1.6,
-                        decoration: BoxDecoration(
-                            color: cyan100,
-                            borderRadius: BorderRadius.circular(30)),
+                          // SizedBox(
+                          //   height: 30,
+                          // ),
+                          Text(
+                            item['credit'].toString(),
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: item['credit'] >= 0 ? cyan600 : redmid,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -222,7 +149,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
             items: imageSliders,
             carouselController: _controller,
             options: CarouselOptions(
-                autoPlay: true,
+                autoPlay: false,
                 enlargeCenterPage: true,
                 aspectRatio: 0.990,
                 onPageChanged: (index, reason) {

@@ -30,35 +30,31 @@ class LabInfoScreen extends StatelessWidget {
                 //height: MediaQuery.of(context).size.height / 6,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '-600,000',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: cyan600,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                ' :الرصيد',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
                           Text(
-                            'مخبر الحموي',
+                            '-600,000',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: cyan600,
                                 fontWeight: FontWeight.bold),
                           ),
+                          Text(
+                            ' :الرصيد',
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ],
+                      ),
+                      Text(
+                        'مخبر الحموي',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: cyan600,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
