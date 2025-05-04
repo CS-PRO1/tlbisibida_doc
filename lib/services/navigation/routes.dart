@@ -61,6 +61,12 @@ const secretaryRoute = "/secretary";
 const statisticsDisplayName = "إحصائيات";
 const statisticsRoute = "/stats";
 
+const authDisplayName = "تسجيل الدخول";
+const authRoute = "/login";
+
+const aboutDisplayName = "حول التطبيق";
+const aboutRoute = "/about";
+
 
 // class MenuItem {
 //   final String name;
