@@ -89,6 +89,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case statisticsRoute:
       return _getPageRoute(StatisticsScreen(), statisticsDisplayName);
 
+    case authRoute:
+      return _getPageRoute(StatisticsScreen(), authDisplayName);
+    case aboutRoute:
+      return _getPageRoute(StatisticsScreen(), aboutDisplayName);
+
     //   case authenticationPageRoute:
     //     return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
 
