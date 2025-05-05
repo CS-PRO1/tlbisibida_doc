@@ -81,27 +81,9 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                       (Icons.logout_rounded, 'تسجيل الخروج', roleRoute),
                     ],
                     onChanged: (value) {
-                      locator<NavigationService>().navigateTo(value!.$3);
+                      // locator<NavigationService>().navigateTo(value!.$3);
+                      Navigator.of(context).pushNamed(value!.$3);
                     },
-                    // decoratorProps: DropDownDecoratorProps(
-                    //   decoration: InputDecoration(
-                    //     contentPadding: EdgeInsets.symmetric(vertical: 6),
-                    //     //filled: true,
-                    //     //fillColor: Color(0xFF1eb98f),
-                    //     border: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.transparent),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.transparent),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //     enabledBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.transparent),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //   ),
-                    // ),
                     dropdownBuilder: (ctx, selectedItem) => Icon(
                       Icons.menu,
                       color: cyan_navbar_600,

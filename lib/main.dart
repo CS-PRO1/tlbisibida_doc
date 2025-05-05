@@ -6,7 +6,9 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
+import 'package:tlbisibida_doc/view/about/about.dart';
 
 
 void main() {
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
+      onGenerateRoute: (settings) => generateRoute(settings),
       home: PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {

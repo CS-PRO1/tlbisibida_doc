@@ -1,17 +1,11 @@
-import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
-import 'package:circle_bottom_navigation/widgets/tab_data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tlbisibida_doc/components/bottom_nav.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
-import 'package:tlbisibida_doc/components/tusk_icons.dart';
-import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
-
-// ignore: must_be_immutable
 class SiteLayout extends StatefulWidget {
   const SiteLayout({super.key});
 
@@ -23,14 +17,6 @@ class _SiteLayoutState extends State<SiteLayout> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final NavigationService _navigationService = locator<NavigationService>();
   int currentPage = 2;
-
-  final List _routes = [
-    patientListRoute,
-    financeRoute,
-    rootRoute,
-    inventoryRoute,
-    myLabsListRoute
-  ];
 
   @override
   void initState() {
@@ -45,62 +31,11 @@ class _SiteLayoutState extends State<SiteLayout> {
       child: Scaffold(
         key: scaffoldKey,
         extendBodyBehindAppBar: false,
-        appBar: TopNavigationBar(),
-        bottomNavigationBar: CircleBottomNavigation(
-          barHeight: 45,
-          circleSize: 30,
-          initialSelection: currentPage,
-          inactiveIconColor: Colors.grey,
-          textColor: cyan500,
-          hasElevationShadows: true,
-          barBackgroundColor: cyan100,
-          arcHeight: 20,
-          circleOutline: 8,
-          blurShadowRadius: 3,
-          tabs: [
-            TabData(
-              icon: Icons.people_rounded,
-              iconSize: 20,
-              title: 'المرضى',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-            TabData(
-              icon: CupertinoIcons.money_dollar,
-              iconSize: 20,
-              title: 'المالية',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-            TabData(
-              icon: Icons.calendar_month_rounded,
-              iconSize: 20,
-              title: 'المواعيد',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-            TabData(
-              icon: CupertinoIcons.lab_flask_solid,
-              iconSize: 20,
-              title: 'المخزن',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-            TabData(
-              icon: TuskIcons.lab_icon,
-              iconSize: 18,
-              title: 'المخابر',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ],
-          onTabChangedListener: (index) {
+        appBar: const TopNavigationBar(),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currentPage: currentPage,
+          onTabChanged: (index) {
             setState(() => currentPage = index);
-            // Navigate to the corresponding route instead of switching pages
-            final route = _routes[index];
-            if (route != null) {
-              _navigationService.navigateTo(route);
-            }
           },
         ),
         body: Navigator(
