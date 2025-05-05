@@ -9,11 +9,11 @@ class ToothChart extends StatelessWidget {
   final Set<int> selectedConnections;
 
   const ToothChart({
-    Key? key,
+    super.key,
     required this.svgAsset,
     this.toothStyles = const {},
     this.selectedConnections = const {},
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

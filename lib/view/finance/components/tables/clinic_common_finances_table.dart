@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 
-/// Example without datasource
-// ignore: must_be_immutable
 class ClinicCommonFinancesTable extends StatelessWidget {
   ClinicCommonFinancesTable({super.key});
   int count = 10;

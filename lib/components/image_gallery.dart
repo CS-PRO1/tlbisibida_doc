@@ -8,19 +8,19 @@ class ImageGallery extends StatefulWidget {
   final Color selectedBorderColor;
 
   const ImageGallery({
-    Key? key,
+    super.key,
     required this.imageUrls,
     this.mainImageHeight = 300,
     this.thumbnailSize = 60,
     this.thumbnailSpacing = 8,
     this.selectedBorderColor = Colors.blue,
-  }) : super(key: key);
+  });
 
   @override
-  _ImageGalleryState createState() => _ImageGalleryState();
+  ImageGalleryState createState() => ImageGalleryState();
 }
 
-class _ImageGalleryState extends State<ImageGallery> {
+class ImageGalleryState extends State<ImageGallery> {
   int _selectedIndex = 0;
   late PageController _pageController;
 

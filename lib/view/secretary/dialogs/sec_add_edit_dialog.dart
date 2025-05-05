@@ -2,23 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
-
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/secretary/component/carousel.dart';
-import 'package:tlbisibida_doc/view/secretary/component/bottom_action_buttons%20_sec.dart';
 
 Dialog secAddEditDialog(BuildContext context, String title) {
-  // TextEditingController itemnamecontroller =
-  //     TextEditingController(text: 'سماكة 10');
-  // TextEditingController itemunitcontroller =
-  //     TextEditingController(text: 'بلوكة');
-  // TextEditingController itemstandardquantitycontroller =
-  //     TextEditingController(text: '50');
-  // TextEditingController itemminimumquantitycontroller =
-  //     TextEditingController(text: '10');
-  // final TextEditingController catmenuController = TextEditingController();
-  // final TextEditingController subcatmenuController = TextEditingController();
-
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),

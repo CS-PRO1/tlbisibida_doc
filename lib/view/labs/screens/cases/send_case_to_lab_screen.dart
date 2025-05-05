@@ -6,18 +6,17 @@ import 'package:tlbisibida_doc/components/date_picker.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 class SendCaseToLabScreen extends StatefulWidget {
-  SendCaseToLabScreen({super.key});
+  const SendCaseToLabScreen({super.key});
 
   @override
   State<SendCaseToLabScreen> createState() => _AddOrderState();
 }
 
 class _AddOrderState extends State<SendCaseToLabScreen> {
-  List<String> _labslist = [
+  final List<String> _labslist = [
     'مخبر الحموي',
     'مخبر الحمصي',
     'مخبر الشامي',
@@ -32,9 +31,10 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
   var formkey = GlobalKey<FormState>();
   bool _needTrial = false;
   bool _isRepeat = false;
+  // ignore: unused_field
   String _toothshade = 'A1';
   List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
-  final ValueNotifier<String> _targetlabtype = ValueNotifier<String>('تعويض');
+  ValueNotifier<String> _targetlabtype = ValueNotifier<String>('تعويض');
   DateTime expectedDeliveryDate = DateTime.now();
   List<File> images = [];
 

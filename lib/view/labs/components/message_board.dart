@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/labs/components/message_bubbles.dart';
 
-Widget MessageBoard(BuildContext context) {
+Widget messageBoard(BuildContext context) {
   return Column(
     children: [
       SizedBox(
@@ -42,7 +42,7 @@ Widget MessageBoard(BuildContext context) {
         child: MessageBar(
           messageBarHintText: 'اكتب تعليقك هنا',
           sendButtonColor: cyan400,
-          onSend: (_) => print(_),
+          onSend: (p0) {},
         ),
       ),
       SizedBox(

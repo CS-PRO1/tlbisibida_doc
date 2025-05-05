@@ -3,33 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
-import 'package:tlbisibida_doc/components/float_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/components/bottom_action_buttons%20_patients.dart';
-import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
+import 'package:tlbisibida_doc/view/patients/components/bottom_action_buttons_patients.dart';
+import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/patient_info_button.dart';
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tlbisibida_doc/components/default_textfield.dart';
-import 'package:tlbisibida_doc/components/float_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
-import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/patients/components/bottom_action_buttons%20_patients.dart';
-import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog%20.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/patient_info_button.dart';
-
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 
-// Mock data with added dates
 List<Map> mockPatients = [
   {
     'name': 'اسماعيل احمد كنباوي',
@@ -348,16 +327,16 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
             },
           );
         },
-        child: Icon(
-          Icons.add,
-          size: 28,
-        ),
         mini: true,
         backgroundColor: cyan400,
         foregroundColor: white,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: cyan600, width: 1.5),
           borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(
+          Icons.add,
+          size: 28,
         ),
       ),
     );

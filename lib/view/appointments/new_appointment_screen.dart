@@ -3,7 +3,6 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -151,7 +150,7 @@ class NewAppointmentScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Container(
+              SizedBox(
                 height: 300,
                 child: AnimatedBuilder(
                     animation: _islongapp,

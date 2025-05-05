@@ -8,6 +8,8 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
+  const TopNavigationBar({super.key});
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -67,8 +69,6 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 50,
                   child: DropdownSearch<(IconData, String, String)>(
                     mode: Mode.custom,
-                    // selectedItem: (Icons.menu, ''),
-                    compareFn: (item1, item2) => item1.$1 == item2.$2,
                     items: (f, cs) => [
                       (CupertinoIcons.chart_pie, 'الاحصائيات', statisticsRoute),
                       (TuskIcons.secretary, 'السكرتاريا', secretaryRoute),

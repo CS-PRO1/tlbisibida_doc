@@ -3,11 +3,10 @@ import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 class AuthenticationPage extends StatelessWidget {
-  // AdminLoginController adminAuth=Get.put(AdminLoginController());
+  AuthenticationPage({super.key});
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
-  AuthenticationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

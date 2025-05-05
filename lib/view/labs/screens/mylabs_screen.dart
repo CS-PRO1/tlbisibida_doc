@@ -1,6 +1,5 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
@@ -9,8 +8,7 @@ import 'package:tlbisibida_doc/view/labs/components/carousel_labs.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_bills_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_cases_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_payments_table.dart';
-import 'package:tlbisibida_doc/view/secretary/component/carousel.dart';
-import 'package:tlbisibida_doc/view/secretary/dialogs/sec_add_edit_dialog.dart';
+
 
 class MylabsScreen extends StatelessWidget {
   MylabsScreen({super.key});

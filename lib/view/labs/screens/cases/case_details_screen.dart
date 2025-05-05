@@ -1,22 +1,19 @@
-import 'package:buildcondition/buildcondition.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/view/labs/components/case_process_timeline.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/items_list_screen.dart';
 import 'package:tlbisibida_doc/view/labs/components/message_board.dart';
 
 class CaseDetailsScreen extends StatefulWidget {
-  CaseDetailsScreen({super.key});
+  const CaseDetailsScreen({super.key});
 
   @override
-  _CaseDetailsScreenState createState() => _CaseDetailsScreenState();
+  CaseDetailsScreenState createState() => CaseDetailsScreenState();
 }
 
-class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
+class CaseDetailsScreenState extends State<CaseDetailsScreen> {
   final orderdetailstitles = [
     'المريض',
     'العمر',
@@ -39,26 +36,10 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
     'لا',
     'المريض م'
   ];
-  // late var orderdetailsinfo = [
-  //   controller.caseDetailsModel!.caseDetails![0].patientName,
-  //   controller.caseDetailsModel!.caseDetails![0].age,
-  //   controller.caseDetailsModel!.caseDetails![0].gender,
-  //   controller.caseDetailsModel!.caseDetails![0].shade,
-  //   controller.caseDetailsModel!.caseDetails![0].createdAt!.substring(0, 10),
-  //   controller.caseDetailsModel!.caseDetails![0].expectDeliveryTime!
-  //       .substring(0, 10),
-  //   controller.caseDetailsModel!.caseDetails![0].repeate,
-  //   controller.caseDetailsModel!.caseDetails![0].needTrial,
-  // ];
-
-  // late List<Comment> comments = controller.commentsModel!.comments
-  //     .where((element) => element.caseId == id)
-  //     .toList();
 
   @override
   void initState() {
     super.initState();
-    //controller.getCaseDetails(id);
   }
 
   @override
@@ -116,7 +97,7 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
                           function: () {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) => MessageBoard(context));
+                                builder: (context) => messageBoard(context));
                           },
                         ),
                         defaultButton(

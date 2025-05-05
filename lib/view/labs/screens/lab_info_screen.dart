@@ -1,13 +1,9 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_bills_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_cases_table.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_payments_table.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/payment_management_dialog.dart';
-import 'package:tlbisibida_doc/view/patients/components/tables/appointment_log_table.dart';
 
 class LabInfoScreen extends StatelessWidget {
   LabInfoScreen({super.key});
@@ -99,6 +95,10 @@ class LabInfoScreen extends StatelessWidget {
               ),
               Container(
                 clipBehavior: Clip.antiAlias,
+                width: 400,
+                height: MediaQuery.of(context).size.height / 1.6,
+                decoration: BoxDecoration(
+                    color: cyan100, borderRadius: BorderRadius.circular(30)),
                 child: SingleChildScrollView(
                   child: AnimatedBuilder(
                     animation: _table,
@@ -109,10 +109,6 @@ class LabInfoScreen extends StatelessWidget {
                             : LabPaymentsTable(),
                   ),
                 ),
-                width: 400,
-                height: MediaQuery.of(context).size.height / 1.6,
-                decoration: BoxDecoration(
-                    color: cyan100, borderRadius: BorderRadius.circular(30)),
               ),
             ],
           ),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-Dialog editCatDialog(BuildContext context) {
-  TextEditingController itemnamecontroller = TextEditingController();
-  TextEditingController itemstandardquantitycontroller =
+Dialog editSubcatDialog(BuildContext context) {
+  TextEditingController subcatnamecontroller =
       TextEditingController();
 
   return Dialog(
@@ -27,7 +25,7 @@ Dialog editCatDialog(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
-                      'اضافة صنف فرعي',
+                      'تعديل صنف فرعي',
                       style: TextStyle(
                           color: cyan400,
                           fontSize: 18,
@@ -42,17 +40,17 @@ Dialog editCatDialog(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text('أدخل  اسم الصنف الفرعي'),
+                    Text('أدخل الاسم الجديد'),
                     SizedBox(
                       width: 250,
                       child: defaultTextField(
-                          itemstandardquantitycontroller, context, ''),
+                          subcatnamecontroller, context, ''),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     defaultButton(
-                        text: 'تم',
+                        text: 'تعديل',
                         function: () {
                           Navigator.of(context).pop();
                         })

@@ -1,120 +1,55 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/components/bottom_action_payments_log_buttons.dart';
 import 'package:tlbisibida_doc/view/inventory/components/bottom_action_buttons.dart';
+import 'package:tlbisibida_doc/view/inventory/components/bottom_action_payments_log_buttons.dart';
 import 'package:tlbisibida_doc/view/inventory/components/percent_gauge.dart';
 import 'package:tlbisibida_doc/view/inventory/components/triangle_card.dart';
 
-// ignore: must_be_immutable
-class ItemsListScreen extends StatelessWidget {
-  ItemsListScreen({super.key});
-
-  List<Map> info = [
-    {
-      'name': 'سماكة 12',
-      'quantity': 150,
-      'standard_quantity': 50,
-      'minimum': 20,
-    },
-    {
-      'name': 'سماكة 12',
-      'quantity': 200,
-      'standard_quantity': 100,
-      'minimum': 40,
-    },
-    {
-      'name': 'سماكة 12',
-      'quantity': 120,
-      'standard_quantity': 90,
-      'minimum': 20,
-    },
-    {
-      'name': 'سماكة 12',
-      'quantity': 10,
-      'standard_quantity': 70,
-      'minimum': 20,
-    },
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: cyan50,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SizedBox(
-            width: 300,
-            child: GridView.count(
-                childAspectRatio: 1,
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                crossAxisSpacing: 7,
-                mainAxisSpacing: 15,
-                children: List.generate(
-                        info.length,
-                        (index) => itemcard(context, info, index, onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => InventoryPage()));
-                            }))
-                    .animate(
-                      interval: const Duration(milliseconds: 50),
-                    )
-                    .slide(duration: const Duration(milliseconds: 300))
-                    .fadeIn(
-                        curve: Curves.easeInOut,
-                        duration: const Duration(milliseconds: 250))
-                    .flip(duration: const Duration(milliseconds: 200))),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget itemcard(BuildContext context, List info, int index,
-      {VoidCallback? onTap}) {
-    return FlipCard(
+Widget itemcard(BuildContext context, Map info, {VoidCallback? onTap}) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10.0),
+    child: FlipCard(
         fill: Fill
             .fillBack, // Fill the back side of the card to make in the same size as the front.
         direction: FlipDirection.HORIZONTAL, // default
         side: CardSide.FRONT, // The side to initially display.
         front: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      info[index]['name'],
-                      style: const TextStyle(color: cyan500, fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: .5,
-                      width: 100,
-                      color: cyan200,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 20, child: percentCircle(context, info[index])),
-                  ],
+          child: SizedBox(
+            height: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        info['name'],
+                        style: const TextStyle(color: cyan500, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: .5,
+                        width: 100,
+                        color: cyan200,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: percentCircle(context, info),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              bottomActionPaymentsLogButtons(context),
-            ],
+                bottomActionPaymentsLogButtons(context),
+              ],
+            ),
           ),
         ),
         back: Card(
@@ -127,7 +62,7 @@ class ItemsListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      info[index]['name'],
+                      info['name'],
                       style: const TextStyle(color: cyan500, fontSize: 18),
                     ),
                     const SizedBox(
@@ -198,6 +133,6 @@ class ItemsListScreen extends StatelessWidget {
               bottomActionButtons(context),
             ],
           ),
-        ));
-  }
+        )),
+  );
 }

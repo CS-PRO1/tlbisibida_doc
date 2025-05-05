@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/edit_cat_dialog%20%20copy.dart';
+import 'package:tlbisibida_doc/view/inventory/dialogs/edit_cat_dialog.dart';
 
 Widget addSubcatButton(BuildContext context) {
   return InkWell(
