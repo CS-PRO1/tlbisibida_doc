@@ -7,7 +7,7 @@ import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-
+  bool is_den = true;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -132,25 +132,29 @@ class LoginScreen extends StatelessWidget {
                 // ]))
                 SizedBox(
                   width: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'لا تملك حساباً؟',
-                        style: TextStyle(color: cyan500),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          locator<NavigationService>()
-                              .navigateTo(registerRoute);
-                        },
-                        child: Text(
-                          'إنشاء حساب جديد',
-                          style: TextStyle(color: cyan300),
+                  child: is_den
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'لا تملك حساباً؟',
+                              style: TextStyle(color: cyan500),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                locator<NavigationService>()
+                                    .navigateTo(registerRoute);
+                              },
+                              child: Text(
+                                'إنشاء حساب جديد',
+                                style: TextStyle(color: cyan300),
+                              ),
+                            )
+                          ],
+                        )
+                      : SizedBox(
+                          height: 10,
                         ),
-                      )
-                    ],
-                  ),
                 )
               ],
             ),
