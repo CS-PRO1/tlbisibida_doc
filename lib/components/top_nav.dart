@@ -68,6 +68,9 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 SizedBox(
                   width: 50,
                   child: DropdownSearch<(IconData, String, String)>(
+                    compareFn: (item1, item2) {
+                      return item1 == item2;
+                    },
                     mode: Mode.custom,
                     items: (f, cs) => [
                       (CupertinoIcons.chart_pie, 'الاحصائيات', statisticsRoute),

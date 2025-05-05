@@ -7,10 +7,11 @@ class Register extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmpassword = TextEditingController();
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController address = TextEditingController();
 
   Register({super.key});
 
@@ -29,8 +30,8 @@ class Register extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 12),
                   child: Image.asset(
                     "assets/icons/logo_v2.png",
-                    width: 200,
-                    height: 200,
+                    width: 100,
+                    height: 100,
                   ),
                 ),
                 const SizedBox(
@@ -49,7 +50,7 @@ class Register extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: email,
+                        controller: firstname,
                         decoration: InputDecoration(
                             labelText: "الاسم الاول",
                             hintText: "abc@domain.com",
@@ -62,7 +63,7 @@ class Register extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextField(
-                        controller: ,
+                        controller: lastname,
                         decoration: InputDecoration(
                             labelText: "الاسم الاخير",
                             hintText: "abc@domain.com",
@@ -111,7 +112,7 @@ class Register extends StatelessWidget {
                   height: 15,
                 ),
                 TextField(
-                  controller: password,
+                  controller: confirmpassword,
                   obscureText: true,
                   decoration: InputDecoration(
                       labelText: "تأكيد كلمة المرور",
@@ -122,26 +123,50 @@ class Register extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(value: true, onChanged: (value) {}),
-                          const CustomText(
-                            text: "تذكّرني",
-                          ),
-                        ],
-                      ),
-                      const CustomText(
-                          text: "نسيت كلمة المرور؟", color: cyan400)
-                    ],
-                  ),
+                TextField(
+                  controller: phone,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "الرقم",
+                      hintText: "+9639********",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20))),
                 ),
                 const SizedBox(
-                  height: 25,
+                  height: 15,
+                ),
+                TextField(
+                  controller: address,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "العنوان",
+                      hintText: "دمشق.السبع بحرات....",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Row(
+                //         children: [
+                //           Checkbox(value: true, onChanged: (value) {}),
+                //           const CustomText(
+                //             text: "تذكّرني",
+                //           ),
+                //         ],
+                //       ),
+                //       const CustomText(
+                //           text: "نسيت كلمة المرور؟", color: cyan400)
+                //     ],
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 10,
                 ),
                 InkWell(
                   // onTap: adminAuth.isLoading.value
