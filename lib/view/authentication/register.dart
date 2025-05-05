@@ -64,7 +64,6 @@ class Register extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         controller: lastname,
-                        controller: lastname,
                         decoration: InputDecoration(
                             labelText: "الاسم الاخير",
                             hintText: "abc@domain.com",
