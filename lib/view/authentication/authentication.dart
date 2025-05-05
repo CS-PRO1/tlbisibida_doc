@@ -6,11 +6,10 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class AuthenticationPage extends StatelessWidget {
-  // AdminLoginController adminAuth=Get.put(AdminLoginController());
+  AuthenticationPage({super.key});
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
-  AuthenticationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

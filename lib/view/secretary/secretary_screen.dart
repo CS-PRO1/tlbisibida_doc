@@ -32,16 +32,16 @@ class SecretaryScreen extends StatelessWidget {
             },
           );
         },
-        child: Icon(
-          Icons.add,
-          size: 28,
-        ),
         mini: true,
         backgroundColor: cyan400,
         foregroundColor: white,
         shape: RoundedRectangleBorder(
             side: BorderSide(color: cyan600, width: 1.5),
             borderRadius: BorderRadius.circular(10)),
+        child: Icon(
+          Icons.add,
+          size: 28,
+        ),
       ),
     );
   }

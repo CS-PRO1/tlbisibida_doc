@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/payment_management_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/tables/appointment_log_table.dart';
@@ -243,11 +242,11 @@ class PatientInfoScreen extends StatelessWidget {
               ),
               Container(
                 clipBehavior: Clip.antiAlias,
-                child: SingleChildScrollView(child: AppointmentLogTable()),
                 width: 350,
                 height: MediaQuery.of(context).size.height / 3.5,
                 decoration: BoxDecoration(
                     color: cyan100, borderRadius: BorderRadius.circular(30)),
+                child: SingleChildScrollView(child: AppointmentLogTable()),
               ),
             ],
           ),

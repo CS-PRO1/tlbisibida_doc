@@ -64,7 +64,7 @@ showItemLog(BuildContext context) {
                   color: cyan400, fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
+          SizedBox(
             height: 440, // Set your desired height
             child: ItemLogTable(),
           ),

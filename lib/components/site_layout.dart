@@ -2,7 +2,6 @@ import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
 import 'package:circle_bottom_navigation/widgets/tab_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/reponsiveness.dart';
 import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
@@ -10,15 +9,11 @@ import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
-import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
-import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
+
 
 // ignore: must_be_immutable
 class SiteLayout extends StatefulWidget {
-  SiteLayout({super.key});
+  const SiteLayout({super.key});
 
   @override
   State<SiteLayout> createState() => _SiteLayoutState();

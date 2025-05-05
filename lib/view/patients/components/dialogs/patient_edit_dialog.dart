@@ -4,7 +4,7 @@ import 'package:tlbisibida_doc/components/default_textfield.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-Dialog PatientEditDialog(BuildContext context) {
+Dialog patientEditDialog(BuildContext context) {
   TextEditingController itemstandardquantitycontroller =
       TextEditingController();
   bool v = true;

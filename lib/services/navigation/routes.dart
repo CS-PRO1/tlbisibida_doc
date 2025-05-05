@@ -1,5 +1,3 @@
-//TODO
-
 const homePageDisplayName = "Home";
 const homePageRoute = "/home";
 

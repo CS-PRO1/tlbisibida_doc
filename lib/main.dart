@@ -7,9 +7,7 @@ import 'package:tlbisibida_doc/services/dio/dio.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/view/secretary/component/carousel.dart';
-import 'package:tlbisibida_doc/view/secretary/secretary_screen.dart';
-import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
+
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(

@@ -5,10 +5,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
 
-/// Example without datasource
-// ignore: must_be_immutable
 class LabsFinanceTable extends StatelessWidget {
   LabsFinanceTable({super.key});
   int count = 10;

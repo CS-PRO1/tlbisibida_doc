@@ -1,6 +1,5 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/finance/components/tables/clinic_common_finances_table.dart';
 import 'package:tlbisibida_doc/view/finance/components/tables/clinic_infrequent_finances_table.dart';
@@ -83,28 +82,28 @@ class FinanceCenterScreen extends StatelessWidget {
   }
 
   showshowclinicstable() {
-    final List _clinicChoices = ['متكررة', 'نادرة الشراء'];
-    final ValueNotifier<String> _clinicfinancetype =
+    final List clinicChoices = ['متكررة', 'نادرة الشراء'];
+    final ValueNotifier<String> clinicfinancetype =
         ValueNotifier<String>('متكررة');
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           child: InlineChoice<String>.single(
-              value: _clinicfinancetype.value,
+              value: clinicfinancetype.value,
               onChanged: (value) {
-                _clinicfinancetype.value = value!;
-                print(_clinicfinancetype.toString());
+                clinicfinancetype.value = value!;
+                print(clinicfinancetype.toString());
               },
               clearable: false,
-              itemCount: _clinicChoices.length,
+              itemCount: clinicChoices.length,
               itemBuilder: (state, i) {
                 return ChoiceChip(
                   selectedColor: cyan200,
                   side: const BorderSide(color: cyan300),
-                  selected: state.selected(_clinicChoices[i]),
-                  onSelected: state.onSelected(_clinicChoices[i]),
-                  label: Text(_clinicChoices[i]),
+                  selected: state.selected(clinicChoices[i]),
+                  onSelected: state.onSelected(clinicChoices[i]),
+                  label: Text(clinicChoices[i]),
                 );
               },
               listBuilder: ChoiceList.createWrapped(
@@ -123,8 +122,8 @@ class FinanceCenterScreen extends StatelessWidget {
         //   height: 20,
         // ),
         AnimatedBuilder(
-            animation: _clinicfinancetype,
-            builder: (context, child) => _clinicfinancetype.value == 'متكررة'
+            animation: clinicfinancetype,
+            builder: (context, child) => clinicfinancetype.value == 'متكررة'
                 ? ClinicCommonFinancesTable()
                 : ClinicInfrequentFinancesTable()),
       ],

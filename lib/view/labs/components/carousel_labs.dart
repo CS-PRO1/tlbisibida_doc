@@ -1,20 +1,8 @@
-import 'dart:ui';
-
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:choice/choice.dart';
 import 'package:flip_card/flip_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/labs/tables/lab_bills_table.dart';
-import 'package:tlbisibida_doc/view/labs/tables/lab_cases_table.dart';
-import 'package:tlbisibida_doc/view/labs/tables/lab_payments_table.dart';
-import 'package:tlbisibida_doc/view/secretary/component/bottom_action_buttons%20_sec.dart';
-import 'package:tlbisibida_doc/view/secretary/component/delete_sec_button.dart';
 
 final List<Map> imgList = [
   {
@@ -37,8 +25,8 @@ final List<Map> imgList = [
   },
 ];
 
-final List _choices = ['الحالات', 'الفواتير', 'الدفعات'];
-final ValueNotifier<String> _table = ValueNotifier<String>('الحالات');
+// final List _choices = ['الحالات', 'الفواتير', 'الدفعات'];
+// final ValueNotifier<String> _table = ValueNotifier<String>('الحالات');
 
 TextEditingController itemstandardquantitycontroller = TextEditingController();
 final List<Widget> imageSliders = imgList

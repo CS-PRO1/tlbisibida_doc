@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/item_add_edit_dialog.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/item_delete_dialog%20copy.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/patient_delete_dialog%20.dart';
-import 'package:tlbisibida_doc/view/patients/components/dialogs/patient_edit_dialog.dart';
-import 'package:tlbisibida_doc/view/secretary/dialogs/sec_delete_dialog%20copy.dart';
+import 'package:tlbisibida_doc/view/secretary/dialogs/sec_delete_confirmation_dialog.dart';
 
 Row bottomActionButtonsSec(BuildContext context) {
   return Row(

@@ -30,7 +30,7 @@ class CaseProcessTimeline extends StatefulWidget {
 }
 
 class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
-  int _processIndex = 1;
+  final int _processIndex = 1;
 
   Color getColor(int index) {
     if (index == _processIndex) {
@@ -76,8 +76,8 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                 );
               },
               indicatorBuilder: (_, index) {
-                var color;
-                var child;
+                Color color;
+                Widget? child;
                 if (index == _processIndex) {
                   color = inProgressColor;
                   child = Padding(
@@ -188,9 +188,6 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
     );
   }
 }
-
-/// hardcoded bezier painter
-/// TODO: Bezier curve into package component
 class _BezierPainter extends CustomPainter {
   const _BezierPainter({
     required this.color,
@@ -217,11 +214,10 @@ class _BezierPainter extends CustomPainter {
 
     final radius = size.width / 2;
 
-    var angle;
-    var offset1;
-    var offset2;
-
-    var path;
+    double angle;
+    Offset offset1;
+    Offset offset2;
+    Path path;
 
     if (drawStart) {
       angle = 3 * pi / 4;
@@ -230,7 +226,7 @@ class _BezierPainter extends CustomPainter {
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
         ..quadraticBezierTo(0.0, size.height / 2, -radius,
-            radius) // TODO connector start & gradient
+            radius)
         ..quadraticBezierTo(0.0, size.height / 2, offset2.dx, offset2.dy)
         ..close();
 
@@ -244,7 +240,7 @@ class _BezierPainter extends CustomPainter {
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
         ..quadraticBezierTo(size.width, size.height / 2, size.width + radius,
-            radius) // TODO connector end & gradient
+            radius)
         ..quadraticBezierTo(size.width, size.height / 2, offset2.dx, offset2.dy)
         ..close();
 

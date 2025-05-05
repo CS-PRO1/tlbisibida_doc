@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/item_add_edit_dialog.dart';
-import 'package:tlbisibida_doc/view/inventory/dialogs/item_delete_dialog%20copy.dart';
+import 'package:tlbisibida_doc/view/inventory/dialogs/item_delete_confirmation_dialog.dart';
 
 Row bottomActionButtons(BuildContext context) {
   return Row(

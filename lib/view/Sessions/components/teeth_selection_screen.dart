@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +9,7 @@ import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 class TeethSelectionScreen extends StatelessWidget {
   final String asset;
 
-  const TeethSelectionScreen({Key? key, required this.asset}) : super(key: key);
+  const TeethSelectionScreen({super.key, required this.asset});
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/top_nav.dart';
-import 'package:tlbisibida_doc/constants/constants.dart';
 
 class ProfileEditScreen extends StatelessWidget {
-  ProfileEditScreen({super.key});
+  const ProfileEditScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
