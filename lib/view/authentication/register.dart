@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
-import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
-class AuthenticationPage extends StatelessWidget {
+// ignore: must_be_immutable
+class Register extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController password = TextEditingController();
 
-  AuthenticationPage({super.key});
+  Register({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class AuthenticationPage extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Text("تسجيل الدخول",
+                Text("إنشاء حساب",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: cyan500,
@@ -43,13 +45,44 @@ class AuthenticationPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                // Row(
-                //   children: [
-                //     CustomText(
-                //       text: "Welcome back to the admin panel.",
-                //       color: Colors.grey[300],
-                //     ),
-                //   ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                            labelText: "الاسم الاول",
+                            hintText: "abc@domain.com",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: ,
+                        decoration: InputDecoration(
+                            labelText: "الاسم الاخير",
+                            hintText: "abc@domain.com",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // TextField(
+                //   controller: email,
+                //   decoration: InputDecoration(
+                //       labelText: "البريد الاكتروني",
+                //       hintText: "abc@domain.com",
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(20))),
                 // ),
                 const SizedBox(
                   height: 15,
@@ -70,6 +103,18 @@ class AuthenticationPage extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                       labelText: "كلمة المرور",
+                      hintText: "123",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: password,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "تأكيد كلمة المرور",
                       hintText: "123",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20))),
@@ -99,9 +144,13 @@ class AuthenticationPage extends StatelessWidget {
                   height: 25,
                 ),
                 InkWell(
-                  onTap: () {
-                    locator<NavigationService>().navigateTo(registerRoute);
-                  },
+                  // onTap: adminAuth.isLoading.value
+                  //     ? null
+                  //     : ()async {
+                  //         adminAuth.admin_login(email.text, password.text);
+                  //          Get.offNamed("Employees");
+
+                  //       },
                   child: Container(
                     decoration: BoxDecoration(
                         color: cyan400,
@@ -116,21 +165,21 @@ class AuthenticationPage extends StatelessWidget {
                         //             AlwaysStoppedAnimation<Color>(Colors.white))
                         //     :
                         const CustomText(
-                      text: "تسجيل الدخول",
+                      text: "إنشاء حساب",
                       color: Colors.white,
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                RichText(
-                    text: const TextSpan(children: [
-                  TextSpan(
-                      text: "لا تملك حسابا ؟",
-                      style: TextStyle(color: cyan500)),
-                  TextSpan(text: "إنشاء حساب", style: TextStyle(color: cyan300))
-                ]))
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // RichText(
+                //     text: const TextSpan(children: [
+                //   TextSpan(text: "Do not have admin credentials? "),
+                //   TextSpan(
+                //       text: "Request Credentials! ",
+                //       style: TextStyle(color: cyan400))
+                // ]))
               ],
             ),
           ),

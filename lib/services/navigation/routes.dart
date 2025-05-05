@@ -63,6 +63,9 @@ const authRoute = "/login";
 const aboutDisplayName = "حول التطبيق";
 const aboutRoute = "/about";
 
+const registerDisplayName = "إنشاء حساب";
+const registerRoute = "/register";
+
 
 // class MenuItem {
 //   final String name;

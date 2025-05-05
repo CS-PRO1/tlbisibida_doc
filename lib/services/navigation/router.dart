@@ -8,6 +8,7 @@ import 'package:tlbisibida_doc/view/about/about.dart';
 import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
 import 'package:tlbisibida_doc/view/authentication/authentication.dart';
+import 'package:tlbisibida_doc/view/authentication/register.dart';
 import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
 import 'package:tlbisibida_doc/view/home_page.dart';
 import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
@@ -93,9 +94,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case authRoute:
       return _getPageRoute(AuthenticationPage(), authDisplayName);
+
     case aboutRoute:
       return _getPageRoute(About(), aboutDisplayName);
 
+    case registerRoute:
+      return _getPageRoute(Register(), registerDisplayName);
     //   case authenticationPageRoute:
     //     return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
 
