@@ -64,6 +64,9 @@ const aboutRoute = "/about";
 const registerDisplayName = "إنشاء حساب";
 const registerRoute = "/register";
 
+const roleDisplayName = "الدخول كـَ";
+const roleRoute = "/role";
+
 
 // class MenuItem {
 //   final String name;

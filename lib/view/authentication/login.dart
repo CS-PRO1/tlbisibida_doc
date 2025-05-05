@@ -99,6 +99,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    locator<NavigationService>().navigateTo(rootRoute);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -144,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                               .navigateTo(registerRoute);
                         },
                         child: Text(
-                          'إنشاء حساب جديد.',
+                          'إنشاء حساب جديد',
                           style: TextStyle(color: cyan300),
                         ),
                       )
