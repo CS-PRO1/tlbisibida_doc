@@ -5,8 +5,8 @@ import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
-class AuthenticationPage extends StatelessWidget {
-  AuthenticationPage({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -99,7 +99,6 @@ class AuthenticationPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    locator<NavigationService>().navigateTo(registerRoute);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -123,13 +122,35 @@ class AuthenticationPage extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                RichText(
-                    text: const TextSpan(children: [
-                  TextSpan(
-                      text: "لا تملك حسابا ؟",
-                      style: TextStyle(color: cyan500)),
-                  TextSpan(text: "إنشاء حساب", style: TextStyle(color: cyan300))
-                ]))
+                // RichText(
+                //     text: const TextSpan(children: [
+                //   TextSpan(
+                //       text: "لا تملك حسابا ؟",
+                //       style: TextStyle(color: cyan500)),
+                //   TextSpan(text: "إنشاء حساب", style: TextStyle(color: cyan300))
+                // ]))
+                SizedBox(
+                  width: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'لا تملك حساباً؟',
+                        style: TextStyle(color: cyan500),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          locator<NavigationService>()
+                              .navigateTo(registerRoute);
+                        },
+                        child: Text(
+                          'إنشاء حساب جديد.',
+                          style: TextStyle(color: cyan300),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

@@ -9,8 +9,8 @@ class Register extends StatelessWidget {
   TextEditingController password = TextEditingController();
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController password = TextEditingController();
+  // TextEditingController password = TextEditingController();
+  // TextEditingController password = TextEditingController();
 
   Register({super.key});
 
@@ -62,7 +62,7 @@ class Register extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextField(
-                        controller: ,
+                        controller: lastname,
                         decoration: InputDecoration(
                             labelText: "الاسم الاخير",
                             hintText: "abc@domain.com",

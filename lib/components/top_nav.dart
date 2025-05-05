@@ -75,7 +75,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                       (Icons.person, 'الملف الشخصي', profileRoute),
                       (Icons.settings, 'الإعدادات', profileRoute),
                       (Icons.info_outline_rounded, 'حول', aboutRoute),
-                      (Icons.logout_rounded, 'تسجيل الخروج', authRoute),
+                      (Icons.logout_rounded, 'تسجيل الخروج', loginRoute),
                     ],
                     onChanged: (value) {
                       locator<NavigationService>().navigateTo(value!.$3);
