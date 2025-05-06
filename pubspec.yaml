@@ -41,7 +41,7 @@ dependencies:
   data_table_2: null
   dio: null
   dropdown_search: ^6.0.2
-  fl_chart: null
+  fl_chart: ^0.67.0
   flip_card: null
   flutter:
     sdk: flutter
