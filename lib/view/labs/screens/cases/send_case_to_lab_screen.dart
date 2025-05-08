@@ -7,6 +7,9 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/Sessions/components/teeth_chart.dart';
+import 'package:tlbisibida_doc/view/Sessions/components/teeth_selection_screen.dart';
+import 'package:tlbisibida_doc/view/labs/components/guide_button.dart';
 import 'package:tlbisibida_doc/view/labs/components/search_for_patient.dart';
 
 class SendCaseToLabScreen extends StatefulWidget {
@@ -153,45 +156,46 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        DropdownMenu(
-                          dropdownMenuEntries: <DropdownMenuEntry<String>>[
-                            DropdownMenuEntry(
-                              value: 'BL1',
-                              label: 'BL1',
-                            ),
-                            DropdownMenuEntry(value: 'BL2', label: 'BL2'),
-                            DropdownMenuEntry(value: 'BL3', label: 'BL3'),
-                            DropdownMenuEntry(value: 'BL4', label: 'BL4'),
-                            DropdownMenuEntry(value: 'A1', label: 'A1'),
-                            DropdownMenuEntry(value: 'A2', label: 'A2'),
-                            DropdownMenuEntry(value: 'A3', label: 'A3'),
-                            DropdownMenuEntry(value: 'A3.5', label: 'A3.5'),
-                            DropdownMenuEntry(value: 'B1', label: 'A4'),
-                            DropdownMenuEntry(value: 'B2', label: 'B1'),
-                            DropdownMenuEntry(value: 'B3', label: 'B2'),
-                            DropdownMenuEntry(value: 'A4', label: 'B3'),
-                            DropdownMenuEntry(value: 'B4', label: 'B4'),
-                            DropdownMenuEntry(value: 'C1', label: 'C1'),
-                            DropdownMenuEntry(value: 'C2', label: 'C2'),
-                            DropdownMenuEntry(value: 'C3', label: 'C3'),
-                            DropdownMenuEntry(value: 'C4', label: 'C4'),
-                            DropdownMenuEntry(value: 'D1', label: 'D1'),
-                            DropdownMenuEntry(value: 'D2', label: 'D2'),
-                            DropdownMenuEntry(value: 'D3', label: 'D3'),
-                            DropdownMenuEntry(value: 'D4', label: 'D4'),
-                          ],
-                          menuHeight: 260,
-                          width: 125,
-                          label: Text(
-                            'لون الأسنان',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          onSelected: (value) {
-                            setState(() {
-                              _toothshade = value!;
-                            });
-                          },
-                        ),
+                        // DropdownMenu(
+                        //   dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                        //     DropdownMenuEntry(
+                        //       value: 'BL1',
+                        //       label: 'BL1',
+                        //     ),
+                        //     DropdownMenuEntry(value: 'BL2', label: 'BL2'),
+                        //     DropdownMenuEntry(value: 'BL3', label: 'BL3'),
+                        //     DropdownMenuEntry(value: 'BL4', label: 'BL4'),
+                        //     DropdownMenuEntry(value: 'A1', label: 'A1'),
+                        //     DropdownMenuEntry(value: 'A2', label: 'A2'),
+                        //     DropdownMenuEntry(value: 'A3', label: 'A3'),
+                        //     DropdownMenuEntry(value: 'A3.5', label: 'A3.5'),
+                        //     DropdownMenuEntry(value: 'B1', label: 'A4'),
+                        //     DropdownMenuEntry(value: 'B2', label: 'B1'),
+                        //     DropdownMenuEntry(value: 'B3', label: 'B2'),
+                        //     DropdownMenuEntry(value: 'A4', label: 'B3'),
+                        //     DropdownMenuEntry(value: 'B4', label: 'B4'),
+                        //     DropdownMenuEntry(value: 'C1', label: 'C1'),
+                        //     DropdownMenuEntry(value: 'C2', label: 'C2'),
+                        //     DropdownMenuEntry(value: 'C3', label: 'C3'),
+                        //     DropdownMenuEntry(value: 'C4', label: 'C4'),
+                        //     DropdownMenuEntry(value: 'D1', label: 'D1'),
+                        //     DropdownMenuEntry(value: 'D2', label: 'D2'),
+                        //     DropdownMenuEntry(value: 'D3', label: 'D3'),
+                        //     DropdownMenuEntry(value: 'D4', label: 'D4'),
+                        //   ],
+                        //   menuHeight: 260,
+                        //   width: 125,
+                        //   label: Text(
+                        //     'لون الأسنان',
+                        //     style: TextStyle(fontSize: 12),
+                        //   ),
+                        //   onSelected: (value) {
+                        //     setState(() {
+                        //       _toothshade = value!;
+                        //     });
+                        //   },
+                        // ),
+                        ShadeSelectionButton(),
                         Container(
                           width: .5,
                           height: 100,
@@ -295,6 +299,13 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                       width: 150,
                       text: 'التالي',
                       function: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => TeethSelectionScreen(
+                              asset: 'assets/teeth.svg',
+                            ),
+                          ),
+                        );
                         // var requestJson = {
                         //   "patient_name": patientnamecontroller.text,
                         //   "age": int.parse(agecontroller.text),

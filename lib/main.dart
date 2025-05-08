@@ -10,6 +10,7 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/about/about.dart';
+import 'package:tlbisibida_doc/view/home_page.dart';
 import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
 
 void main() {
