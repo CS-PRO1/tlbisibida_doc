@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
-import 'package:tlbisibida_doc/components/default_textfield.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/inventory/components/item_edit_quantity_card.dart';
 
 Dialog addQuantityForItem(BuildContext context) {
-  TextEditingController itemnamecontroller = TextEditingController();
-  TextEditingController itemstandardquantitycontroller =
-      TextEditingController();
-
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -27,7 +23,7 @@ Dialog addQuantityForItem(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
-                      'إضافة كمية',
+                      'تعديل كمية',
                       style: TextStyle(
                           color: cyan400,
                           fontSize: 18,
@@ -42,36 +38,14 @@ Dialog addQuantityForItem(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('kg'),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: 140,
-                          child: defaultTextField(
-                            itemnamecontroller,
-                            context,
-                            'الكمية المضافة',
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
+                    itemEditQuantityCard(
+                      context,
                     ),
                     SizedBox(
-                      width: 250,
-                      child: defaultTextField(itemstandardquantitycontroller,
-                          context, 'سعر الواحدة'),
-                    ),
-                    const SizedBox(
                       height: 10,
                     ),
                     defaultButton(
-                        text: 'إضافة',
+                        text: 'تم',
                         function: () {
                           Navigator.of(context).pop();
                         })

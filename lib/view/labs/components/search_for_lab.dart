@@ -173,6 +173,10 @@ class _NameSelectionSheetContentState extends State<NameSelectionSheetContent> {
         MediaQuery.of(context).size.height * 0.6; // 60% of screen height
 
     return Container(
+      decoration: BoxDecoration(
+          color: cyan50,
+          border: Border.all(width: 1, color: cyan300),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       height: sheetHeight,
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context)
