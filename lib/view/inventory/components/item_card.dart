@@ -87,6 +87,9 @@ Widget itemcard(BuildContext context, Map info, {VoidCallback? onTap}) {
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
                                 Text('سعر العنصر الواحد/قطعة'),
                                 Text(
                                   '50.000',
@@ -97,24 +100,6 @@ Widget itemcard(BuildContext context, Map info, {VoidCallback? onTap}) {
                                   '2/5/2024',
                                   style: TextStyle(color: cyan300),
                                 ),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
                                 Text('الحد الادنى'),
                                 Text(
                                   '50',

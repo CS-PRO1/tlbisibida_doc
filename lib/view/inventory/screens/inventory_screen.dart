@@ -2,6 +2,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/inventory/components/add_subcat_button.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/add_cat_dialog.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/edit_subcat_dialog.dart';
@@ -63,7 +64,10 @@ class InventoryScreen extends StatelessWidget {
             shrinkWrap: true,
             displaySearchIcon: true,
             initialList: info,
-            itemBuilder: (info) => itemcard(context, info),
+            itemBuilder: (info) => itemcard(
+              context,
+              info,
+            ),
             filter: (value) => info
                 .where(
                   (element) => element['name'].contains(value),
@@ -211,7 +215,9 @@ class InventoryScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
               )),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(itemListRoute);
+          },
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

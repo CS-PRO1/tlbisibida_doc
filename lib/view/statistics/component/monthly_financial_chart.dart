@@ -22,7 +22,7 @@ class MonthlyFinancialData {
   double get profitOrLoss => revenue - expenses;
 }
 
-class OverlayFinancialChart extends StatelessWidget {
+class MonthlyFinancialChart extends StatelessWidget {
   List<MonthlyFinancialData> chartData;
 
   final double _mainBarWidth = 30.0;
@@ -39,14 +39,16 @@ class OverlayFinancialChart extends StatelessWidget {
   final Color _borderColor = cyan400;
   final Color _axisTextColor = cyan600;
 
-  OverlayFinancialChart({super.key, required this.chartData});
+  MonthlyFinancialChart({super.key, required this.chartData});
 
   @override
   Widget build(BuildContext context) {
-    double max = maxval(chartData);
-    _maxY = max;
-    _minY = -max;
-    _yAxisInterval = findLargestPowerOf10(max).toDouble();
+    int max = maxval(chartData);
+    _yAxisInterval = findLargestPowerOf10(max) * 1.0;
+    max += findLargestPowerOf10(max);
+    _maxY = max * 1.0;
+    _minY = -max * 1.0;
+    print('interval = ' + _yAxisInterval.toString());
     return AspectRatio(
       aspectRatio: 1.5,
       child: Padding(
@@ -124,9 +126,10 @@ class OverlayFinancialChart extends StatelessWidget {
                         TextSpan(
                           text: data.profitOrLoss > 0
                               ? 'الربح: ' + data.profitOrLoss.toInt().toString()
-                              : 'الخسارة: ' +
-                                  data.profitOrLoss.toInt().toString(),
-                          // 'Profit/Loss: ${_formatYValue(data.profitOrLoss)}',
+                              : data.profitOrLoss < 0
+                                  ? 'الخسارة: ' +
+                                      data.profitOrLoss.toInt().toString()
+                                  : 'تعادل',
                           style: TextStyle(
                             color: data.profitOrLoss >= 0
                                 ? _profitColor
@@ -240,11 +243,11 @@ class OverlayFinancialChart extends StatelessWidget {
   }
 }
 
-maxval(List<MonthlyFinancialData> data) {
-  double max = 0;
+int maxval(List<MonthlyFinancialData> data) {
+  int max = 0;
   for (var element in data) {
-    element.expenses > max ? max = element.expenses : max = max;
-    element.revenue > max ? max = element.revenue : max = max;
+    element.expenses > max ? max = element.expenses.toInt() : max = max;
+    element.revenue > max ? max = element.revenue.toInt() : max = max;
   }
 
   for (var i = 0; i < 100; i++) {
@@ -253,29 +256,24 @@ maxval(List<MonthlyFinancialData> data) {
     }
   }
   print(max);
-  max += findLargestPowerOf10(max);
-  print(max);
+  print('max val = $max');
   return max;
 }
 
-int findLargestPowerOf10(double number) {
-  // Handle negative input
+int findLargestPowerOf10(int number) {
   if (number < 0) {
-    throw ArgumentError('Input must be a non-negative integer.');
+    throw ArgumentError('Input must be a non-negative number.');
   }
 
-  // Handle the case for 0, the largest power of 10 less than or equal to 0 is 1 (10^0)
   if (number == 0) {
     return 1;
   }
 
-  // Calculate the base-10 logarithm of the number.
-  // The floor of the logarithm gives the exponent for the largest power of 10.
-  final exponent = (log(number) / ln10)
-      .floor(); // Using natural log and ln10 for log base 10
+  int result = 1;
 
-  // Calculate 10 raised to the power of the exponent.
-  final result = pow(10, exponent).toInt();
+  while (result * 10 <= number) {
+    result *= 10;
+  }
 
   return result;
 }

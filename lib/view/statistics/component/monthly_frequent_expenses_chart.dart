@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 // import 'package:fl_chart_app/presentation/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming this contains your base color constants like 'white' and cyan palette
-import 'package:tlbisibida_doc/view/statistics/component/ind.dart'; // Assuming this contains your Indicator widget
+import 'package:tlbisibida_doc/view/statistics/component/indicator.dart'; // Assuming this contains your Indicator widget
 import 'package:intl/intl.dart'; // Import for number formatting
 // import 'dart:math'; // Import for random number generation (not needed for this approach)
 
@@ -16,14 +16,14 @@ class ChartData {
   ChartData({required this.text, required this.value, required this.color});
 }
 
-class PieChartSample2 extends StatefulWidget {
-  const PieChartSample2({super.key});
+class MonthlyFrequentExpensesChart extends StatefulWidget {
+  const MonthlyFrequentExpensesChart({super.key});
 
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  State<StatefulWidget> createState() => MonthlyFrequentExpensesChartState();
 }
 
-class PieChart2State extends State {
+class MonthlyFrequentExpensesChartState extends State {
   int touchedIndex = -1;
 
   // Define the raw data for the pie chart sections
@@ -38,21 +38,19 @@ class PieChart2State extends State {
     {'text': 'نت', 'value': 300000.0},
   ];
 
-// Define the range of cyan colors for interpolation
   final List<Color> cyanColorRange = [
-    const Color.fromARGB(255, 255, 229, 225), // Lighter cyan
-    const Color.fromARGB(255, 201, 118, 114), // Darker cyan
+    cyan400,
+    cyan200,
   ];
 
-  // Define a simple range of pink colors for interpolation
   final List<Color> pinkColorRange = [
-    cyan400, cyan200, // Colors.pink[100]!, // Lighter pink
-    // Colors.pink[700]!, // Darker pink
+    const Color.fromARGB(255, 255, 229, 225),
+    const Color.fromARGB(255, 201, 118, 114),
   ];
 
   // Sort the raw data by value in ascending order
   late final List<Map<String, dynamic>> sortedRawChartData =
-      List.from(rawChartData)..sort((a, b) => a['value'].compareTo(b['value']));
+      List.from(rawChartData)..sort((a, b) => b['value'].compareTo(a['value']));
 
   // Process sorted raw data to create ChartData objects with sequential gradient colors
   late final List<ChartData> chartData =
@@ -188,7 +186,7 @@ class PieChart2State extends State {
     return List.generate(chartData.length, (i) {
       final isTouched =
           i == touchedIndex; // Check if the current section is touched
-      final fontSize = isTouched ? 20.0 : 18.0; // Adjust font size if touched
+      final fontSize = isTouched ? 18.0 : 16.0; // Adjust font size if touched
       final radius = isTouched ? 90.0 : 80.0; // Adjust radius if touched
       const shadows = [
         Shadow(color: Colors.black, blurRadius: 10)

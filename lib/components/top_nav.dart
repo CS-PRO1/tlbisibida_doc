@@ -32,12 +32,9 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                       color: cyan500,
                     )
                   : SizedBox(),
-              title: Text(
-                title,
-                style: TextStyle(color: cyan_navbar_600),
-              ),
+              title: Text(title),
               centerTitle: true,
-              iconTheme: const IconThemeData(color: cyan_navbar_600),
+              foregroundColor: cyan_navbar_600,
               elevation: 0,
               backgroundColor: cyan100,
               actions: [

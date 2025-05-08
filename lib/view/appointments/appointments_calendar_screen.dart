@@ -25,7 +25,11 @@ class AppointmentsCalendarScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  DateFormat.MMMMEEEEd().format(currentdate),
+                  DateFormat.E('ar').format(currentdate) +
+                      '، ' +
+                      DateFormat.d('en').format(currentdate) +
+                      ' ' +
+                      DateFormat.MMM('ar').format(currentdate),
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

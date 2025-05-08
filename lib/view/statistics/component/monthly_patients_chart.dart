@@ -1,11 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
-// import 'package:fl_chart_app/presentation/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-class LineChartSample50 extends StatefulWidget {
-  const LineChartSample50({
+class MonthlyDataPoint {
+  final String month;
+  final double patients;
+
+  MonthlyDataPoint({required this.month, required this.patients});
+}
+
+class MonthlyPatientsChart extends StatefulWidget {
+  const MonthlyPatientsChart({
     super.key,
+    required this.data,
     Color? gradientColor1,
     Color? gradientColor2,
     Color? gradientColor3,
@@ -17,6 +24,7 @@ class LineChartSample50 extends StatefulWidget {
         gradientColor4 = gradientColor4 ?? cyan500,
         indicatorStrokeColor = indicatorStrokeColor ?? cyan400;
 
+  final List<MonthlyDataPoint> data;
   final Color gradientColor1;
   final Color gradientColor2;
   final Color gradientColor3;
@@ -24,55 +32,56 @@ class LineChartSample50 extends StatefulWidget {
   final Color indicatorStrokeColor;
 
   @override
-  State<LineChartSample50> createState() => _LineChartSample5State();
+  State<MonthlyPatientsChart> createState() => _MonthlyPatientsChartState();
 }
 
-class _LineChartSample5State extends State<LineChartSample50> {
-  List<int> showingTooltipOnSpots = [1, 3, 5];
+class _MonthlyPatientsChartState extends State<MonthlyPatientsChart> {
+  List<int> showingTooltipOnSpots = [];
 
-  List<FlSpot> get allSpots => const [
-        FlSpot(6, 230),
-        FlSpot(7, 555),
-        FlSpot(8, 345),
-        FlSpot(9, 400),
-        FlSpot(10, 671),
-        FlSpot(11, 406),
-      ];
+  List<FlSpot> _spots = [];
+  List<String> _monthLabels = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _processData(widget.data);
+    showingTooltipOnSpots = [0, 2, 4]; // Set default tooltips
+  }
+
+  @override
+  void didUpdateWidget(covariant MonthlyPatientsChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data != widget.data) {
+      _processData(widget.data);
+      showingTooltipOnSpots = [];
+    }
+  }
+
+  void _processData(List<MonthlyDataPoint> data) {
+    _spots = [];
+    _monthLabels = [];
+    for (int i = 0; i < data.length; i++) {
+      _spots.add(FlSpot(i.toDouble(), data[i].patients));
+      _monthLabels.add(data[i].month);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
+    final int index = value.toInt();
     final style = TextStyle(
       fontWeight: FontWeight.bold,
       color: cyan300,
-      fontFamily: 'Digital',
-      fontSize: 18 * chartWidth / 500,
+      fontSize: 16 * chartWidth / 500,
     );
-    String text;
-    switch (value.toInt()) {
-      case 6:
-        text = 'Jul';
-        break;
-      case 7:
-        text = 'Aug';
-        break;
-      case 8:
-        text = 'Sep';
-        break;
-      case 9:
-        text = 'Oct';
-        break;
-      case 10:
-        text = 'Nov';
-        break;
-      case 11:
-        text = 'Dec';
-        break;
-
-      default:
-        return Container();
+    String text = '';
+    if (index >= 0 && index < _monthLabels.length) {
+      text = _monthLabels[index];
     }
 
     return SideTitleWidget(
-      axisSide: AxisSide.bottom,
+      axisSide: meta.axisSide,
+      space: 4,
       child: Text(text, style: style),
     );
   }
@@ -82,7 +91,7 @@ class _LineChartSample5State extends State<LineChartSample50> {
     final lineBarsData = [
       LineChartBarData(
         showingIndicators: showingTooltipOnSpots,
-        spots: allSpots,
+        spots: _spots,
         isCurved: true,
         barWidth: 4,
         shadow: const Shadow(
@@ -99,7 +108,7 @@ class _LineChartSample5State extends State<LineChartSample50> {
             ],
           ),
         ),
-        dotData: const FlDotData(show: false),
+        dotData: const FlDotData(show: true),
         gradient: LinearGradient(
           colors: [
             widget.gradientColor1,
@@ -186,7 +195,7 @@ class _LineChartSample5State extends State<LineChartSample50> {
                 touchTooltipData: LineTouchTooltipData(
                   getTooltipColor: (touchedSpot) => cyan500,
                   tooltipRoundedRadius: 20,
-                  tooltipBorder: BorderSide(
+                  tooltipBorder: const BorderSide(
                     color: cyan50op,
                     width: 6,
                   ),
@@ -205,7 +214,7 @@ class _LineChartSample5State extends State<LineChartSample50> {
               ),
               lineBarsData: lineBarsData,
               minY: 0,
-              maxY: maxval(allSpots),
+              maxY: maxval(_spots),
               baselineY: 0,
               backgroundColor: const Color.fromARGB(62, 211, 241, 238),
               titlesData: FlTitlesData(
@@ -238,21 +247,13 @@ class _LineChartSample5State extends State<LineChartSample50> {
                   ),
                 ),
                 // rightTitles: const AxisTitles(
-                //   axisNameWidget: Text('count'),
                 //   sideTitles: SideTitles(
                 //     showTitles: false,
-                //     reservedSize: 0,
                 //   ),
                 // ),
                 topTitles: const AxisTitles(
-                  // axisNameWidget: Text(
-                  //   'عدد المرضى شهريا',
-                  //   textAlign: TextAlign.left,
-                  // ),
-                  axisNameSize: 24,
                   sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 0,
+                    showTitles: false,
                   ),
                 ),
               ),
@@ -271,7 +272,6 @@ class _LineChartSample5State extends State<LineChartSample50> {
   }
 }
 
-/// Lerps between a [LinearGradient] colors, based on [t]
 Color lerpGradient(List<Color> colors, List<double> stops, double t) {
   if (colors.isEmpty) {
     throw ArgumentError('"colors" is empty.');
@@ -281,8 +281,6 @@ Color lerpGradient(List<Color> colors, List<double> stops, double t) {
 
   if (stops.length != colors.length) {
     stops = [];
-
-    /// provided gradientColorStops is invalid and we calculate it here
     colors.asMap().forEach((index, color) {
       final percent = 1.0 / (colors.length - 1);
       stops.add(percent * index);

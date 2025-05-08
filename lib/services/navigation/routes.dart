@@ -4,10 +4,10 @@ const homePageRoute = "/home";
 const addAppointmentDisplayName = "اضافة موعد";
 const addAppointmentRoute = "/add_appointment";
 
-const appointmentDisplayName = " المواعيد";
+const appointmentDisplayName = "المواعيد";
 const rootRoute = "/";
 
-const financeDisplayName = " قسم المالية";
+const financeDisplayName = "قسم المالية";
 const financeRoute = "/finance";
 
 const inventoryDisplayName = "المخزن";

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:tlbisibida_doc/components/site_layout.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
@@ -9,7 +10,7 @@ import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/router.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/about/about.dart';
-
+import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -39,6 +40,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: Locale('ar'),
+      supportedLocales: [
+        Locale('ar'),
+        Locale('en'),
+      ],
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       title: 'LambdaDent Doctor App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
