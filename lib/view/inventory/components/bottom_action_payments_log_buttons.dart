@@ -39,10 +39,25 @@ Row bottomActionPaymentsLogButtons(BuildContext context) {
             decoration: const BoxDecoration(
               color: cyan100,
             ),
-            child: const Icon(
-              Icons.add,
-              color: cyan400,
-            ),
+            child: Center(
+                child: Text(
+              '- / +',
+              style: TextStyle(color: cyan500, fontSize: 22),
+            )),
+            //  Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     const Icon(
+            //       Icons.add,
+            //       color: cyan400,
+            //     ),
+
+            //     const Icon(
+            //       Icons.minimize_rounded,
+            //       color: cyan400,
+            //     ),
+            //   ],
+            // ),
           ),
         ),
       ),
