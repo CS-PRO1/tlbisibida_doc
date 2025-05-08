@@ -6,6 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
+import 'dart:ui' as UI;
+
+UI.TextDirection direction = UI.TextDirection.ltr;
 
 class AppointmentsCalendarScreen extends StatelessWidget {
   AppointmentsCalendarScreen({super.key});
@@ -64,36 +67,40 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                   //selectableDayPredicate: (date) => date.day != 23,
                   locale: 'ar',
                 ),
-                SizedBox(
-                    height: 900,
-                    width: 900,
-                    child: DayView(
-                      controller: EventController(),
-                      showVerticalLine: true,
-                      startHour: 8,
-                      endHour: 20,
-                      heightPerMinute: 3,
-                      showHalfHours: true,
-                      initialDay: currentdate,
-                      headerStyle: HeaderStyle(
-                          headerTextStyle: TextStyle(fontSize: 0),
-                          headerMargin: EdgeInsets.all(0),
-                          headerPadding: EdgeInsets.all(0),
-                          decoration: BoxDecoration(shape: BoxShape.circle)),
-                      //timeStringBuilder: (date, {secondaryDate}) => date.,
-                      hourIndicatorSettings: HourIndicatorSettings(
-                        color: cyan300,
-                      ),
-                      halfHourIndicatorSettings: HourIndicatorSettings(
-                          dashWidth: 9,
-                          dashSpaceWidth: 3,
-                          color: cyan100,
-                          lineStyle: LineStyle.dashed),
-                    )),
+                Directionality(
+                  textDirection: direction,
+                  child: SizedBox(
+                      height: 900,
+                      width: 900,
+                      child: DayView(
+                        controller: EventController(),
+                        showVerticalLine: true,
+                        startHour: 8,
+                        endHour: 20,
+                        heightPerMinute: 3,
+                        showHalfHours: true,
+                        initialDay: currentdate,
+                        headerStyle: HeaderStyle(
+                            headerTextStyle: TextStyle(fontSize: 0),
+                            headerMargin: EdgeInsets.all(0),
+                            headerPadding: EdgeInsets.all(0),
+                            decoration: BoxDecoration(shape: BoxShape.circle)),
+                        //timeStringBuilder: (date, {secondaryDate}) => date.,
+                        hourIndicatorSettings: HourIndicatorSettings(
+                          color: cyan300,
+                        ),
+                        halfHourIndicatorSettings: HourIndicatorSettings(
+                            dashWidth: 9,
+                            dashSpaceWidth: 3,
+                            color: cyan100,
+                            lineStyle: LineStyle.dashed),
+                      )),
+                ),
               ],
             ),
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             locator<NavigationService>().navigateTo(addAppointmentRoute);

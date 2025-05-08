@@ -28,7 +28,7 @@ const myLabsListRoute = "/my_labs_list";
 const labInfoDisplayName = "معلومات المخبر";
 const labInfoRoute = "/lab_info";
 
-const sendCaseToLabDisplayName = "إرسال إلى مخبر";
+const sendCaseToLabDisplayName = "إرسال حالة إلى مخبر";
 const sendCaseToLabRoute = "/send_case_to_lab";
 
 const patientInfoDisplayName = "معلومات المريض";

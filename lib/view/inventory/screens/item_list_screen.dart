@@ -4,8 +4,6 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/inventory/components/item_card.dart';
 import 'package:tlbisibida_doc/view/inventory/dialogs/item_add_edit_dialog.dart';
 
-
-
 // ignore: must_be_immutable
 class ItemListScreen extends StatelessWidget {
   ItemListScreen({super.key});
@@ -109,5 +107,4 @@ class ItemListScreen extends StatelessWidget {
       ),
     );
   }
-
 }
