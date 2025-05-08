@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/payment_management_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/tables/appointment_log_table.dart';
 
@@ -250,6 +251,22 @@ class PatientInfoScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(sendCaseToLabRoute);
+        },
+        mini: true,
+        backgroundColor: cyan400,
+        foregroundColor: white,
+        shape: RoundedRectangleBorder(
+            side: const BorderSide(color: cyan600, width: 1.5),
+            borderRadius: BorderRadius.circular(10)),
+        child: const Icon(
+          Icons.add,
+          size: 28,
         ),
       ),
     );

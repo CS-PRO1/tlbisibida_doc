@@ -7,6 +7,7 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/labs/components/search_for_patient.dart';
 
 class SendCaseToLabScreen extends StatefulWidget {
   const SendCaseToLabScreen({super.key});
@@ -101,36 +102,43 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                     SizedBox(
                       height: 30,
                     ),
-                    DropdownSearch<String>(
-                      mode: Mode.form,
-                      selectedItem: selectedLabName,
-                      onChanged: (value) {
-                        selectedLabName = value.toString();
-                      },
-                      items: (f, cs) => _labslist,
-                      suffixProps: DropdownSuffixProps(
-                          clearButtonProps: ClearButtonProps(isVisible: true)),
-                      dropdownBuilder: (context, selectedItem) {
-                        if (selectedItem == null) {
-                          return SizedBox.shrink();
-                        }
-                        return ListTile(
-                          titleAlignment: ListTileTitleAlignment.center,
-                          title: Text(selectedItem),
-                        );
-                      },
-                      popupProps: PopupProps.menu(
-                        disableFilter: true,
-                        showSearchBox: true,
-                        showSelectedItems: true,
-                        itemBuilder: (ctx, item, isDisabled, isSelected) {
-                          return ListTile(
-                            selected: isSelected,
-                            title: Text(item),
-                          );
-                        },
-                      ),
-                    ),
+                    // DropdownSearch<String>(
+                    //   mode: Mode.form,
+                    //   selectedItem: selectedLabName,
+                    //   onChanged: (value) {
+                    //     selectedLabName = value.toString();
+                    //   },
+                    //   items: (f, cs) => _labslist,
+                    //   suffixProps: DropdownSuffixProps(
+                    //       clearButtonProps: ClearButtonProps(isVisible: true)),
+                    //   dropdownBuilder: (context, selectedItem) {
+                    //     if (selectedItem == null) {
+                    //       return SizedBox.shrink();
+                    //     }
+                    //     return ListTile(
+                    //       titleAlignment: ListTileTitleAlignment.center,
+                    //       title: Text(selectedItem),
+                    //     );
+                    //   },
+                    //   popupProps: PopupProps.menu(
+                    //     disableFilter: true,
+                    //     showSearchBox: true,
+                    //     showSelectedItems: true,
+                    //     itemBuilder: (ctx, item, isDisabled, isSelected) {
+                    //       return ListTile(
+                    //         selected: isSelected,
+                    //         title: Text(item),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                    ChoiceButtonWithSearch(
+                        names: _labslist,
+                        hintText: 'اختر المخبر', // Example hint text in Arabic
+                        onNameSelected: (selectedName) {
+                          print('Selected: $selectedName');
+                          // Do something with the selected name
+                        }),
                     SizedBox(
                       height: 30,
                     ),
