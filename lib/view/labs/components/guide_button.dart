@@ -59,8 +59,8 @@ class _ShadeSelectionButtonState extends State<ShadeSelectionButton> {
         // Determine text color for contrast based on the button's background color
         foregroundColor: _selectedShadeColor != null &&
                 _selectedShadeColor!.computeLuminance() > 0.5
-            ? Colors.black87
-            : Colors.white,
+            ? cyan600
+            : cyan50,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: const TextStyle(fontSize: 18),
       ),
