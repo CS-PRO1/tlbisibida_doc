@@ -318,6 +318,7 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(

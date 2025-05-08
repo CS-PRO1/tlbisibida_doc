@@ -7,7 +7,7 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/labs/components/search_for_patient.dart';
+import 'package:tlbisibida_doc/view/labs/components/search_for_lab.dart';
 
 class SendCaseToLabScreen extends StatefulWidget {
   const SendCaseToLabScreen({super.key});
