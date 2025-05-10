@@ -59,7 +59,7 @@ class RoleScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      locator<NavigationService>().navigateTo(loginRoute);
+                      Navigator.pushNamed(context, loginRoute);
                     },
                     child: Container(
                       height: 220,
@@ -100,7 +100,7 @@ class RoleScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      locator<NavigationService>().navigateTo(loginRoute);
+                      Navigator.pushNamed(context, loginRoute);
                     },
                     child: Container(
                       width: 150,
