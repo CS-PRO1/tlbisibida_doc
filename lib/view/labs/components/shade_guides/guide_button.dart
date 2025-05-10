@@ -3,19 +3,17 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 
 import 'ivoclar_chromascop_guide.dart';
 import 'vita_3dmaster_guide.dart';
-import 'vita_classic_guide.dart'; // Assuming this import is correct
+import 'vita_classic_guide.dart';
 
-// A button widget that allows selecting a dental shade from a modal sheet
-// containing multiple expandable shade guides.
 class ShadeSelectionButton extends StatefulWidget {
   // Callback function that is called when a shade is selected from the guide.
   // This will pass the selected shade name (String) and color (Color) to the parent widget.
   final Function(String shadeName, Color shadeColor)? onShadeSelected;
 
   const ShadeSelectionButton({
-    Key? key,
+    super.key,
     this.onShadeSelected, // Add the new callback parameter
-  }) : super(key: key);
+  });
 
   @override
   _ShadeSelectionButtonState createState() => _ShadeSelectionButtonState();
@@ -56,17 +54,16 @@ class _ShadeSelectionButtonState extends State<ShadeSelectionButton> {
     return ElevatedButton(
       onPressed: _showShadeGuidesSheet, // Show the modal sheet with guides
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            _selectedShadeColor ?? Colors.blueGrey, // Default color
+        backgroundColor: _selectedShadeColor ?? cyan200, // Default color
         foregroundColor: _selectedShadeColor != null &&
                 _selectedShadeColor!.computeLuminance() > 0.5
-            ? Colors.black87
+            ? cyan600
             : Colors.white, // Text color for contrast
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: const TextStyle(fontSize: 18),
       ),
       child: Text(
-        _selectedShadeName ?? 'Select Shade Guide', // Initial button text
+        _selectedShadeName ?? 'لون الأسنان', // Initial button text
       ),
     );
   }
@@ -142,10 +139,14 @@ class _DentalShadeGuidesModalContentState
   @override
   Widget build(BuildContext context) {
     // Determine the height of the modal sheet. Adjust as needed.
-    final double sheetHeight =
-        MediaQuery.of(context).size.height * 0.8; // 80% of screen height
+    final double sheetHeight = MediaQuery.of(context).size.height * 0.45;
 
     return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+          border: Border.all(color: cyan500, width: 1),
+          color: cyan100,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       height: sheetHeight,
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context)
@@ -155,14 +156,20 @@ class _DentalShadeGuidesModalContentState
       child: SingleChildScrollView(
         // Make the content scrollable
         child: ExpansionPanelList(
+          expandIconColor: cyan500,
           expansionCallback: _handleExpansionChange, // Handle expansion changes
           children: _panelItems.asMap().entries.map((entry) {
             final index = entry.key;
             final item = entry.value;
             return ExpansionPanel(
+              backgroundColor: cyan50,
               headerBuilder: (context, isExpanded) {
                 return ListTile(
-                  title: Text(item.headerText),
+                  title: Text(
+                    item.headerText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: cyan500),
+                  ),
                 );
               },
               body: item.body, // The guide widget
