@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 
@@ -172,61 +173,65 @@ class TeethSelectionScreen extends StatelessWidget {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        content: const Text('Choose the treatment'),
+        content: Text(
+          'اختر العلاج:',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: cyan400, fontSize: 18),
+        ),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Crown');
+              cubit.setToothTreatment(tooth, 'تاج');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Crown'),
+            child: const Text('تاج'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Pontic');
+              cubit.setToothTreatment(tooth, 'دمية');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Pontic'),
+            child: const Text('دمية'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Implant');
+              cubit.setToothTreatment(tooth, 'زرعة');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Implant'),
+            child: const Text('زرعة'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Veneer');
+              cubit.setToothTreatment(tooth, 'فينير');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Veneer'),
+            child: const Text('فينير'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Inlay');
+              cubit.setToothTreatment(tooth, 'حشوة');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Inlay'),
+            child: const Text('حشوة'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context);
-              cubit.setToothTreatment(tooth, 'Denture');
+              cubit.setToothTreatment(tooth, 'بدلة');
               _showAlertDialog2(context, tooth, cubit);
             },
-            child: const Text('Denture'),
+            child: const Text('بدلة'),
           ),
         ],
       ),
@@ -237,44 +242,98 @@ class TeethSelectionScreen extends StatelessWidget {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        content: const Text('Choose the material:'),
+        content: Text(
+          'اختر المادة العلاجية:',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: cyan400, fontSize: 18),
+        ),
         actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-              cubit.setToothMaterial(tooth, 'Zircon');
-              cubit.toggleToothSelection(tooth);
-            },
-            child: const Text('Zircon'),
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-              cubit.setToothMaterial(tooth, 'Metal');
-              cubit.toggleToothSelection(tooth);
-            },
-            child: const Text('Metal'),
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-              cubit.setToothMaterial(tooth, 'Wax');
-              cubit.toggleToothSelection(tooth);
-            },
-            child: const Text('Wax'),
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-              cubit.setToothMaterial(tooth, 'Acrylic PMMA');
-              cubit.toggleToothSelection(tooth);
-            },
-            child: const Text('Acrylic PMMA'),
-          ),
+          if (tooth.treatment != 'بدلة')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'زيركون');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('زيركون'),
+            ),
+          if (tooth.treatment != 'بدلة' &&
+              tooth.treatment != 'حشوة' &&
+              tooth.treatment != 'فينير')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'خزف على معدن');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('خزف على معدن'),
+            ),
+          if (tooth.treatment != 'بدلة' &&
+              tooth.treatment != 'حشوة' &&
+              tooth.treatment != 'فينير')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'شمع');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('شمع'),
+            ),
+          if (tooth.treatment != 'بدلة' &&
+              tooth.treatment != 'حشوة' &&
+              tooth.treatment != 'فينير')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'أكريل مؤقت');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('أكريل مؤقت'),
+            ),
+          if (tooth.treatment == 'حشوة' || tooth.treatment == 'فينير')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'EMax');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('EMax'),
+            ),
+          if (tooth.treatment == 'بدلة')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'أكريل');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('أكريل'),
+            ),
+          if (tooth.treatment == 'بدلة')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'أكريل مبطن');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('أكريل مبطن'),
+            ),
+          if (tooth.treatment == 'بدلة')
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                cubit.setToothMaterial(tooth, 'فليكس');
+                cubit.toggleToothSelection(tooth);
+              },
+              child: const Text('فليكس'),
+            ),
         ],
       ),
     );
@@ -284,7 +343,10 @@ class TeethSelectionScreen extends StatelessWidget {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        content: const Text('Clear the selected tooth?'),
+        content: const Text(
+          'إلغاء اختيار السن؟',
+          style: TextStyle(fontSize: 18),
+        ),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDefaultAction: true,
@@ -292,8 +354,7 @@ class TeethSelectionScreen extends StatelessWidget {
               Navigator.pop(context);
               cubit.clearTooth(tooth);
             },
-            child:
-                const Text('Clear Tooth', style: TextStyle(color: Colors.red)),
+            child: const Text('نعم', style: TextStyle(color: Colors.red)),
           )
         ],
       ),
