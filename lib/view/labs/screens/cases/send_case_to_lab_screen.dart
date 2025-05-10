@@ -10,7 +10,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/Sessions/components/teeth_chart.dart';
 import 'package:tlbisibida_doc/view/Sessions/components/teeth_selection_screen.dart';
 import 'package:tlbisibida_doc/view/labs/components/guide_button.dart';
-import 'package:tlbisibida_doc/view/labs/components/search_for_patient.dart';
+import 'package:tlbisibida_doc/view/labs/components/search_for_lab.dart';
 
 class SendCaseToLabScreen extends StatefulWidget {
   const SendCaseToLabScreen({super.key});
