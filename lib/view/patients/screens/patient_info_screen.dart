@@ -256,7 +256,7 @@ class PatientInfoScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(addEditSessionDetailsRoute);
+          Navigator.of(context).pushNamed(addSessionDetailsRoute);
         },
         mini: true,
         backgroundColor: cyan400,

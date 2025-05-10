@@ -34,13 +34,6 @@ class AppointmentLogTable extends StatelessWidget {
               horizontalMargin: 12,
               minWidth: 300,
               columns: const [
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'التفاصيل',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
                 // DataColumn(
                 //   label: Center(
                 //       child: Text(
@@ -58,7 +51,14 @@ class AppointmentLogTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تاريخ الموعد',
+                    'تاريخ الجلسة',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'التفاصيل',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -67,6 +67,13 @@ class AppointmentLogTable extends StatelessWidget {
                 count,
                 (index) => DataRow(
                   cells: [
+                    // const DataCell(Center(
+                    //     child: CustomText(
+                    //   text: '001',
+                    // ))),
+                    const DataCell(Center(child: CustomText(text: 'قلع ضرس'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '5/11/2024'))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
@@ -78,13 +85,6 @@ class AppointmentLogTable extends StatelessWidget {
                         color: cyan300,
                       ),
                     ))),
-                    // const DataCell(Center(
-                    //     child: CustomText(
-                    //   text: '001',
-                    // ))),
-                    const DataCell(Center(child: CustomText(text: 'قلع ضرس'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),
