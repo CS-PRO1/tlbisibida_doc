@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-
-import 'package:tlbisibida_doc/constants/constants.dart'; // Import for ui.Color
+import 'dart:ui' as ui; // Import for ui.Color
+import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming this import is correct
 
 // A widget that simulates a VITA classic shade guide with categories and
 // shades arranged horizontally, with overall horizontal scrolling,
 // category labels with gradients based on their shades, and rotated shade swatches.
-// Updated to return both shade name and color on selection.
+// Updated to accept an initial selected shade and return both shade name and color on selection.
 class VitaShadeGuide extends StatefulWidget {
   // Callback function that is called when a shade is selected.
   // Now returns both the shade name (String) and the shade color (Color).
   final Function(String shadeName, Color shadeColor)? onShadeSelected;
 
+  // Optional initial selected shade name.
+  final String? initialSelectedShade;
+
   const VitaShadeGuide({
     Key? key,
     this.onShadeSelected,
+    this.initialSelectedShade, // Add the new parameter
   }) : super(key: key);
 
   @override
@@ -59,6 +62,13 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
     'D': ['D2', 'D3', 'D4'],
   };
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the selected shade with the provided initial value, if any.
+    _selectedShade = widget.initialSelectedShade;
+  }
+
   // Function to handle a shade being tapped.
   void _handleShadeTap(String shadeName) {
     setState(() {
@@ -72,6 +82,11 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
 
   @override
   Widget build(BuildContext context) {
+    // Assuming cyan400 is defined in your constants.dart
+    // If not, you'll need to define it or replace it with an actual Color value.
+    const Color cyan400 =
+        Color(0xFF00BCD4); // Example color, replace with your actual value
+
     return SingleChildScrollView(
       // Overall horizontal scrolling for the entire guide
       scrollDirection: Axis.horizontal,
@@ -164,8 +179,8 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
                                                   shadeColor.blue)
                                               .computeLuminance() >
                                           0.5
-                                      ? cyan600
-                                      : cyan50,
+                                      ? Colors.black87
+                                      : Colors.white,
                                   fontWeight: isSelected
                                       ? FontWeight.bold
                                       : FontWeight.normal,
@@ -191,8 +206,8 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
                     // Create a linear gradient using the colors of the shades in this category
                     gradient: LinearGradient(
                       colors: categoryShadeColors,
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
                     border: Border.all(color: Colors.blueGrey, width: .5),
                     borderRadius: BorderRadius.circular(
@@ -201,7 +216,7 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
                   child: Center(
                     // Center the text within the container
                     child: Text(
-                      category,
+                      'Group $category',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         // Determine text color based on the overall luminance of the gradient's colors
@@ -212,8 +227,8 @@ class _VitaShadeGuideState extends State<VitaShadeGuide> {
                                             sum + color.computeLuminance()) /
                                     categoryShadeColors.length >
                                 0.5
-                            ? cyan600
-                            : cyan50,
+                            ? Colors.black87
+                            : Colors.white,
                         fontSize:
                             16, // Slightly smaller font size for the group label
                         fontWeight: FontWeight.bold,
