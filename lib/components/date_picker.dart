@@ -23,7 +23,7 @@ Widget datePicker(BuildContext context) {
       color: cyan100,
       elevation: 1,
       shape: RoundedRectangleBorder(
-          side: const BorderSide(color: cyan400, width: 2),
+          side: const BorderSide(color: cyan400, width: .8),
           borderRadius: BorderRadius.circular(20)),
       child: InkWell(
         onTap: getDatePicker,
