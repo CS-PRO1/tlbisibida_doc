@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming cyan400 is defined here
 import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 
@@ -29,9 +29,27 @@ class TeethSelectionScreen extends StatelessWidget {
           if (state is TeethLoaded) {
             final cubit = context.read<TeethCubit>();
             final data = state.data;
+
+            // Extract unique selected treatments for the legend
+            final selectedTreatments = data.teeth.values
+                .where((tooth) => tooth.selected && tooth.treatment != null)
+                .map((tooth) => tooth.treatment!)
+                .toSet();
+
+            // Find a tooth for each selected treatment to get its color
+            final treatmentColors = {
+              for (var treatment in selectedTreatments)
+                treatment: data.teeth.values
+                    .firstWhere((tooth) => tooth.treatment == treatment)
+                    .color
+            };
+
             return SingleChildScrollView(
-              child: Column(
+              child:
+                  // Use a Stack to layer the chart and the legend
+                  Stack(
                 children: [
+                  // The Tooth Chart (positioned at the bottom of the stack)
                   FittedBox(
                     child: SizedBox.fromSize(
                       size: data.size,
@@ -158,6 +176,45 @@ class TeethSelectionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Legend (positioned on top of the chart, centered)
+                  if (selectedTreatments.isNotEmpty)
+                    Positioned(
+                      top: 0, // Positioned to span the full height and width
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        // Center the legend content
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min, // Use minimum space
+                          children: [
+                            // Removed the "Legend:" title
+                            ...treatmentColors.entries.map(
+                              (entry) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: Row(
+                                  mainAxisSize:
+                                      MainAxisSize.min, // Use minimum space
+                                  children: [
+                                    Container(
+                                      width: 16, // Smaller color box
+                                      height: 16,
+                                      color: entry.value,
+                                      margin: const EdgeInsets.only(right: 8),
+                                    ),
+                                    Text(entry.key,
+                                        style: TextStyle(
+                                            fontSize: 14)), // Smaller text
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
             );
@@ -254,7 +311,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'زيركون');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('زيركون'),
             ),
@@ -266,7 +324,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'خزف على معدن');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('خزف على معدن'),
             ),
@@ -278,7 +337,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'شمع');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('شمع'),
             ),
@@ -290,7 +350,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'أكريل مؤقت');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('أكريل مؤقت'),
             ),
@@ -300,7 +361,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'EMax');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('EMax'),
             ),
@@ -310,7 +372,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'أكريل');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('أكريل'),
             ),
@@ -320,7 +383,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'أكريل مبطن');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('أكريل مبطن'),
             ),
@@ -330,7 +394,8 @@ class TeethSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 cubit.setToothMaterial(tooth, 'فليكس');
-                cubit.toggleToothSelection(tooth);
+                cubit.toggleToothSelection(
+                    tooth); // Select after material is set
               },
               child: const Text('فليكس'),
             ),

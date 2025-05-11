@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_drawing/path_drawing.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:xml/xml.dart';
 
@@ -47,18 +48,24 @@ class TeethCubit extends Cubit<TeethState> {
   }
 
   void toggleToothSelection(Tooth tooth) {
-    tooth.selected = !tooth.selected;
-    emit(TeethLoaded(_data));
+    // Only toggle selection if treatment and material are set
+    if (tooth.treatment != null && tooth.material != null) {
+      tooth.selected = !tooth.selected;
+      emit(TeethLoaded(_data));
+    } else {
+      // Optionally, show a message to the user that they need to select treatment/material first
+      print('Select treatment and material before selecting the tooth.');
+    }
   }
 
   void setToothTreatment(Tooth tooth, String treatment) {
     tooth.treatment = treatment;
-    emit(TeethLoaded(_data));
+    // Don't emit here, wait for material selection
   }
 
   void setToothMaterial(Tooth tooth, String material) {
     tooth.material = material;
-    emit(TeethLoaded(_data));
+    // Don't emit here, toggleToothSelection will emit
   }
 
   void toggleConnectionSelection(ToothConnection connection) {
@@ -93,12 +100,15 @@ class TeethCubit extends Cubit<TeethState> {
     for (final tooth in teeth) {
       final id = int.parse(tooth.getAttribute('id')!);
       if (id >= 100) {
+        // Calculate rect from path bounds directly
+        final path = parseSvgPathData(tooth.getAttribute('d')!);
+        final rect = path.getBounds();
         connections[id] = ToothConnection(
           id,
           _generateConnectionIds(id).$1,
           _generateConnectionIds(id).$2,
-          Rect.fromLTWH(0, 0, 50, 50),
-          parseSvgPathData(tooth.getAttribute('d')!),
+          rect, // Use calculated rect
+          path, // Use parsed path
         );
       }
     }
@@ -151,6 +161,8 @@ class TeethCubit extends Cubit<TeethState> {
   }
 }
 
+// Data Models (Assuming these are in a separate file like data_models.dart)
+// If they are in the same file as TeethCubit, keep them here.
 
 class Tooth {
   Tooth(this.id, Path originalPath) {
@@ -167,18 +179,18 @@ class Tooth {
 
   Color get color {
     switch (treatment) {
-      case 'Crown':
-        return Colors.cyan.shade400;
-      case 'Pontic':
-        return Colors.pink.shade400;
-      case 'Implant':
-        return Colors.green.shade400;
-      case 'Veneer':
-        return Colors.orange.shade400;
-      case 'Inlay':
-        return Colors.purple.shade400;
-      case 'Denture':
-        return Colors.red.shade400;
+      case 'تاج': // Updated to Arabic
+        return Colors.lime.shade200;
+      case 'دمية': // Updated to Arabic
+        return Colors.lightBlue.shade200;
+      case 'زرعة': // Updated to Arabic
+        return Colors.green.shade200;
+      case 'فينير': // Updated to Arabic
+        return Colors.pink.shade200;
+      case 'حشوة': // Updated to Arabic
+        return Colors.purple.shade200;
+      case 'بدلة': // Updated to Arabic
+        return Colors.red.shade200;
       default:
         return Colors.white;
     }
