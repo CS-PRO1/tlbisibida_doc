@@ -1,6 +1,8 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/finance/components/dialogs/add_inf_button.dart';
+import 'package:tlbisibida_doc/view/finance/components/dialogs/add_op_button.dart';
 import 'package:tlbisibida_doc/view/finance/components/tables/clinic_common_finances_table.dart';
 import 'package:tlbisibida_doc/view/finance/components/tables/clinic_infrequent_finances_table.dart';
 import 'package:tlbisibida_doc/view/finance/components/tables/clinic_op_finances_table.dart';
@@ -135,8 +137,24 @@ class FinanceCenterScreen extends StatelessWidget {
             builder: (context, child) => clinicfinancetype.value == 'المخزن'
                 ? ClinicCommonFinancesTable()
                 : clinicfinancetype.value == 'تشغيلية'
-                    ? ClinicOpFinancesTable()
-                    : ClinicInfrequentFinancesTable()),
+                    ? Column(
+                        children: [
+                          SizedBox(
+                              height: 464,
+                              child: SingleChildScrollView(
+                                  child: ClinicOpFinancesTable())),
+                          addOpButton(context),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(
+                              height: 464,
+                              child: SingleChildScrollView(
+                                  child: ClinicInfrequentFinancesTable())),
+                          addInFButton(context)
+                        ],
+                      )),
       ],
     );
   }
