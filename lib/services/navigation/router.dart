@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/services/navigation/locator.dart';
 import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/add_edit_session_details_screen.dart';
+import 'package:tlbisibida_doc/view/Sessions/screens/add_session_details_screen%20.dart';
+import 'package:tlbisibida_doc/view/Sessions/screens/edit_session_details_screen.dart';
 import 'package:tlbisibida_doc/view/Sessions/screens/session_details_screen.dart';
 import 'package:tlbisibida_doc/view/about/about.dart';
 import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
@@ -69,9 +70,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case profileRoute:
       return _getPageRoute(ProfileScreen(), profileDisplayName);
 
-    case addEditSessionDetailsRoute:
+    case editSessionDetailsRoute:
       return _getPageRoute(
-          AddEditSessionDetailsScreen(), addEditSessionDetailsDisplayName);
+          EditSessionDetailsScreen(), editSessionDetailsDisplayName);
+
+    case addSessionDetailsRoute:
+      return _getPageRoute(
+          AddSessionDetailsScreen(), addSessionDetailsDisplayName);
 
     case sessionDetailsRoute:
       return _getPageRoute(

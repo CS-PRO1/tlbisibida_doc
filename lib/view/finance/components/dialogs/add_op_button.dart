@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/view/finance/components/dialogs/add_op_dialog.dart';
+
+Widget addOpButton(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return addOpDialog(context);
+        },
+      );
+    },
+    child: Container(
+      width: double.infinity,
+      clipBehavior: Clip.antiAlias,
+      height: 50,
+      decoration: const BoxDecoration(
+        color: cyan300,
+      ),
+      child: const Icon(
+        Icons.add,
+        color: white,
+      ),
+    ),
+  );
+}

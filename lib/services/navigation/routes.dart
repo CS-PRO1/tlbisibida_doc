@@ -43,8 +43,11 @@ const profileEditRoute = "/profile_edit";
 const profileDisplayName = "الملف الشخصي";
 const profileRoute = "/doc_profile";
 
-const addEditSessionDetailsDisplayName = "تعديل تفاصيل الجلسة";
-const addEditSessionDetailsRoute = "/add_edit_session_detail";
+const addSessionDetailsDisplayName = "إضافة تفاصيل الجلسة";
+const addSessionDetailsRoute = "/add_session_detail";
+
+const editSessionDetailsDisplayName = "تعديل تفاصيل الجلسة";
+const editSessionDetailsRoute = "/edit_session_detail";
 
 const sessionDetailsDisplayName = "تفاصيل الجلسة";
 const sessionDetailsRoute = "/sessions_details";

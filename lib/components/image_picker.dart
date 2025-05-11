@@ -10,43 +10,11 @@ Widget imagePicker(List images) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     final pickedFile =
-          //         await ImagePicker().pickImage(source: ImageSource.gallery);
-          //     if (pickedFile != null) {
-          //       setState(() {
-          //         images.add(File(pickedFile.path));
-          //       });
-          //     }
-          //   },
-          //   child: Text('صور من المعرض'),
-          // ),
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     final pickedFile =
-          //         await ImagePicker().pickImage(source: ImageSource.camera);
-          //     if (pickedFile != null) {
-          //       setState(() {
-          //         images.add(File(pickedFile.path));
-          //       });
-          //     }
-          //   },
-          //   child: Text('التقاط صورة'),
-          // ),
           SizedBox(
             width: 150,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // Text(
-                //   'إضافة صور',
-                //   style: TextStyle(
-                //       fontSize: 18, fontWeight: FontWeight.bold, color: cyan500),
-                // ),
-                // SizedBox(
-                //   width: 5,
-                // ),
                 CircleAvatar(
                   backgroundColor: cyan200,
                   child: IconButton(
@@ -85,7 +53,7 @@ Widget imagePicker(List images) {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          // SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Wrap(

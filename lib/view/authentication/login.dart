@@ -12,7 +12,6 @@ class LoginScreen extends StatelessWidget {
   TextEditingController password = TextEditingController();
 
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -143,8 +142,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                locator<NavigationService>()
-                                    .navigateTo(registerRoute);
+                                Navigator.pushNamed(context, registerRoute);
                               },
                               child: Text(
                                 'إنشاء حساب جديد',

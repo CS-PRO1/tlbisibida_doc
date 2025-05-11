@@ -179,6 +179,23 @@ class SessionDetailsScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(editSessionDetailsRoute);
+        },
+        mini: true,
+        backgroundColor: cyan400,
+        foregroundColor: white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: cyan600, width: 1.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(
+          Icons.edit_rounded,
+          size: 22,
+        ),
+      ),
     );
   }
 }

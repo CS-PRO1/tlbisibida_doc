@@ -54,11 +54,16 @@ class _ShadeSelectionButtonState extends State<ShadeSelectionButton> {
     return ElevatedButton(
       onPressed: _showShadeGuidesSheet, // Show the modal sheet with guides
       style: ElevatedButton.styleFrom(
-        backgroundColor: _selectedShadeColor ?? cyan200, // Default color
-        foregroundColor: _selectedShadeColor != null &&
-                _selectedShadeColor!.computeLuminance() > 0.5
+        shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(color: cyan500, width: .5)),
+        backgroundColor: _selectedShadeColor ?? cyan200,
+        // Default color
+        foregroundColor: _selectedShadeColor == null
             ? cyan600
-            : Colors.white, // Text color for contrast
+            : _selectedShadeColor!.computeLuminance() > 0.5
+                ? cyan500
+                : cyan50, // Text color for contrast
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: const TextStyle(fontSize: 18),
       ),
