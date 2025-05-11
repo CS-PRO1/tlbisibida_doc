@@ -233,8 +233,9 @@ class ToothBorder extends ShapeBorder {
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..color = Colors.black54;
+      ..strokeWidth = .9
+      ..color = Color(0xFFABA9A3);
+
     canvas.drawPath(getOuterPath(rect), paint);
   }
 

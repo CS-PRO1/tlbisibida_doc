@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_drawing/path_drawing.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:xml/xml.dart';
 
 class ToothChart extends StatelessWidget {
@@ -148,9 +149,9 @@ class _ToothWidget extends StatelessWidget {
             child: Text(
               '${tooth.id}',
               style: const TextStyle(
-                color: Colors.black,
+                color: cyan600,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 12,
               ),
             ),
           ),
@@ -258,8 +259,8 @@ class ToothBorder extends ShapeBorder {
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..color = Colors.black54;
+      ..strokeWidth = 1
+      ..color = cyan500;
     canvas.drawPath(getOuterPath(rect), paint);
   }
 

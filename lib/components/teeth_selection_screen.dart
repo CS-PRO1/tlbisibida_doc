@@ -79,7 +79,7 @@ class TeethSelectionScreen extends StatelessWidget {
                                       decoration: ShapeDecoration(
                                         color: tooth.selected
                                             ? tooth.color
-                                            : Colors.white,
+                                            : Color(0xFFF8F5ED),
                                         shadows: tooth.selected
                                             ? [
                                                 const BoxShadow(
@@ -114,9 +114,9 @@ class TeethSelectionScreen extends StatelessWidget {
                                       child: Text(
                                         '${tooth.id}',
                                         style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                          color: cyan600,
+                                          // fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ),
@@ -145,8 +145,8 @@ class TeethSelectionScreen extends StatelessWidget {
                                   clipBehavior: Clip.antiAlias,
                                   decoration: ShapeDecoration(
                                     color: connection.selected
-                                        ? Colors.teal.shade400
-                                        : Colors.white,
+                                        ? cyan200
+                                        : Color(0xFFE0E0DB),
                                     shadows: connection.selected
                                         ? [
                                             const BoxShadow(
@@ -160,7 +160,7 @@ class TeethSelectionScreen extends StatelessWidget {
                                     type: MaterialType.transparency,
                                     child: InkWell(
                                       splashColor: connection.selected
-                                          ? Colors.white
+                                          ? const Color(0xFFE0C99E)
                                           : Colors.teal.shade100,
                                       highlightColor: Colors.transparent,
                                       onTap: () {
@@ -199,13 +199,25 @@ class TeethSelectionScreen extends StatelessWidget {
                                       MainAxisSize.min, // Use minimum space
                                   children: [
                                     Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: cyan500, width: .3),
+                                          color: entry.value,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black45,
+                                                blurRadius: 5,
+                                                offset: Offset(-1, 2))
+                                          ]),
                                       width: 16, // Smaller color box
                                       height: 16,
-                                      color: entry.value,
-                                      margin: const EdgeInsets.only(right: 8),
+
+                                      margin: const EdgeInsets.only(left: 15),
                                     ),
                                     Text(entry.key,
                                         style: TextStyle(
+                                            color: cyan600,
                                             fontSize: 14)), // Smaller text
                                   ],
                                 ),

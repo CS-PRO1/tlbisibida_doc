@@ -5,8 +5,8 @@ import 'package:tlbisibida_doc/components/date_picker.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
+import 'package:tlbisibida_doc/components/teeth_selection_screen.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/view/Sessions/components/teeth_selection_screen.dart';
 
 class SessionDetailsForm extends StatelessWidget {
   SessionDetailsForm({super.key});
