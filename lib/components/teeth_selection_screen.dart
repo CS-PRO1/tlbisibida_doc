@@ -109,14 +109,17 @@ class TeethSelectionScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Positioned.fill(
-                                    child: Center(
-                                      child: Text(
-                                        '${tooth.id}',
-                                        style: const TextStyle(
-                                          color: cyan600,
-                                          // fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                  // Wrap the Text with IgnorePointer
+                                  IgnorePointer(
+                                    child: Positioned.fill(
+                                      child: Center(
+                                        child: Text(
+                                          '${tooth.id}',
+                                          style: const TextStyle(
+                                            color: cyan600,
+                                            // fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ),
