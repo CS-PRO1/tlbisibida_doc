@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 import 'package:xml/xml.dart';
 
 class ToothChart extends StatelessWidget {
@@ -71,12 +72,16 @@ class ToothChart extends StatelessWidget {
     for (final tooth in teeth) {
       final id = int.parse(tooth.getAttribute('id')!);
       if (id >= 100) {
+        final path =  parseSvgPathData(tooth.getAttribute('d')!);
+                final rect = path.getBounds();
+
         connections[id] = ToothConnection(
-          id: id,
-          tooth1Id: _generateConnectionIds(id).$1,
-          tooth2Id: _generateConnectionIds(id).$2,
-          path: parseSvgPathData(tooth.getAttribute('d')!),
-        );
+         id,
+           _generateConnectionIds(id).$1,
+           _generateConnectionIds(id).$2,
+           rect,
+           path,
+          );
       }
     }
 
@@ -180,7 +185,7 @@ class _ConnectionWidget extends StatelessWidget {
         shadows: isSelected
             ? [const BoxShadow(blurRadius: 4, offset: Offset(0, 6))]
             : null,
-        shape: ToothBorder(connection.path),
+        shape: ToothBorder(connection.path!),
       ),
     );
   }
@@ -211,21 +216,7 @@ class Tooth {
         rect = path.getBounds();
 }
 
-class ToothConnection {
-  final int id;
-  final int tooth1Id;
-  final int tooth2Id;
-  final Path path;
-  final Rect rect;
 
-  ToothConnection({
-    required this.id,
-    required this.tooth1Id,
-    required this.tooth2Id,
-    required Path path,
-  })  : path = path,
-        rect = path.getBounds();
-}
 
 class ToothStyle {
   final Color color;
@@ -239,31 +230,3 @@ class ToothStyle {
   });
 }
 
-class ToothBorder extends ShapeBorder {
-  final Path path;
-
-  const ToothBorder(this.path);
-
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
-
-  @override
-  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => path;
-
-  @override
-  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    return rect.topLeft == Offset.zero ? path : path.shift(rect.topLeft);
-  }
-
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1
-      ..color = cyan500;
-    canvas.drawPath(getOuterPath(rect), paint);
-  }
-
-  @override
-  ShapeBorder scale(double t) => this;
-}

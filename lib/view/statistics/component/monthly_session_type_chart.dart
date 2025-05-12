@@ -1,363 +1,393 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+// Assuming constants.dart contains your color definitions
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-class MonthlySessionTypeChart extends StatelessWidget {
-  const MonthlySessionTypeChart({super.key, required this.isShowingMainData});
+// Data model for a single monthly data point
+class MonthlyDataPoint {
+  final String month;
+  final double patients;
 
-  final bool isShowingMainData;
+  MonthlyDataPoint({required this.month, required this.patients});
+
+  // Added equality check for didUpdateWidget
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MonthlyDataPoint &&
+          runtimeType == other.runtimeType &&
+          month == other.month &&
+          patients == other.patients;
 
   @override
-  Widget build(BuildContext context) {
-    return LineChart(
-      isShowingMainData ? sampleData1 : sampleData2,
-      duration: const Duration(milliseconds: 250),
-    );
-  }
-
-  LineChartData get sampleData1 => LineChartData(
-        lineTouchData: lineTouchData1,
-        gridData: gridData,
-        titlesData: titlesData1,
-        borderData: borderData,
-        lineBarsData: lineBarsData1,
-        minX: 0,
-        maxX: 14,
-        maxY: 4,
-        minY: 0,
-      );
-
-  LineChartData get sampleData2 => LineChartData(
-        lineTouchData: lineTouchData2,
-        gridData: gridData,
-        titlesData: titlesData2,
-        borderData: borderData,
-        lineBarsData: lineBarsData2,
-        minX: 0,
-        maxX: 14,
-        maxY: 6,
-        minY: 0,
-      );
-
-  LineTouchData get lineTouchData1 => LineTouchData(
-        handleBuiltInTouches: true,
-        touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (touchedSpot) => cyan500,
-        ),
-      );
-
-  FlTitlesData get titlesData1 => FlTitlesData(
-        bottomTitles: AxisTitles(
-          sideTitles: bottomTitles,
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: leftTitles(),
-        ),
-      );
-
-  List<LineChartBarData> get lineBarsData1 => [
-        lineChartBarData1_1,
-        lineChartBarData1_2,
-        lineChartBarData1_3,
-      ];
-
-  LineTouchData get lineTouchData2 => const LineTouchData(
-        enabled: false,
-      );
-
-  FlTitlesData get titlesData2 => FlTitlesData(
-        bottomTitles: AxisTitles(
-          sideTitles: bottomTitles,
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: leftTitles(),
-        ),
-      );
-
-  List<LineChartBarData> get lineBarsData2 => [
-        lineChartBarData2_1,
-        lineChartBarData2_2,
-        lineChartBarData2_3,
-      ];
-
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '1m';
-        break;
-      case 2:
-        text = '2m';
-        break;
-      case 3:
-        text = '3m';
-        break;
-      case 4:
-        text = '5m';
-        break;
-      case 5:
-        text = '6m';
-        break;
-      default:
-        return Container();
-    }
-
-    return SideTitleWidget(
-      axisSide: AxisSide.left,
-      child: Text(
-        text,
-        style: style,
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  SideTitles leftTitles() => SideTitles(
-        getTitlesWidget: leftTitleWidgets,
-        showTitles: true,
-        interval: 1,
-        reservedSize: 40,
-      );
-
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('SEPT', style: style);
-        break;
-      case 7:
-        text = const Text('OCT', style: style);
-        break;
-      case 12:
-        text = const Text('DEC', style: style);
-        break;
-      default:
-        text = const Text('');
-        break;
-    }
-
-    return SideTitleWidget(
-      space: 10,
-      axisSide: AxisSide.bottom,
-      child: text,
-    );
-  }
-
-  SideTitles get bottomTitles => SideTitles(
-        showTitles: true,
-        reservedSize: 32,
-        interval: 1,
-        getTitlesWidget: bottomTitleWidgets,
-      );
-
-  FlGridData get gridData => const FlGridData(show: false);
-
-  FlBorderData get borderData => FlBorderData(
-        show: true,
-        border: Border(
-          bottom: BorderSide(
-            color: cyan50,
-          ),
-          left: const BorderSide(color: Colors.transparent),
-          right: const BorderSide(color: Colors.transparent),
-          top: const BorderSide(color: Colors.transparent),
-        ),
-      );
-
-  LineChartBarData get lineChartBarData1_1 => LineChartBarData(
-        isCurved: true,
-        color: cyan400,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 1.5),
-          FlSpot(5, 1.4),
-          FlSpot(7, 3.4),
-          FlSpot(10, 2),
-          FlSpot(12, 2.2),
-          FlSpot(13, 1.8),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_2 => LineChartBarData(
-        isCurved: true,
-        color: cyan200,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false, color: cyan200),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 2.8),
-          FlSpot(7, 1.2),
-          FlSpot(10, 2.8),
-          FlSpot(12, 2.6),
-          FlSpot(13, 3.9),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_3 => LineChartBarData(
-        isCurved: true,
-        color: cyan300,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 2.8),
-          FlSpot(3, 1.9),
-          FlSpot(6, 3),
-          FlSpot(10, 1.3),
-          FlSpot(13, 2.5),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData2_1 => LineChartBarData(
-        isCurved: true,
-        curveSmoothness: 0,
-        color: cyan400,
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 4),
-          FlSpot(5, 1.8),
-          FlSpot(7, 5),
-          FlSpot(10, 2),
-          FlSpot(12, 2.2),
-          FlSpot(13, 1.8),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData2_2 => LineChartBarData(
-        isCurved: true,
-        color: cyan400,
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(
-          show: true,
-          color: cyan400,
-        ),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 2.8),
-          FlSpot(7, 1.2),
-          FlSpot(10, 2.8),
-          FlSpot(12, 2.6),
-          FlSpot(13, 3.9),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData2_3 => LineChartBarData(
-        isCurved: true,
-        curveSmoothness: 0,
-        color: cyan500,
-        barWidth: 2,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: true),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 3.8),
-          FlSpot(3, 1.9),
-          FlSpot(6, 5),
-          FlSpot(10, 3.3),
-          FlSpot(13, 4.5),
-        ],
-      );
+  int get hashCode => month.hashCode ^ patients.hashCode;
 }
 
-class LineChartSample1 extends StatefulWidget {
-  const LineChartSample1({super.key});
+// Widget to display the monthly patients chart
+class MonthlyPatientsChart extends StatefulWidget {
+  const MonthlyPatientsChart({
+    super.key,
+    required this.data,
+    Color? gradientColor1,
+    Color? gradientColor2,
+    Color? gradientColor3,
+    Color? gradientColor4,
+    Color? indicatorStrokeColor,
+  })  : gradientColor1 = gradientColor1 ?? cyan200,
+        gradientColor2 = gradientColor2 ?? cyan300,
+        gradientColor3 = gradientColor3 ?? cyan400,
+        gradientColor4 = gradientColor4 ?? cyan500,
+        indicatorStrokeColor = indicatorStrokeColor ?? cyan400;
+
+  final List<MonthlyDataPoint> data;
+  final Color gradientColor1;
+  final Color gradientColor2;
+  final Color gradientColor3;
+  final Color gradientColor4;
+  final Color indicatorStrokeColor;
 
   @override
-  State<StatefulWidget> createState() => LineChartSample1State();
+  State<MonthlyPatientsChart> createState() => _MonthlyPatientsChartState();
 }
 
-class LineChartSample1State extends State<LineChartSample1> {
-  late bool isShowingMainData;
+class _MonthlyPatientsChartState extends State<MonthlyPatientsChart> {
+  List<int> showingTooltipOnSpots = [];
+
+  List<FlSpot> _spots = [];
+  List<String> _monthLabels = [];
 
   @override
   void initState() {
     super.initState();
-    isShowingMainData = true;
+    _processData(widget.data);
+    // Initialize tooltips on the first, middle, and last spots if data exists
+    if (_spots.isNotEmpty) {
+      showingTooltipOnSpots = [0];
+      if (_spots.length > 1) {
+        showingTooltipOnSpots.add((_spots.length / 2).floor());
+        if (_spots.length > 2) {
+          showingTooltipOnSpots.add(_spots.length - 1);
+        }
+      }
+    } else {
+      showingTooltipOnSpots = []; // No data, no tooltips
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant MonthlyPatientsChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Check if the data itself has changed
+    if (oldWidget.data != widget.data) {
+      _processData(widget.data);
+      // Reset tooltips when data changes
+      showingTooltipOnSpots = [];
+      if (_spots.isNotEmpty) {
+        showingTooltipOnSpots = [0];
+        if (_spots.length > 1) {
+          showingTooltipOnSpots.add((_spots.length / 2).floor());
+          if (_spots.length > 2) {
+            showingTooltipOnSpots.add(_spots.length - 1);
+          }
+        }
+      }
+    }
+  }
+
+  // Processes the input data to create FlSpot and month labels
+  void _processData(List<MonthlyDataPoint> data) {
+    _spots = [];
+    _monthLabels = [];
+    for (int i = 0; i < data.length; i++) {
+      _spots.add(FlSpot(i.toDouble(), data[i].patients));
+      _monthLabels.add(data[i].month);
+    }
+    // Request a new frame to ensure the chart updates after data processing
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  // Widget builder for the bottom titles (month labels)
+  Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
+    final int index = value.toInt();
+    // Adjust font size based on chart width for responsiveness
+    final style = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: cyan300,
+      fontSize: 16 * chartWidth / 500, // Scale font size
+    );
+    String text = '';
+    if (index >= 0 && index < _monthLabels.length) {
+      text = _monthLabels[index];
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 4,
+      child: Text(text, style: style),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 2,
-      child: Stack(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(
-                height: 37,
-              ),
-              const Text(
-                'عدد العلاجات شهرياً',
-                style: TextStyle(
-                  color: cyan600,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 37,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16, left: 6),
-                  child: MonthlySessionTypeChart(
-                      isShowingMainData: isShowingMainData),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+    // Define the line chart bar data using the processed spots
+    final lineBarsData = [
+      LineChartBarData(
+        showingIndicators: showingTooltipOnSpots,
+        spots: _spots,
+        isCurved: true,
+        barWidth: 4,
+        shadow: const Shadow(
+          blurRadius: 8,
+        ),
+        belowBarData: BarAreaData(
+          show: true,
+          gradient: LinearGradient(
+            colors: [
+              widget.gradientColor1,
+              widget.gradientColor2,
+              widget.gradientColor3,
+              widget.gradientColor4,
             ],
           ),
-          IconButton(
-            icon: Icon(
-              Icons.refresh,
-              color: cyan50,
+        ),
+        dotData: const FlDotData(show: true),
+        gradient: LinearGradient(
+          colors: [
+            widget.gradientColor1,
+            widget.gradientColor2,
+            widget.gradientColor3,
+            widget.gradientColor4,
+          ],
+          stops: const [0.1, 0.4, 0.7, 0.9],
+        ),
+      ),
+    ];
+
+    // Determine which bar to show tooltips on (in this case, the only one)
+    final tooltipsOnBar = lineBarsData[0];
+
+    return AspectRatio(
+      aspectRatio: 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24.0,
+          vertical: 1,
+        ),
+        // Use LayoutBuilder to get the chart width for responsive titles
+        child: LayoutBuilder(builder: (context, constraints) {
+          return LineChart(
+            LineChartData(
+              // Configure showing tooltip indicators
+              showingTooltipIndicators: showingTooltipOnSpots.map((index) {
+                return ShowingTooltipIndicators([
+                  LineBarSpot(
+                    tooltipsOnBar,
+                    lineBarsData.indexOf(tooltipsOnBar),
+                    tooltipsOnBar.spots[index],
+                  ),
+                ]);
+              }).toList(),
+              // Configure line touch behavior
+              lineTouchData: LineTouchData(
+                enabled: true,
+                handleBuiltInTouches: false,
+                touchCallback:
+                    (FlTouchEvent event, LineTouchResponse? response) {
+                  if (response == null || response.lineBarSpots == null) {
+                    return;
+                  }
+                  // Toggle tooltip visibility on tap
+                  if (event is FlTapUpEvent) {
+                    final spotIndex = response.lineBarSpots!.first.spotIndex;
+                    setState(() {
+                      if (showingTooltipOnSpots.contains(spotIndex)) {
+                        showingTooltipOnSpots.remove(spotIndex);
+                      } else {
+                        showingTooltipOnSpots.add(spotIndex);
+                      }
+                    });
+                  }
+                },
+                // Set mouse cursor on hover
+                mouseCursorResolver:
+                    (FlTouchEvent event, LineTouchResponse? response) {
+                  if (response == null || response.lineBarSpots == null) {
+                    return SystemMouseCursors.basic;
+                  }
+                  return SystemMouseCursors.click;
+                },
+                // Customize the indicator shown when a spot is touched
+                getTouchedSpotIndicator:
+                    (LineChartBarData barData, List<int> spotIndexes) {
+                  return spotIndexes.map((index) {
+                    return TouchedSpotIndicatorData(
+                      const FlLine(
+                        color: cyan50op, // Indicator line color
+                      ),
+                      FlDotData(
+                        show: true,
+                        getDotPainter: (spot, percent, barData, index) =>
+                            FlDotCirclePainter(
+                          radius: 5,
+                          color: lerpGradient(
+                            // Use lerpGradient for dot color
+                            barData.gradient!.colors,
+                            barData.gradient!.stops!,
+                            percent / 100,
+                          ),
+                          strokeWidth: 2,
+                          strokeColor: widget
+                              .indicatorStrokeColor, // Indicator stroke color
+                        ),
+                      ),
+                    );
+                  }).toList();
+                },
+                // Configure the tooltip appearance and content
+                touchTooltipData: LineTouchTooltipData(
+                  getTooltipColor: (touchedSpot) =>
+                      cyan500, // Tooltip background color
+                  tooltipRoundedRadius: 20,
+                  tooltipBorder: const BorderSide(
+                    color: cyan50op, // Tooltip border color
+                    width: 6,
+                  ),
+                  getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+                    return lineBarsSpot.map((lineBarSpot) {
+                      return LineTooltipItem(
+                        lineBarSpot.y
+                            .toInt()
+                            .toString(), // Display patient count as integer
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }).toList();
+                  },
+                ),
+              ),
+              lineBarsData: lineBarsData,
+              minY: 0,
+              // Use the calculated max value for maxY
+              maxY: maxval(_spots),
+              baselineY: 0,
+              backgroundColor: const Color.fromARGB(
+                  62, 211, 241, 238), // Chart background color
+              titlesData: FlTitlesData(
+                leftTitles: const AxisTitles(
+                  axisNameWidget: Text(
+                    'عدد المرضى', // Left axis name
+                    style: TextStyle(
+                        color: cyan500,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  axisNameSize: 24,
+                  sideTitles: SideTitles(
+                    showTitles: false, // Hide left side titles
+                    reservedSize: 0,
+                  ),
+                ),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true, // Show bottom titles (months)
+                    interval: 1,
+                    getTitlesWidget: (value, meta) {
+                      // Use the bottomTitleWidgets function to get month labels
+                      return bottomTitleWidgets(
+                        value,
+                        meta,
+                        constraints
+                            .maxWidth, // Pass chart width for responsiveness
+                      );
+                    },
+                    reservedSize: 30,
+                  ),
+                ),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false, // Hide right side titles
+                  ),
+                ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false, // Hide top titles
+                  ),
+                ),
+              ),
+              gridData: const FlGridData(show: false), // Hide grid lines
+              borderData: FlBorderData(
+                show: true,
+                border: Border.all(
+                  color: cyan100, // Border color
+                ),
+              ),
             ),
-            onPressed: () {
-              setState(() {
-                isShowingMainData = !isShowingMainData;
-              });
-            },
-          )
-        ],
+          );
+        }),
       ),
     );
   }
+}
+
+// Helper function to interpolate colors in a gradient
+Color lerpGradient(List<Color> colors, List<double> stops, double t) {
+  if (colors.isEmpty) {
+    throw ArgumentError('"colors" is empty.');
+  } else if (colors.length == 1) {
+    return colors[0];
+  }
+
+  if (stops.length != colors.length) {
+    stops = [];
+    colors.asMap().forEach((index, color) {
+      final percent = 1.0 / (colors.length - 1);
+      stops.add(percent * index);
+    });
+  }
+
+  for (var s = 0; s < stops.length - 1; s++) {
+    final leftStop = stops[s];
+    final rightStop = stops[s + 1];
+    final leftColor = colors[s];
+    final rightColor = colors[s + 1];
+    if (t <= leftStop) {
+      return leftColor;
+    } else if (t < rightStop) {
+      final sectionT = (t - leftStop) / (rightStop - leftStop);
+      return Color.lerp(leftColor, rightColor, sectionT)!;
+    }
+  }
+  return colors.last;
+}
+
+// Helper function to calculate a suitable maximum Y value for the chart
+// Note: The logic here seems specific to your requirements for rounding and adding.
+maxval(List<FlSpot> data) {
+  double max = 0;
+  for (var element in data) {
+    if (element.y > max) {
+      max = element.y;
+    }
+  }
+
+  // Round down to the nearest hundred
+  max = (max / 100).floor() * 100.0;
+
+  // Add 100 or 200 based on the rounded value
+  if ((max / 100) % 2 == 0) {
+    max += 200;
+  } else {
+    max += 100;
+  }
+
+  // Ensure a minimum maxY if data is empty or all values are 0
+  if (max < 100 && data.isNotEmpty) {
+    max = 100;
+  } else if (data.isEmpty) {
+    max = 10; // Default max for empty data
+  }
+
+  return max;
 }
