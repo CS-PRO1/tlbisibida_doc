@@ -60,7 +60,7 @@ Dialog addOpDialog(BuildContext context) {
                         text: 'تم',
                         function: () {
                           Navigator.of(context).pop();
-                        })
+                        }),
                   ],
                 ),
               ),

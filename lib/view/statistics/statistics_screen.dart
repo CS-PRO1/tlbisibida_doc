@@ -9,8 +9,10 @@ import 'package:tlbisibida_doc/view/statistics/component/monthly_patients_chart.
 
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({super.key});
-  final List _choices = ['الارباح', 'المخزن', 'عدد المرضى', 'مدفوعات'];
-  final ValueNotifier<String> _table = ValueNotifier<String>('مدفوعات');
+  final List _choices = ['الارباح', 'العلاجات', 'المرضى', 'المدفوعات'];
+  final ValueNotifier<String> _table = ValueNotifier<String>('المدفوعات');
+  final List _expChoices = ['التشغيلية', 'المخزن'];
+  final ValueNotifier<String> _exptype = ValueNotifier<String>('المخزن');
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class StatisticsScreen extends StatelessWidget {
                 ),
                 SingleChildScrollView(
                   child: Container(
-                    height: MediaQuery.of(context).size.height / 1.4,
+                    height: MediaQuery.of(context).size.height / 1.24,
                     // width: 1000,
                     decoration: BoxDecoration(
                         color: cyan100,
@@ -68,9 +70,9 @@ class StatisticsScreen extends StatelessWidget {
                         border: Border.all(color: cyan300)),
                     child: AnimatedBuilder(
                       animation: _table,
-                      builder: (context, child) => (_table.value ==
-                              'عدد المرضى')
+                      builder: (context, child) => (_table.value == 'المرضى')
                           ? SingleChildScrollView(
+                              physics: NeverScrollableScrollPhysics(),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -244,111 +246,199 @@ class StatisticsScreen extends StatelessWidget {
                                     ],
                                   ),
                                 )
-                              : (_table.value == 'المخزن')
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SingleChildScrollView(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 25.0, bottom: 15),
-                                              child: Text(
-                                                'مدفوعات المخزن لهذا الشهر',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: cyan600),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: .5,
-                                              width: 200,
-                                              color: cyan600,
-                                            ),
-                                            SizedBox(
-                                              height: 50,
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    1.7,
-                                                child: Padding(
+                              : (_table.value == 'العلاجات')
+                                  ? Text('data,')
+                                  : Column(
+                                      children: [
+                                        Center(
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InlineChoice<String>.single(
+                                                value: _exptype.value,
+                                                onChanged: (value) {
+                                                  _exptype.value = value!;
+                                                  print(_exptype.toString());
+                                                },
+                                                clearable: false,
+                                                itemCount: _expChoices.length,
+                                                itemBuilder: (state, i) {
+                                                  return ChoiceChip(
+                                                    selectedColor: cyan200,
+                                                    side: const BorderSide(
+                                                        color: cyan300),
+                                                    selected: state.selected(
+                                                        _expChoices[i]),
+                                                    onSelected:
+                                                        state.onSelected(
+                                                            _expChoices[i]),
+                                                    label: Text(_expChoices[i]),
+                                                    showCheckmark: false,
+                                                  );
+                                                },
+                                                listBuilder:
+                                                    ChoiceList.createWrapped(
+                                                        runAlignment:
+                                                            WrapAlignment
+                                                                .center,
+                                                        alignment: WrapAlignment
+                                                            .center,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        textDirection:
+                                                            TextDirection.rtl,
+                                                        //spacing: 10,
+                                                        //runSpacing: 10,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 5,
+                                                        ))),
+                                          ),
+                                        ),
+                                        AnimatedBuilder(
+                                          animation: _exptype,
+                                          builder: (context, child) => (_exptype
+                                                      .value ==
+                                                  'المخزن')
+                                              ? Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 20.0),
-                                                  child: InventoryCountChart(
-                                                    rawChartData: [
-                                                      {
-                                                        'text': 'أدوات',
-                                                        'count': '320',
-                                                        'value': 874100.0
-                                                      },
-                                                      {
-                                                        'text': 'مواد تخدير',
-                                                        'count': '10',
-                                                        'value': 200000.0
-                                                      },
-                                                      {
-                                                        'text': 'قبضات',
-                                                        'count': '5',
-                                                        'value': 400000.0
-                                                      },
-                                                      {
-                                                        'text': 'سنابل',
-                                                        'count': '65',
-                                                        'value': 980000.0
-                                                      },
+                                                      const EdgeInsets.all(8.0),
+                                                  child: SingleChildScrollView(
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 25.0,
+                                                                  bottom: 15),
+                                                          child: Text(
+                                                            'مدفوعات المخزن لهذا الشهر',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: cyan600),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: .5,
+                                                          width: 200,
+                                                          color: cyan600,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 50,
+                                                        ),
+                                                        SizedBox(
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                1.7,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      bottom:
+                                                                          20.0),
+                                                              child:
+                                                                  InventoryCountChart(
+                                                                rawChartData: [
+                                                                  {
+                                                                    'text':
+                                                                        'أدوات',
+                                                                    'count':
+                                                                        '320',
+                                                                    'value':
+                                                                        874100.0
+                                                                  },
+                                                                  {
+                                                                    'text':
+                                                                        'مواد تخدير',
+                                                                    'count':
+                                                                        '10',
+                                                                    'value':
+                                                                        200000.0
+                                                                  },
+                                                                  {
+                                                                    'text':
+                                                                        'قبضات',
+                                                                    'count':
+                                                                        '5',
+                                                                    'value':
+                                                                        400000.0
+                                                                  },
+                                                                  {
+                                                                    'text':
+                                                                        'سنابل',
+                                                                    'count':
+                                                                        '65',
+                                                                    'value':
+                                                                        980000.0
+                                                                  },
+                                                                ],
+                                                              ),
+                                                            ))
+                                                      ],
+                                                    ),
+                                                  ))
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 25.0,
+                                                                bottom: 15),
+                                                        child: Text(
+                                                          'مدفوعات هذا الشهر',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: cyan600),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: .5,
+                                                        width: 200,
+                                                        color: cyan600,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 50,
+                                                      ),
+                                                      SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              1.7,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    bottom:
+                                                                        20.0),
+                                                            child:
+                                                                MonthlyFrequentExpensesChart(),
+                                                          ))
                                                     ],
-                                                  ),
-                                                ))
-                                          ],
-                                        ),
-                                      ))
-                                  : Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SingleChildScrollView(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 25.0, bottom: 15),
-                                              child: Text(
-                                                'مدفوعات هذا الشهر',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: cyan600),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: .5,
-                                              width: 200,
-                                              color: cyan600,
-                                            ),
-                                            SizedBox(
-                                              height: 50,
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    1.7,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 20.0),
-                                                  child:
-                                                      MonthlyFrequentExpensesChart(),
-                                                ))
-                                          ],
-                                        ),
-                                      )),
+                                                  )),
+                                        )
+                                      ],
+                                    ),
                     ),
                   ),
                 ),
