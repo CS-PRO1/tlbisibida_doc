@@ -249,7 +249,6 @@ class StatisticsScreen extends StatelessWidget {
                                 )
                               : (_table.value == 'العلاجات')
                                   ? SingleChildScrollView(
-                                      physics: NeverScrollableScrollPhysics(),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -258,7 +257,7 @@ class StatisticsScreen extends StatelessWidget {
                                             padding: const EdgeInsets.only(
                                                 top: 25.0, bottom: 15),
                                             child: Text(
-                                              'عدد المرضى شهريا',
+                                              'عدد المرضى لكل علاج',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: cyan600),
@@ -273,17 +272,78 @@ class StatisticsScreen extends StatelessWidget {
                                             height: 50,
                                           ),
                                           SizedBox(
-                                            height: 300,
+                                            height: 400,
                                             // width: 300,
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 20.0),
-                                              child: MonthlySessionTypeChart(
-                                                isShowingMainData: true,
-                                              ),
+                                              child: MonthlySessionsTypeChart(
+                                                  data: [
+                                                    TreatmentData(
+                                                        name: 'Fillings',
+                                                        values: [
+                                                          190,
+                                                          250,
+                                                          0,
+                                                          210,
+                                                          240,
+                                                          300
+                                                        ]), // Values for Jan-Jun
+                                                    TreatmentData(
+                                                        name: 'Extractions',
+                                                        values: [
+                                                          130,
+                                                          180,
+                                                          200,
+                                                          160,
+                                                          190,
+                                                          220
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Cleanings',
+                                                        values: [
+                                                          80,
+                                                          120,
+                                                          150,
+                                                          110,
+                                                          130,
+                                                          160
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Root Canals',
+                                                        values: [
+                                                          50,
+                                                          350,
+                                                          90,
+                                                          0,
+                                                          200,
+                                                          0
+                                                        ]), // Example with missing values
+                                                    TreatmentData(
+                                                        name: 'Crowns',
+                                                        values: [
+                                                          100,
+                                                          110,
+                                                          60,
+                                                          180,
+                                                          290,
+                                                          370
+                                                        ]), // Example with missing values
+                                                  ],
+                                                  monthLabels: [
+                                                    'يناير',
+                                                    'فبراير',
+                                                    'مارس',
+                                                    'أبريل',
+                                                    'مايو',
+                                                    'يونيو'
+                                                  ] // Month labels
+
+                                                  ),
                                             ),
                                           ),
+
                                           //
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -294,6 +354,81 @@ class StatisticsScreen extends StatelessWidget {
                                               color: cyan500,
                                             ),
                                           ),
+                                          SizedBox(
+                                            height: 400,
+                                            // width: 300,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0),
+                                              child: MonthlySessionsTypeChart(
+                                                  data: [
+                                                    TreatmentData(
+                                                        name: 'Fillings',
+                                                        values: [
+                                                          190,
+                                                          250,
+                                                          0,
+                                                          210,
+                                                          240,
+                                                          300
+                                                        ]), // Values for Jan-Jun
+                                                    TreatmentData(
+                                                        name: 'Extractions',
+                                                        values: [
+                                                          130,
+                                                          180,
+                                                          200,
+                                                          160,
+                                                          190,
+                                                          220
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Cleanings',
+                                                        values: [
+                                                          80,
+                                                          120,
+                                                          150,
+                                                          110,
+                                                          130,
+                                                          160
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Root Canals',
+                                                        values: [
+                                                          50,
+                                                          350,
+                                                          90,
+                                                          0,
+                                                          200,
+                                                          0
+                                                        ]), // Example with missing values
+                                                    TreatmentData(
+                                                        name: 'Crowns',
+                                                        values: [
+                                                          100,
+                                                          110,
+                                                          60,
+                                                          180,
+                                                          290,
+                                                          370
+                                                        ]), // Example with missing values
+                                                  ],
+                                                  monthLabels: [
+                                                    'يناير',
+                                                    'فبراير',
+                                                    'مارس',
+                                                    'أبريل',
+                                                    'مايو',
+                                                    'يونيو'
+                                                  ] // Month labels
+
+                                                  ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          )
                                           //
                                         ],
                                       ),

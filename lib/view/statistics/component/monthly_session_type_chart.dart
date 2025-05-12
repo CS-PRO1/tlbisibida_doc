@@ -1,393 +1,559 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer'
+    as developer; // Use developer.log for potentially better visibility
+import 'dart:math' as math; // Import for ceiling function
+
 // Assuming constants.dart contains your color definitions
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-// Data model for a single monthly data point
-class MonthlyDataPoint {
-  final String month;
-  final double patients;
+// Define the color ranges for the dynamic lines
+final List<Color> cyanColorRange = [
+  const Color.fromARGB(255, 181, 63, 163),
+  cyan400,
+  const Color.fromARGB(255, 149, 132, 0),
+  const Color.fromARGB(255, 36, 161, 210),
+];
 
-  MonthlyDataPoint({required this.month, required this.patients});
+final List<Color> pinkColorRange = [
+  const Color.fromARGB(255, 255, 169, 155),
+  const Color.fromARGB(255, 71, 71, 153),
+  const Color.fromARGB(255, 201, 118, 114),
+];
+
+// Combine the color ranges for dynamic line coloring
+final List<Color> allLineColors = [...cyanColorRange, ...pinkColorRange];
+
+// New data model for treatment data
+class TreatmentData {
+  final String name;
+  // List of values for each month for this treatment type
+  final List<double> values;
+
+  TreatmentData({required this.name, required this.values});
 
   // Added equality check for didUpdateWidget
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MonthlyDataPoint &&
+      other is TreatmentData &&
           runtimeType == other.runtimeType &&
-          month == other.month &&
-          patients == other.patients;
+          name == other.name &&
+          listEquals(
+              values, other.values); // Using listEquals for list comparison
 
   @override
-  int get hashCode => month.hashCode ^ patients.hashCode;
+  int get hashCode => name.hashCode ^ values.hashCode;
 }
 
-// Widget to display the monthly patients chart
-class MonthlyPatientsChart extends StatefulWidget {
-  const MonthlyPatientsChart({
+// This widget displays the monthly session type chart with dynamic TreatmentData input
+class DynamicMonthlyChart extends StatefulWidget {
+  const DynamicMonthlyChart({
     super.key,
-    required this.data,
-    Color? gradientColor1,
-    Color? gradientColor2,
-    Color? gradientColor3,
-    Color? gradientColor4,
-    Color? indicatorStrokeColor,
-  })  : gradientColor1 = gradientColor1 ?? cyan200,
-        gradientColor2 = gradientColor2 ?? cyan300,
-        gradientColor3 = gradientColor3 ?? cyan400,
-        gradientColor4 = gradientColor4 ?? cyan500,
-        indicatorStrokeColor = indicatorStrokeColor ?? cyan400;
+    required this.data, // Accepts a list of TreatmentData
+    required this.monthLabels, // Accepts a list of month labels
+  });
 
-  final List<MonthlyDataPoint> data;
-  final Color gradientColor1;
-  final Color gradientColor2;
-  final Color gradientColor3;
-  final Color gradientColor4;
-  final Color indicatorStrokeColor;
+  final List<TreatmentData> data;
+  final List<String> monthLabels;
 
   @override
-  State<MonthlyPatientsChart> createState() => _MonthlyPatientsChartState();
+  State<DynamicMonthlyChart> createState() => _DynamicMonthlyChartState();
 }
 
-class _MonthlyPatientsChartState extends State<MonthlyPatientsChart> {
-  List<int> showingTooltipOnSpots = [];
-
-  List<FlSpot> _spots = [];
+class _DynamicMonthlyChartState extends State<DynamicMonthlyChart> {
+  // List of lists to hold FlSpot data for each dynamic line (treatment)
+  List<List<FlSpot>> _dynamicSpots = [];
   List<String> _monthLabels = [];
+  // Set to hold the x-axis indices of months where tooltips are currently showing
+  Set<int> _showingTooltipOnMonths = {};
+  // List to hold the names of each line (treatment names)
+  List<String> _lineNames = [];
+
+  // State variables for dynamic Y-axis range and interval
+  double _maxY = 10.0; // Default minimum maxY
+  double _yInterval = 1.0; // Default yInterval
 
   @override
   void initState() {
     super.initState();
-    _processData(widget.data);
-    // Initialize tooltips on the first, middle, and last spots if data exists
-    if (_spots.isNotEmpty) {
-      showingTooltipOnSpots = [0];
-      if (_spots.length > 1) {
-        showingTooltipOnSpots.add((_spots.length / 2).floor());
-        if (_spots.length > 2) {
-          showingTooltipOnSpots.add(_spots.length - 1);
-        }
-      }
-    } else {
-      showingTooltipOnSpots = []; // No data, no tooltips
-    }
+    _processData(widget.data, widget.monthLabels);
   }
 
   @override
-  void didUpdateWidget(covariant MonthlyPatientsChart oldWidget) {
+  void didUpdateWidget(covariant DynamicMonthlyChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Check if the data itself has changed
-    if (oldWidget.data != widget.data) {
-      _processData(widget.data);
-      // Reset tooltips when data changes
-      showingTooltipOnSpots = [];
-      if (_spots.isNotEmpty) {
-        showingTooltipOnSpots = [0];
-        if (_spots.length > 1) {
-          showingTooltipOnSpots.add((_spots.length / 2).floor());
-          if (_spots.length > 2) {
-            showingTooltipOnSpots.add(_spots.length - 1);
-          }
-        }
-      }
+    // Check if the data or month labels have changed
+    if (oldWidget.data != widget.data ||
+        oldWidget.monthLabels != widget.monthLabels) {
+      _processData(widget.data, widget.monthLabels);
+      _showingTooltipOnMonths = {}; // Reset tooltips when data changes
     }
   }
 
-  // Processes the input data to create FlSpot and month labels
-  void _processData(List<MonthlyDataPoint> data) {
-    _spots = [];
-    _monthLabels = [];
-    for (int i = 0; i < data.length; i++) {
-      _spots.add(FlSpot(i.toDouble(), data[i].patients));
-      _monthLabels.add(data[i].month);
+  // Processes the input List<TreatmentData> and month labels to create dynamic FlSpot lists and line names
+  void _processData(List<TreatmentData> data, List<String> monthLabels) {
+    _dynamicSpots = [];
+    _monthLabels = monthLabels; // Set month labels directly
+    _lineNames = []; // Reset line names list
+
+    int maxLines =
+        data.length; // Number of lines is the number of treatment types
+    int maxMonths =
+        monthLabels.length; // Number of months is the length of month labels
+
+    if (maxLines > 0) {
+      // Initialize the list of spot lists and line names lists
+      _dynamicSpots = List.generate(maxLines, (_) => []);
+      _lineNames = List.generate(maxLines, (_) => '');
     }
+
+    double currentMaxY = 0.0;
+    for (int lineIndex = 0; lineIndex < maxLines; lineIndex++) {
+      final treatmentData = data[lineIndex];
+      _lineNames[lineIndex] = treatmentData.name; // Set the name for this line
+
+      // Populate the dynamic spot list for this line
+      for (int monthIndex = 0; monthIndex < maxMonths; monthIndex++) {
+        double patientValue = 0.0;
+        // If a value exists for this month for this treatment type, add the spot
+        if (monthIndex < treatmentData.values.length) {
+          patientValue = treatmentData.values[monthIndex];
+        }
+        // Add the spot (with value 0.0 if missing)
+        _dynamicSpots[lineIndex]
+            .add(FlSpot(monthIndex.toDouble(), patientValue));
+
+        if (patientValue > currentMaxY) {
+          currentMaxY = patientValue;
+        }
+      }
+    }
+
+    // Calculate dynamic maxY and yInterval
+    _calculateYAxis(currentMaxY);
+
     // Request a new frame to ensure the chart updates after data processing
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
-  // Widget builder for the bottom titles (month labels)
-  Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
-    final int index = value.toInt();
-    // Adjust font size based on chart width for responsiveness
-    final style = TextStyle(
+  // Calculates the appropriate maxY and yInterval based on the maximum data value
+  void _calculateYAxis(double currentMaxY) {
+    if (currentMaxY <= 0) {
+      _maxY = 10.0;
+      _yInterval = 1.0;
+      return;
+    }
+
+    // Add some padding to the max Y value
+    double paddedMaxY = currentMaxY * 1.2;
+
+    // Determine a suitable interval
+    double interval = 1.0;
+    while (paddedMaxY / interval > 10) {
+      // Aim for roughly 5-10 intervals
+      if (interval == 1 || interval == 2 || interval == 5) {
+        interval *= 2;
+      } else {
+        interval *= 5;
+      }
+    }
+    // Ensure interval is not 0 if paddedMaxY is very small
+    if (interval == 0) interval = 1.0;
+
+    _yInterval = interval;
+    // Round maxY up to the nearest interval
+    _maxY = (paddedMaxY / _yInterval).ceil() * _yInterval;
+    // Ensure maxY is at least the original max value if rounding down occurred
+    if (_maxY < currentMaxY) {
+      _maxY = (currentMaxY / _yInterval).ceil() * _yInterval;
+    }
+    // Ensure a minimum maxY
+    if (_maxY < 10) _maxY = 10;
+    // Ensure a minimum interval
+    if (_yInterval < 1) _yInterval = 1;
+
+    developer.log('Calculated maxY: $_maxY, yInterval: $_yInterval',
+        name: 'DynamicMonthlyChart'); // Debug log
+  }
+
+  // Determine the maximum X value needed for the chart
+  double _getMaxX() {
+    // Max X is the index of the last month plus some padding
+    return (_monthLabels.length > 0 ? _monthLabels.length - 1 : 0).toDouble() +
+        1;
+  }
+
+  // Configuration for touch interaction and tooltips
+  LineTouchData get lineTouchData => LineTouchData(
+        enabled: true, // Enable touch interaction
+        handleBuiltInTouches:
+            false, // Handle touches manually for click behavior
+        touchCallback: (FlTouchEvent event, LineTouchResponse? response) {
+          developer.log('Touch event: $event, Response: $response',
+              name: 'DynamicMonthlyChart'); // Debug log
+
+          if (response == null || response.lineBarSpots == null) {
+            return;
+          }
+          // Toggle tooltip visibility for the entire month on tap
+          if (event is FlTapUpEvent) {
+            final clickedSpot = response.lineBarSpots!.first;
+            final monthIndex =
+                clickedSpot.x.toInt(); // Get the month index (x-value)
+
+            developer.log(
+                'Tapped on month index: $monthIndex. Current showingTooltipOnMonths: $_showingTooltipOnMonths',
+                name: 'DynamicMonthlyChart'); // Debug log
+
+            setState(() {
+              // If the clicked month is already showing tooltips, remove it.
+              // Otherwise, clear the set and add the clicked month.
+              if (_showingTooltipOnMonths.contains(monthIndex)) {
+                _showingTooltipOnMonths.remove(monthIndex);
+              } else {
+                _showingTooltipOnMonths.clear(); // Clear previous months
+                _showingTooltipOnMonths.add(monthIndex); // Add the new month
+              }
+              developer.log(
+                  'Updated showingTooltipOnMonths: $_showingTooltipOnMonths',
+                  name: 'DynamicMonthlyChart'); // Debug log after update
+            });
+          }
+        },
+        mouseCursorResolver: (FlTouchEvent event, LineTouchResponse? response) {
+          if (response == null || response.lineBarSpots == null) {
+            return SystemMouseCursors.basic;
+          }
+          return SystemMouseCursors.click; // Show click cursor on hover
+        },
+        // Removed the indicator to fix tooltip visibility
+        // Configure the tooltip appearance and content (shown for clicked spots)
+        touchTooltipData: LineTouchTooltipData(
+          getTooltipColor: (touchedSpot) => const Color.fromARGB(
+              120, 176, 190, 197), // Tooltip background color
+          tooltipRoundedRadius: 8, // Rounded corners for tooltip
+          tooltipPadding: const EdgeInsets.symmetric(
+              horizontal: 8, vertical: 4), // Padding inside tooltip
+          getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+            developer.log('getTooltipItems called with: $lineBarsSpot',
+                name: 'DynamicMonthlyChart'); // Debug log
+            return lineBarsSpot.map((lineBarSpot) {
+              // Get the treatment name for this line
+              String treatmentName = '';
+              final lineIndex = lineBarSpot.barIndex;
+              if (lineIndex < _lineNames.length) {
+                treatmentName = _lineNames[lineIndex];
+              }
+
+              // Display the treatment name and count in the tooltip with the line's color
+              return LineTooltipItem(
+                '$treatmentName: ${lineBarSpot.y.toInt()}', // Display name and value
+                TextStyle(
+                  // Use TextStyle to set color
+                  color: lineBarSpot
+                      .bar.color, // Set text color to the line's color
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12, // Smaller font size for labels
+                ),
+              );
+            }).toList();
+          },
+        ),
+      );
+
+  // Configuration for axis titles and labels (adapted from original)
+  FlTitlesData get titlesData => FlTitlesData(
+        bottomTitles: AxisTitles(
+          sideTitles: bottomTitles, // Bottom axis titles (months)
+        ),
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false), // Hide right axis titles
+        ),
+        topTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false), // Hide top axis titles
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: leftTitles(), // Left axis titles (patient counts)
+        ),
+      );
+
+  // Data for the lines using dynamic data and original styles
+  List<LineChartBarData> get lineBarsData {
+    developer.log(
+        'lineBarsData getter called. Showing tooltips for months: $_showingTooltipOnMonths',
+        name: 'DynamicMonthlyChart'); // Debug log
+
+    List<LineChartBarData> bars = [];
+    for (int i = 0; i < _dynamicSpots.length; i++) {
+      // Get a unique color for this line from the combined color list
+      Color lineColor = allLineColors[i % allLineColors.length];
+
+      // Determine if this line has consecutive 0s to adjust curve smoothness
+      bool hasConsecutiveZeros = false;
+      for (int j = 0; j < _dynamicSpots[i].length - 1; j++) {
+        if (_dynamicSpots[i][j].y == 0.0 && _dynamicSpots[i][j + 1].y == 0.0) {
+          hasConsecutiveZeros = true;
+          break;
+        }
+      }
+
+      bars.add(LineChartBarData(
+        // showingIndicators is not used when showingTooltipIndicators is set in LineChartData
+        isCurved: true, // Ensure lines are curved
+        // Adjust curve smoothness if there are consecutive zeros
+        curveSmoothness: hasConsecutiveZeros
+            ? 0.0
+            : 0.35, // Reduced default smoothness slightly
+        color: lineColor,
+        barWidth: 2, // Made lines slightly thinner
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          // Configure data points (dots)
+          // Show dots only if the month's tooltip is active
+          checkToShowDot: (spot, barData) {
+            return _showingTooltipOnMonths.contains(spot.x.toInt());
+          },
+          getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+            radius: 4, // Dot size
+            color: barData.color!, // Dot color matches line color
+            strokeWidth: 1, // Border width
+            strokeColor: Colors.black54, // Border color
+          ),
+        ),
+        belowBarData: BarAreaData(
+            show: false), // Hide area below the line (from original)
+        spots: _dynamicSpots[i], // Use dynamic data for this line
+      ));
+    }
+    return bars;
+  }
+
+  // Widget builder for the left axis titles (dynamic based on interval)
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
       fontWeight: FontWeight.bold,
-      color: cyan300,
-      fontSize: 16 * chartWidth / 500, // Scale font size
+      fontSize: 12,
     );
-    String text = '';
+    // Only show labels for values that are multiples of the interval
+    if (value % _yInterval == 0) {
+      return SideTitleWidget(
+        axisSide: AxisSide.left,
+        child: Text(
+          value.toInt().toString(), // Display the integer value
+          style: style,
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+    return Container(); // Hide labels for other values
+  }
+
+  // Configuration for the left axis titles (dynamic interval)
+  SideTitles leftTitles() => SideTitles(
+        getTitlesWidget: leftTitleWidgets, // Use the custom widget builder
+        showTitles: true, // Show the titles
+        interval: _yInterval, // Use the dynamically calculated interval
+        reservedSize: 40, // Reserve space for the titles
+      );
+
+  // Widget builder for the bottom axis titles (months) using dynamic labels
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: cyan600,
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    final int index = value.toInt();
+    Widget textWidget = const Text(''); // Default empty widget
+
+    // Use the dynamically generated month labels
     if (index >= 0 && index < _monthLabels.length) {
-      text = _monthLabels[index];
+      textWidget = Text(_monthLabels[index], style: style);
     }
 
     return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 4,
-      child: Text(text, style: style),
+      space: 10, // Space between title and axis line
+      axisSide: AxisSide.bottom,
+      child: textWidget,
     );
   }
+
+  // Configuration for the bottom axis titles
+  SideTitles get bottomTitles => SideTitles(
+        showTitles: true, // Show the titles
+        reservedSize: 32, // Reserve space for the titles
+        interval: 1, // Show titles at an interval of 1 to show all months
+        getTitlesWidget: bottomTitleWidgets, // Use the custom widget builder
+      );
+
+  // Configuration for grid lines (horizontal dashed lines)
+  FlGridData get gridData => FlGridData(
+        show: true, // Show grid lines
+        drawVerticalLine: false, // Hide vertical lines
+        drawHorizontalLine: true, // Show horizontal lines
+        getDrawingHorizontalLine: (value) {
+          // Only draw lines at multiples of the yInterval
+          if (value % _yInterval == 0) {
+            return const FlLine(
+              color: Color.fromARGB(134, 18, 124, 113), // Grid line color
+              strokeWidth: 1,
+              dashArray: [5, 5], // Make the line dashed
+            );
+          }
+          return const FlLine(
+              color: Colors.transparent); // Hide lines at other values
+        },
+        horizontalInterval:
+            _yInterval, // Use the dynamically calculated interval
+      );
+
+  // Configuration for the chart border (from original)
+  FlBorderData get borderData => FlBorderData(
+        show: true, // Show the border
+        border: Border(
+          bottom: BorderSide(
+            color:
+                const Color.fromARGB(134, 18, 124, 113), // Bottom border color
+          ),
+          left: const BorderSide(
+              color: Color.fromARGB(133, 18, 124, 113)), // Hide left border
+          right:
+              const BorderSide(color: Colors.transparent), // Hide right border
+          top: const BorderSide(color: Colors.transparent), // Hide top border
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
-    // Define the line chart bar data using the processed spots
-    final lineBarsData = [
-      LineChartBarData(
-        showingIndicators: showingTooltipOnSpots,
-        spots: _spots,
-        isCurved: true,
-        barWidth: 4,
-        shadow: const Shadow(
-          blurRadius: 8,
-        ),
-        belowBarData: BarAreaData(
-          show: true,
-          gradient: LinearGradient(
-            colors: [
-              widget.gradientColor1,
-              widget.gradientColor2,
-              widget.gradientColor3,
-              widget.gradientColor4,
-            ],
-          ),
-        ),
-        dotData: const FlDotData(show: true),
-        gradient: LinearGradient(
-          colors: [
-            widget.gradientColor1,
-            widget.gradientColor2,
-            widget.gradientColor3,
-            widget.gradientColor4,
-          ],
-          stops: const [0.1, 0.4, 0.7, 0.9],
-        ),
+    developer.log('Building DynamicMonthlyChart',
+        name: 'DynamicMonthlyChart'); // Debug log
+
+    // Build the list of ShowingTooltipIndicators based on the months with tooltips showing
+    List<ShowingTooltipIndicators> tooltipIndicators = [];
+    if (_showingTooltipOnMonths.isNotEmpty && _dynamicSpots.isNotEmpty) {
+      for (int monthIndex in _showingTooltipOnMonths) {
+        List<LineBarSpot> spotsForMonth = [];
+        // Add a LineBarSpot for each line at the current month index
+        for (int lineIndex = 0; lineIndex < _dynamicSpots.length; lineIndex++) {
+          // Ensure the month index is within the bounds of the data for this line
+          if (monthIndex < _dynamicSpots[lineIndex].length) {
+            spotsForMonth.add(LineBarSpot(
+                lineBarsData[lineIndex], // The LineChartBarData for this line
+                lineIndex, // The index of this line bar
+                _dynamicSpots[lineIndex]
+                    [monthIndex] // The FlSpot for this month and line
+                ));
+          }
+        }
+        if (spotsForMonth.isNotEmpty) {
+          tooltipIndicators.add(ShowingTooltipIndicators(spotsForMonth));
+        }
+      }
+    }
+
+    return LineChart(
+      LineChartData(
+        lineTouchData: lineTouchData, // Use the updated touch configuration
+        gridData: gridData, // Grid lines configuration (dynamic and dashed)
+        titlesData:
+            titlesData, // Axis titles and labels configuration (dynamic Y-axis)
+        borderData: borderData, // Chart border configuration (from original)
+        lineBarsData:
+            lineBarsData, // Data for the lines (dynamic, colors, dots, zero handling)
+        minX: 0, // Minimum value for the X-axis
+        // Determine maxX dynamically based on the number of months
+        maxX: _getMaxX(),
+        minY: 0, // Minimum value for the Y-axis is always 0
+        // Determine maxY dynamically based on the maximum value across all data lists
+        maxY: _maxY,
+        // Provide the list of tooltip indicators directly to LineChartData
+        showingTooltipIndicators: tooltipIndicators,
       ),
-    ];
+      duration: const Duration(milliseconds: 250), // Animation duration
+    );
+  }
+}
 
-    // Determine which bar to show tooltips on (in this case, the only one)
-    final tooltipsOnBar = lineBarsData[0];
+// This widget manages the state and displays the DynamicMonthlyChart
+class MonthlySessionsTypeChart extends StatefulWidget {
+  // Accepts a single list of MonthlyMultiDataPoint
+  const MonthlySessionsTypeChart({
+    super.key,
+    required this.data,
+    required this.monthLabels, // Added monthLabels parameter
+  });
 
+  final List<TreatmentData> data; // Changed to List<TreatmentData>
+  final List<String> monthLabels; // Added monthLabels parameter
+
+  @override
+  State<StatefulWidget> createState() => MonthlySessionsTypeChartState();
+}
+
+class MonthlySessionsTypeChartState extends State<MonthlySessionsTypeChart> {
+  @override
+  Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 2,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24.0,
-          vertical: 1,
-        ),
-        // Use LayoutBuilder to get the chart width for responsive titles
-        child: LayoutBuilder(builder: (context, constraints) {
-          return LineChart(
-            LineChartData(
-              // Configure showing tooltip indicators
-              showingTooltipIndicators: showingTooltipOnSpots.map((index) {
-                return ShowingTooltipIndicators([
-                  LineBarSpot(
-                    tooltipsOnBar,
-                    lineBarsData.indexOf(tooltipsOnBar),
-                    tooltipsOnBar.spots[index],
-                  ),
-                ]);
-              }).toList(),
-              // Configure line touch behavior
-              lineTouchData: LineTouchData(
-                enabled: true,
-                handleBuiltInTouches: false,
-                touchCallback:
-                    (FlTouchEvent event, LineTouchResponse? response) {
-                  if (response == null || response.lineBarSpots == null) {
-                    return;
-                  }
-                  // Toggle tooltip visibility on tap
-                  if (event is FlTapUpEvent) {
-                    final spotIndex = response.lineBarSpots!.first.spotIndex;
-                    setState(() {
-                      if (showingTooltipOnSpots.contains(spotIndex)) {
-                        showingTooltipOnSpots.remove(spotIndex);
-                      } else {
-                        showingTooltipOnSpots.add(spotIndex);
-                      }
-                    });
-                  }
-                },
-                // Set mouse cursor on hover
-                mouseCursorResolver:
-                    (FlTouchEvent event, LineTouchResponse? response) {
-                  if (response == null || response.lineBarSpots == null) {
-                    return SystemMouseCursors.basic;
-                  }
-                  return SystemMouseCursors.click;
-                },
-                // Customize the indicator shown when a spot is touched
-                getTouchedSpotIndicator:
-                    (LineChartBarData barData, List<int> spotIndexes) {
-                  return spotIndexes.map((index) {
-                    return TouchedSpotIndicatorData(
-                      const FlLine(
-                        color: cyan50op, // Indicator line color
-                      ),
-                      FlDotData(
-                        show: true,
-                        getDotPainter: (spot, percent, barData, index) =>
-                            FlDotCirclePainter(
-                          radius: 5,
-                          color: lerpGradient(
-                            // Use lerpGradient for dot color
-                            barData.gradient!.colors,
-                            barData.gradient!.stops!,
-                            percent / 100,
-                          ),
-                          strokeWidth: 2,
-                          strokeColor: widget
-                              .indicatorStrokeColor, // Indicator stroke color
-                        ),
-                      ),
-                    );
-                  }).toList();
-                },
-                // Configure the tooltip appearance and content
-                touchTooltipData: LineTouchTooltipData(
-                  getTooltipColor: (touchedSpot) =>
-                      cyan500, // Tooltip background color
-                  tooltipRoundedRadius: 20,
-                  tooltipBorder: const BorderSide(
-                    color: cyan50op, // Tooltip border color
-                    width: 6,
-                  ),
-                  getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
-                    return lineBarsSpot.map((lineBarSpot) {
-                      return LineTooltipItem(
-                        lineBarSpot.y
-                            .toInt()
-                            .toString(), // Display patient count as integer
-                        const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }).toList();
-                  },
-                ),
-              ),
-              lineBarsData: lineBarsData,
-              minY: 0,
-              // Use the calculated max value for maxY
-              maxY: maxval(_spots),
-              baselineY: 0,
-              backgroundColor: const Color.fromARGB(
-                  62, 211, 241, 238), // Chart background color
-              titlesData: FlTitlesData(
-                leftTitles: const AxisTitles(
-                  axisNameWidget: Text(
-                    'عدد المرضى', // Left axis name
-                    style: TextStyle(
-                        color: cyan500,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  axisNameSize: 24,
-                  sideTitles: SideTitles(
-                    showTitles: false, // Hide left side titles
-                    reservedSize: 0,
-                  ),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true, // Show bottom titles (months)
-                    interval: 1,
-                    getTitlesWidget: (value, meta) {
-                      // Use the bottomTitleWidgets function to get month labels
-                      return bottomTitleWidgets(
-                        value,
-                        meta,
-                        constraints
-                            .maxWidth, // Pass chart width for responsiveness
-                      );
-                    },
-                    reservedSize: 30,
-                  ),
-                ),
-                rightTitles: const AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false, // Hide right side titles
-                  ),
-                ),
-                topTitles: const AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false, // Hide top titles
-                  ),
-                ),
-              ),
-              gridData: const FlGridData(show: false), // Hide grid lines
-              borderData: FlBorderData(
-                show: true,
-                border: Border.all(
-                  color: cyan100, // Border color
-                ),
+      aspectRatio: 1.23, // Aspect ratio of the chart container
+      child: Column(
+        // Arrange chart elements vertically
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // const SizedBox(
+          //   height: 37, // Spacing
+          // ),
+          // Removed the chart title Text widget
+          // const SizedBox(
+          //   height: 37, // Spacing
+          // ),
+          Expanded(
+            // Allow the chart to fill available space
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  right: 16, left: 6), // Padding around the chart
+              // Pass the dynamic TreatmentData list and month labels to the chart widget
+              child: DynamicMonthlyChart(
+                data: widget.data,
+                monthLabels: widget.monthLabels,
               ),
             ),
-          );
-        }),
+          ),
+          const SizedBox(
+            height: 10, // Spacing
+          ),
+        ],
       ),
     );
   }
 }
 
-// Helper function to interpolate colors in a gradient
-Color lerpGradient(List<Color> colors, List<double> stops, double t) {
-  if (colors.isEmpty) {
-    throw ArgumentError('"colors" is empty.');
-  } else if (colors.length == 1) {
-    return colors[0];
-  }
+// Example of how a parent widget would use MonthlySessionsTypeChart
+/*
+class ParentWidget extends StatelessWidget {
+  // Sample dynamic data using TreatmentData for January to June
+  final List<TreatmentData> monthlyTreatmentData = [
+    TreatmentData(name: 'Fillings', values: [190, 250, 0, 210, 240, 300]), // Values for Jan-Jun
+    TreatmentData(name: 'Extractions', values: [130, 180, 200, 160, 190, 220]),
+    TreatmentData(name: 'Cleanings', values: [80, 120, 0, 110, 130, 160]),
+    TreatmentData(name: 'Root Canals', values: [50, 0, 90, 0, 0, 0]), // Example with missing values
+    TreatmentData(name: 'Crowns', values: [0, 0, 60, 0, 0, 0]), // Example with missing values
+  ];
 
-  if (stops.length != colors.length) {
-    stops = [];
-    colors.asMap().forEach((index, color) {
-      final percent = 1.0 / (colors.length - 1);
-      stops.add(percent * index);
-    });
-  }
+  final List<String> months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو']; // Month labels
 
-  for (var s = 0; s < stops.length - 1; s++) {
-    final leftStop = stops[s];
-    final rightStop = stops[s + 1];
-    final leftColor = colors[s];
-    final rightColor = colors[s + 1];
-    if (t <= leftStop) {
-      return leftColor;
-    } else if (t < rightStop) {
-      final sectionT = (t - leftStop) / (rightStop - leftStop);
-      return Color.lerp(leftColor, rightColor, sectionT)!;
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Monthly Treatments Chart')),
+      body: Center(
+        child: MonthlySessionsTypeChart(
+          data: monthlyTreatmentData,
+          monthLabels: months,
+        ),
+      ),
+    );
   }
-  return colors.last;
 }
-
-// Helper function to calculate a suitable maximum Y value for the chart
-// Note: The logic here seems specific to your requirements for rounding and adding.
-maxval(List<FlSpot> data) {
-  double max = 0;
-  for (var element in data) {
-    if (element.y > max) {
-      max = element.y;
-    }
-  }
-
-  // Round down to the nearest hundred
-  max = (max / 100).floor() * 100.0;
-
-  // Add 100 or 200 based on the rounded value
-  if ((max / 100) % 2 == 0) {
-    max += 200;
-  } else {
-    max += 100;
-  }
-
-  // Ensure a minimum maxY if data is empty or all values are 0
-  if (max < 100 && data.isNotEmpty) {
-    max = 100;
-  } else if (data.isEmpty) {
-    max = 10; // Default max for empty data
-  }
-
-  return max;
-}
+*/
