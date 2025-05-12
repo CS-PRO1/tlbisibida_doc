@@ -40,19 +40,18 @@ Dialog addOpDialog(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text('أدخل  اسم المصاريف '),
                     SizedBox(
                       width: 250,
-                      child: defaultTextField(catnamecontroller, context, ''),
+                      child: defaultTextField(
+                          catnamecontroller, context, 'أدخل  اسم المصاريف '),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                        'أدخل المبلغ                                                                                                        '),
                     SizedBox(
                       width: 250,
-                      child: defaultTextField(catnamecontroller, context, ''),
+                      child: defaultTextField(
+                          catnamecontroller, context, 'أدخل المبلغ'),
                     ),
                     const SizedBox(
                       height: 10,
