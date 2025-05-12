@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-class _LineChart extends StatelessWidget {
-  const _LineChart({required this.isShowingMainData});
+class MonthlySessionTypeChart extends StatelessWidget {
+  const MonthlySessionTypeChart({super.key, required this.isShowingMainData});
 
   final bool isShowingMainData;
 
@@ -336,7 +336,7 @@ class LineChartSample1State extends State<LineChartSample1> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16, left: 6),
-                  child: _LineChart(isShowingMainData: isShowingMainData),
+                  child: MonthlySessionTypeChart(isShowingMainData: isShowingMainData),
                 ),
               ),
               const SizedBox(
