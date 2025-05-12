@@ -311,7 +311,7 @@ class LineChartSample1State extends State<LineChartSample1> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.23,
+      aspectRatio: 2,
       child: Stack(
         children: <Widget>[
           Column(
@@ -336,7 +336,8 @@ class LineChartSample1State extends State<LineChartSample1> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16, left: 6),
-                  child: MonthlySessionTypeChart(isShowingMainData: isShowingMainData),
+                  child: MonthlySessionTypeChart(
+                      isShowingMainData: isShowingMainData),
                 ),
               ),
               const SizedBox(

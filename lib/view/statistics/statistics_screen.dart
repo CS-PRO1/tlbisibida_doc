@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/view/statistics/component/inventory_count_chart.d
 import 'package:tlbisibida_doc/view/statistics/component/monthly_financial_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_frequent_expenses_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_patients_chart.dart';
+import 'package:tlbisibida_doc/view/statistics/component/monthly_session_type_chart.dart';
 
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({super.key});
@@ -247,7 +248,56 @@ class StatisticsScreen extends StatelessWidget {
                                   ),
                                 )
                               : (_table.value == 'العلاجات')
-                                  ? Text('data,')
+                                  ? SingleChildScrollView(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0, bottom: 15),
+                                            child: Text(
+                                              'عدد المرضى شهريا',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: cyan600),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: .5,
+                                            width: 200,
+                                            color: cyan600,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          ),
+                                          SizedBox(
+                                            height: 300,
+                                            // width: 300,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0),
+                                              child: MonthlySessionTypeChart(
+                                                isShowingMainData: true,
+                                              ),
+                                            ),
+                                          ),
+                                          //
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0, bottom: 50),
+                                            child: Container(
+                                              width: 200,
+                                              height: .5,
+                                              color: cyan500,
+                                            ),
+                                          ),
+                                          //
+                                        ],
+                                      ),
+                                    )
                                   : Column(
                                       children: [
                                         Center(
