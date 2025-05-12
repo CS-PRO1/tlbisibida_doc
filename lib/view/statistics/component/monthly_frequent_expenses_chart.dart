@@ -173,9 +173,9 @@ class MonthlyFrequentExpensesChartState extends State {
               ),
             ),
           ),
-          const SizedBox(
-            height: 18, // Spacing at the bottom
-          ),
+          // const SizedBox(
+          //   height: 18, // Spacing at the bottom
+          // ),
         ],
       ),
     );
