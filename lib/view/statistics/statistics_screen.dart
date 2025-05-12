@@ -415,12 +415,12 @@ class StatisticsScreen extends StatelessWidget {
                                                         ]), // Example with missing values
                                                   ],
                                                   monthLabels: [
-                                                    'يناير',
-                                                    'فبراير',
-                                                    'مارس',
-                                                    'أبريل',
-                                                    'مايو',
-                                                    'يونيو'
+                                                    'يوليو',
+                                                    'أغسطس',
+                                                    'سبتمبر',
+                                                    'أكتوبر',
+                                                    'نوفمبر',
+                                                    'ديسمبر',
                                                   ] // Month labels
 
                                                   ),
