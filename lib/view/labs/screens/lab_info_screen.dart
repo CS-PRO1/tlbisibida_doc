@@ -34,7 +34,10 @@ class LabInfoScreen extends StatelessWidget {
                         children: [
                           Text(
                             '-600,000',
+                                                          textDirection: TextDirection.ltr,
+
                             style: TextStyle(
+                              
                                 fontSize: 18,
                                 color: cyan600,
                                 fontWeight: FontWeight.bold),

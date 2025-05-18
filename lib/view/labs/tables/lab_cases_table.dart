@@ -10,8 +10,9 @@ import 'package:tlbisibida_doc/services/navigation/routes.dart';
 /// Example without datasource
 // ignore: must_be_immutable
 class LabCasesTable extends StatelessWidget {
-  LabCasesTable({super.key});
-  int count = 10;
+  LabCasesTable({super.key, this.data});
+  List? data;
+  // int count = 10;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -28,7 +29,7 @@ class LabCasesTable extends StatelessWidget {
         // margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: (56 * count) + 40,
+            height: (56 * data!.length) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,
@@ -59,26 +60,28 @@ class LabCasesTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                count,
+                data!.length,
                 (index) => DataRow(
                   cells: [
                     DataCell(Center(
                         child: CustomText(
-                      text: DateFormat.yMd().format(DateTime.now()),
+                      text: DateFormat.yMd().format(data![index]['date']) ??
+                          DateFormat.yMd().format(DateTime.now()),
                       size: 14,
                       alignment: TextAlign.center,
                     ))),
                     DataCell(Center(
                         child: CustomText(
-                      text: 'تحسين التحسيني',
+                      text: data![index]['name'] ?? 'null التحسيني',
                       size: 14,
                       alignment: TextAlign.center,
                     ))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        locator<NavigationService>()
-                            .navigateTo(caseDetailsRoute);
+                        // locator<NavigationService>()
+                        //     .navigateTo(caseDetailsRoute);
+                        Navigator.pushNamed(context, caseDetailsRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

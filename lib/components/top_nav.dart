@@ -79,7 +79,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                     onChanged: (value) {
                       // locator<NavigationService>().navigateTo(value!.$3);
-                      Navigator.of(context).pushNamed(value!.$3);
+                      Navigator.pushNamed(context,value!.$3);
                     },
                     dropdownBuilder: (ctx, selectedItem) => Icon(
                       Icons.menu,

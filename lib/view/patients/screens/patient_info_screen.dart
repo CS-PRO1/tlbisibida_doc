@@ -210,7 +210,8 @@ class PatientInfoScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              '-250 000',
+                              textDirection: TextDirection.ltr,
+                              '-250,000',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
@@ -256,7 +257,7 @@ class PatientInfoScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(addSessionDetailsRoute);
+          Navigator.pushNamed(context, addSessionDetailsRoute);
         },
         mini: true,
         backgroundColor: cyan400,

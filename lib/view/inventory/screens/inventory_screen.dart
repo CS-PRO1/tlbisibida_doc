@@ -217,7 +217,7 @@ class InventoryScreen extends StatelessWidget {
                 fontSize: 18,
               )),
           onPressed: () {
-            Navigator.of(context).pushNamed(itemListRoute);
+            Navigator.pushNamed(context,itemListRoute);
           },
         ),
         Row(

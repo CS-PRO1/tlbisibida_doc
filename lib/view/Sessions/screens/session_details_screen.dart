@@ -171,10 +171,10 @@ class SessionDetailsScreen extends StatelessWidget {
                 height: 10,
               ),
               defaultButton(
-                text: 'إرسال الحالة إلى مخبر',
-                function: () =>
-                    locator<NavigationService>().navigateTo(sendCaseToLabRoute),
-              )
+                  text: 'إرسال الحالة إلى مخبر',
+                  function: () =>
+                      // locator<NavigationService>().navigateTo(sendCaseToLabRoute),
+                      Navigator.pushNamed(context, sendCaseToLabRoute))
             ],
           ),
         ),
@@ -182,7 +182,7 @@ class SessionDetailsScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(editSessionDetailsRoute);
+          Navigator.pushNamed(context, editSessionDetailsRoute);
         },
         mini: true,
         backgroundColor: cyan400,

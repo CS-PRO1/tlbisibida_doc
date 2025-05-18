@@ -272,8 +272,9 @@ class AppointmentsCalendarScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Navigate to the add appointment route
-            locator<NavigationService>().navigateTo(
-                addAppointmentRoute); // Assuming addAppointmentRoute is defined
+            // locator<NavigationService>().navigateTo(
+            //     addAppointmentRoute); // Assuming addAppointmentRoute is defined
+                Navigator.pushNamed(context, addAppointmentRoute);
           },
           mini: true,
           backgroundColor: cyan400, // Assuming cyan400 is defined

@@ -66,6 +66,7 @@ class LabsFinanceTable extends StatelessWidget {
                     ))),
                     DataCell(Center(
                         child: CustomText(
+                      textDirection: TextDirection.ltr,
                       text: '-1,150,000',
                       size: 14,
                       alignment: TextAlign.center,
@@ -73,7 +74,8 @@ class LabsFinanceTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        locator<NavigationService>().navigateTo(labInfoRoute);
+                        // locator<NavigationService>().navigateTo(labInfoRoute);
+                        Navigator.pushNamed(context, labInfoRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

@@ -99,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    locator<NavigationService>().navigateTo(rootRoute);
+                    Navigator.pushNamed(context, rootRoute);
                   },
                   child: Container(
                     decoration: BoxDecoration(

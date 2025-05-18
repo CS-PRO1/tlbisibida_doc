@@ -77,8 +77,9 @@ class AppointmentLogTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        locator<NavigationService>()
-                            .navigateTo(sessionDetailsRoute);
+                        // locator<NavigationService>()
+                        //     .navigateTo(sessionDetailsRoute);
+                        Navigator.pushNamed(context, sessionDetailsRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

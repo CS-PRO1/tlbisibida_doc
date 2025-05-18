@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 Widget patientInfoButton(BuildContext context) {
   return InkWell(
     onTap: () {
-      locator<NavigationService>().navigateTo(patientInfoRoute);
+      // locator<NavigationService>().navigateTo(patientInfoRoute);
+      Navigator.pushNamed(context, patientInfoRoute);
     },
     child: Container(
       width: double.infinity,
