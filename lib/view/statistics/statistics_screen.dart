@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/view/statistics/component/inventory_count_chart.d
 import 'package:tlbisibida_doc/view/statistics/component/monthly_financial_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_frequent_expenses_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_patients_chart.dart';
+import 'package:tlbisibida_doc/view/statistics/component/monthly_session_type_chart.dart';
 
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({super.key});
@@ -247,7 +248,191 @@ class StatisticsScreen extends StatelessWidget {
                                   ),
                                 )
                               : (_table.value == 'العلاجات')
-                                  ? Text('data,')
+                                  ? SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0, bottom: 15),
+                                            child: Text(
+                                              'عدد المرضى لكل علاج',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: cyan600),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: .5,
+                                            width: 200,
+                                            color: cyan600,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          ),
+                                          SizedBox(
+                                            height: 400,
+                                            // width: 300,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0),
+                                              child: MonthlySessionsTypeChart(
+                                                  data: [
+                                                    TreatmentData(
+                                                        name: 'Fillings',
+                                                        values: [
+                                                          190,
+                                                          250,
+                                                          0,
+                                                          210,
+                                                          240,
+                                                          300
+                                                        ]), // Values for Jan-Jun
+                                                    TreatmentData(
+                                                        name: 'Extractions',
+                                                        values: [
+                                                          130,
+                                                          180,
+                                                          200,
+                                                          160,
+                                                          190,
+                                                          220
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Cleanings',
+                                                        values: [
+                                                          80,
+                                                          120,
+                                                          150,
+                                                          110,
+                                                          130,
+                                                          160
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Root Canals',
+                                                        values: [
+                                                          50,
+                                                          350,
+                                                          90,
+                                                          0,
+                                                          200,
+                                                          0
+                                                        ]), // Example with missing values
+                                                    TreatmentData(
+                                                        name: 'Crowns',
+                                                        values: [
+                                                          100,
+                                                          110,
+                                                          60,
+                                                          180,
+                                                          290,
+                                                          370
+                                                        ]), // Example with missing values
+                                                  ],
+                                                  monthLabels: [
+                                                    'يناير',
+                                                    'فبراير',
+                                                    'مارس',
+                                                    'أبريل',
+                                                    'مايو',
+                                                    'يونيو'
+                                                  ] // Month labels
+
+                                                  ),
+                                            ),
+                                          ),
+
+                                          //
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0, bottom: 50),
+                                            child: Container(
+                                              width: 200,
+                                              height: .5,
+                                              color: cyan500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 400,
+                                            // width: 300,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0),
+                                              child: MonthlySessionsTypeChart(
+                                                  data: [
+                                                    TreatmentData(
+                                                        name: 'Fillings',
+                                                        values: [
+                                                          190,
+                                                          250,
+                                                          0,
+                                                          210,
+                                                          240,
+                                                          300
+                                                        ]), // Values for Jan-Jun
+                                                    TreatmentData(
+                                                        name: 'Extractions',
+                                                        values: [
+                                                          130,
+                                                          180,
+                                                          200,
+                                                          160,
+                                                          190,
+                                                          220
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Cleanings',
+                                                        values: [
+                                                          80,
+                                                          120,
+                                                          150,
+                                                          110,
+                                                          130,
+                                                          160
+                                                        ]),
+                                                    TreatmentData(
+                                                        name: 'Root Canals',
+                                                        values: [
+                                                          50,
+                                                          350,
+                                                          90,
+                                                          0,
+                                                          200,
+                                                          0
+                                                        ]), // Example with missing values
+                                                    TreatmentData(
+                                                        name: 'Crowns',
+                                                        values: [
+                                                          100,
+                                                          110,
+                                                          60,
+                                                          180,
+                                                          290,
+                                                          370
+                                                        ]), // Example with missing values
+                                                  ],
+                                                  monthLabels: [
+                                                    'يوليو',
+                                                    'أغسطس',
+                                                    'سبتمبر',
+                                                    'أكتوبر',
+                                                    'نوفمبر',
+                                                    'ديسمبر',
+                                                  ] // Month labels
+
+                                                  ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          )
+                                          //
+                                        ],
+                                      ),
+                                    )
                                   : Column(
                                       children: [
                                         Center(
