@@ -16,14 +16,14 @@ class ChartData {
   ChartData({required this.text, required this.value, required this.color});
 }
 
-class MonthlyFrequentExpensesChart extends StatefulWidget {
-  const MonthlyFrequentExpensesChart({super.key});
+class MonthlyOpExpensesChart extends StatefulWidget {
+  const MonthlyOpExpensesChart({super.key});
 
   @override
-  State<StatefulWidget> createState() => MonthlyFrequentExpensesChartState();
+  State<StatefulWidget> createState() => MonthlyOpExpensesChartState();
 }
 
-class MonthlyFrequentExpensesChartState extends State {
+class MonthlyOpExpensesChartState extends State {
   int touchedIndex = -1;
 
   // Define the raw data for the pie chart sections
