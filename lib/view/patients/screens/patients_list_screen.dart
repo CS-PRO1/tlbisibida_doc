@@ -17,6 +17,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 5, 15),
     'added_date': DateTime(2022, 1, 10),
+    'credits': -520000
   },
   {
     'name': 'عثمان عبد الجليل ششه',
@@ -25,6 +26,7 @@ List<Map> mockPatients = [
     'is_smoker': true,
     'last_appointment': DateTime(2023, 6, 20),
     'added_date': DateTime(2021, 11, 5),
+    'credits': -1000000
   },
   {
     'name': 'أحمد محمد علي',
@@ -33,6 +35,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 4, 10),
     'added_date': DateTime(2023, 2, 15),
+    'credits': 52000
   },
   {
     'name': 'زينب حسن خالد',
@@ -41,6 +44,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 7, 1),
     'added_date': DateTime(2022, 8, 20),
+    'credits': -100000
   },
   {
     'name': 'سارة عبد الرحمن',
@@ -49,6 +53,7 @@ List<Map> mockPatients = [
     'is_smoker': true,
     'last_appointment': DateTime(2023, 3, 5),
     'added_date': DateTime(2022, 5, 12),
+    'credits': -75000
   },
   {
     'name': 'خالد مصطفى عمر',
@@ -57,6 +62,7 @@ List<Map> mockPatients = [
     'is_smoker': true,
     'last_appointment': DateTime(2023, 8, 12),
     'added_date': DateTime(2021, 9, 3),
+    'credits': 25000
   },
   {
     'name': 'نورا صلاح الدين',
@@ -65,6 +71,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 2, 28),
     'added_date': DateTime(2023, 1, 7),
+    'credits': -98765
   },
   {
     'name': 'يوسف أحمد إبراهيم',
@@ -73,6 +80,7 @@ List<Map> mockPatients = [
     'is_smoker': true,
     'last_appointment': DateTime(2023, 9, 5),
     'added_date': DateTime(2022, 3, 18),
+    'credits': -65000
   },
   {
     'name': 'هديل سعيد محمد',
@@ -81,6 +89,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 1, 15),
     'added_date': DateTime(2022, 11, 30),
+    'credits': -23500
   },
   {
     'name': 'عمر فاروق ناصر',
@@ -89,6 +98,7 @@ List<Map> mockPatients = [
     'is_smoker': false,
     'last_appointment': DateTime(2023, 7, 25),
     'added_date': DateTime(2023, 4, 5),
+    'credits': -480000
   },
 ];
 
@@ -99,6 +109,7 @@ enum SortOption {
   lastAppointmentDesc,
   addedDateAsc,
   addedDateDesc,
+  creditsAsc,
 }
 
 class PatientsListScreen extends StatefulWidget {
@@ -164,6 +175,9 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
           filteredInfo
               .sort((a, b) => b['added_date'].compareTo(a['added_date']));
           break;
+        case SortOption.creditsAsc:
+          filteredInfo.sort((a, b) => a['credits'].compareTo(b['credits']));
+          break;
       }
     });
   }
@@ -214,6 +228,12 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
                   context,
                   'تاريخ الإضافة (الأحدث أولاً)',
                   SortOption.addedDateDesc,
+                ),
+                const Divider(),
+                _buildSortOptionTile(
+                  context,
+                  'الرصيد (الأقل أولاً)',
+                  SortOption.creditsAsc,
                 ),
               ],
             ),
@@ -357,6 +377,8 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
         return 'مرتب حسب: تاريخ الإضافة (الأقدم أولاً)';
       case SortOption.addedDateDesc:
         return 'مرتب حسب: تاريخ الإضافة (الأحدث أولاً)';
+      case SortOption.creditsAsc:
+        return 'مرتب حسب الرصيد (الأقل أولاً)';
     }
   }
 }

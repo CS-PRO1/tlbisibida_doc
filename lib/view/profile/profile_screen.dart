@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/profile/profile_edit_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -33,9 +34,10 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProfileEditScreen(),
-          ));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => ProfileEditScreen(),
+          // ));
+          Navigator.pushNamed(context, profileEditRoute);
         },
         mini: true,
         backgroundColor: cyan400,

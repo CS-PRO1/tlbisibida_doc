@@ -284,8 +284,9 @@ class LabsListScreen extends StatelessWidget {
                             //   context: context,
                             //   builder: (context) => PaymentManagementDialog(),
                             // );
-                            locator<NavigationService>()
-                                .navigateTo(labInfoRoute);
+                            // locator<NavigationService>()
+                            //     .navigateTo(labInfoRoute);
+                            Navigator.pushNamed(context, labInfoRoute);
                           }),
                       const SizedBox(
                         height: 50,

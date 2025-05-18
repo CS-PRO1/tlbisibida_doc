@@ -1,11 +1,133 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_drawing/path_drawing.dart';
-import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming cyan400, cyan500, cyan600 are defined here
 import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:xml/xml.dart';
 
+// Assuming these data models and ToothBorder are defined in separate files
+// or included here for completeness.
+
+// Data Models
+class ToothChartData {
+  final Size size;
+  final Map<int, Tooth> teeth;
+  final Map<int, ToothConnection> connections;
+
+  const ToothChartData({
+    required this.size,
+    required this.teeth,
+    required this.connections,
+  });
+
+  // Helper to get selected teeth
+  Set<Tooth> get selectedTeeth =>
+      teeth.values.where((tooth) => tooth.selected).toSet();
+
+  // Helper to get selected connections
+  Set<ToothConnection> get selectedConnections =>
+      connections.values.where((connection) => connection.selected).toSet();
+}
+
+class Tooth {
+  Tooth(this.id, Path originalPath) {
+    rect = originalPath.getBounds();
+    path = originalPath.shift(-rect.topLeft);
+  }
+
+  final int id;
+  late final Path path;
+  late final Rect rect;
+  bool selected = false;
+  String? treatment;
+  String? material;
+
+  Color get color {
+    switch (treatment) {
+      case 'تاج': // Updated to Arabic
+        return Colors.lime.shade200;
+      case 'دمية': // Updated to Arabic
+        return Colors.lightBlue.shade200;
+      case 'زرعة': // Updated to Arabic
+        return Colors.green.shade200;
+      case 'فينير': // Updated to Arabic
+        return Colors.pink.shade200;
+      case 'حشوة': // Updated to Arabic
+        return Colors.purple.shade200;
+      case 'بدلة': // Updated to Arabic
+        return Colors.red.shade200;
+      default:
+        return const Color(0xFFF8F5ED); // Default unselected color
+    }
+  }
+}
+
+class ToothConnection {
+  ToothConnection(
+      this.id, this.tooth1Id, this.tooth2Id, this.rect, Path originalPath) {
+    rect = originalPath.getBounds();
+    path = originalPath.shift(-rect.topLeft);
+  }
+
+  final int id;
+  final int tooth1Id;
+  final int tooth2Id;
+  Path? path;
+  Rect rect;
+  bool selected = false;
+}
+
+class ToothBorder extends ShapeBorder {
+  const ToothBorder(this.path);
+
+  final Path path;
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>
+      getOuterPath(rect);
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    return rect.topLeft == Offset.zero ? path : path.shift(rect.topLeft);
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = .9
+      ..color = const Color(0xFFABA9A3); // Border color
+
+    canvas.drawPath(getOuterPath(rect), paint);
+  }
+
+  @override
+  ShapeBorder scale(double t) => this;
+}
+
+// States (Assuming TeethState is defined elsewhere, e.g., teeth_state.dart)
+// For completeness, a basic definition:
+/*
+abstract class TeethState {}
+
+class TeethInitial extends TeethState {}
+class TeethLoading extends TeethState {}
+class TeethLoaded extends TeethState {
+  final ToothChartData data;
+  TeethLoaded(this.data);
+}
+class TeethError extends TeethState {
+  final String message;
+  TeethError(this.message);
+}
+*/
+
+// Cubit
 typedef Data = ({
   Size size,
   Map<int, Tooth> teeth,
@@ -16,6 +138,13 @@ class TeethCubit extends Cubit<TeethState> {
   TeethCubit() : super(TeethInitial());
 
   Data _data = (size: Size.zero, teeth: {}, connections: {});
+  bool _isCopyModeActive = false;
+  String? _copiedTreatment;
+  String? _copiedMaterial;
+
+  bool get isCopyModeActive => _isCopyModeActive;
+  String? get copiedTreatment => _copiedTreatment;
+  String? get copiedMaterial => _copiedMaterial;
 
   Future<void> loadTeeth(String asset) async {
     emit(TeethLoading());
@@ -47,13 +176,62 @@ class TeethCubit extends Cubit<TeethState> {
         tooth1.material == tooth2.material;
   }
 
+  // --- Copy Mode Logic ---
+
+  void toggleCopyMode(bool isActive) {
+    _isCopyModeActive = isActive;
+    if (!isActive) {
+      // Clear copied info when deactivating copy mode
+      // _copiedTreatment = null;
+      // _copiedMaterial = null;
+    }
+    // Emit state to rebuild UI and update chip appearance
+    if (state is TeethLoaded) {
+      emit(TeethLoaded(_data));
+    }
+  }
+
+  void setCopiedInfo(String treatment, String material) {
+    _copiedTreatment = treatment;
+    _copiedMaterial = material;
+    // No emit here, emit happens when copy mode is toggled or tooth is selected
+  }
+
+  void applyCopiedInfoToTooth(Tooth tooth) {
+    if (_isCopyModeActive &&
+        _copiedTreatment != null &&
+        _copiedMaterial != null) {
+      // Clear existing selection and info if any
+      clearTooth(tooth);
+
+      // Apply copied info
+      tooth.treatment = _copiedTreatment;
+      tooth.material = _copiedMaterial;
+      tooth.selected = true; // Select the tooth after applying info
+
+      // Keep copy mode active - REMOVED deactivation logic here
+
+      // Emit state to update the UI
+      emit(TeethLoaded(_data));
+    }
+  }
+
+  // --- Existing Logic Modified ---
+
   void toggleToothSelection(Tooth tooth) {
-    // Only toggle selection if treatment and material are set
+    // This method is now only called in normal mode via the dialogs
     if (tooth.treatment != null && tooth.material != null) {
       tooth.selected = !tooth.selected;
+      // Update copied info when a tooth is selected in normal mode
+      if (tooth.selected) {
+        setCopiedInfo(tooth.treatment!, tooth.material!);
+      } else {
+        // If a tooth is deselected in normal mode, clear copied info
+        _copiedTreatment = null;
+        _copiedMaterial = null;
+      }
       emit(TeethLoaded(_data));
     } else {
-      // Optionally, show a message to the user that they need to select treatment/material first
       print('Select treatment and material before selecting the tooth.');
     }
   }
@@ -65,13 +243,16 @@ class TeethCubit extends Cubit<TeethState> {
 
   void setToothMaterial(Tooth tooth, String material) {
     tooth.material = material;
-    // Don't emit here, toggleToothSelection will emit
+    // Don't emit here, toggleToothSelection will emit after material is set
   }
 
   void toggleConnectionSelection(ToothConnection connection) {
-    if (canEstablishConnection(connection)) {
+    // Connections can only be selected in normal mode
+    if (!_isCopyModeActive && canEstablishConnection(connection)) {
       connection.selected = !connection.selected;
       emit(TeethLoaded(_data));
+    } else if (_isCopyModeActive) {
+      print('Cannot select connections in copy mode.');
     }
   }
 
@@ -79,6 +260,15 @@ class TeethCubit extends Cubit<TeethState> {
     tooth.selected = false;
     tooth.treatment = null;
     tooth.material = null;
+    // Also clear copied info if the cleared tooth was the source
+    // Keep copy mode active even if the source is cleared - MODIFIED logic here
+    if (_copiedTreatment == tooth.treatment &&
+        _copiedMaterial == tooth.material) {
+      _copiedTreatment = null;
+      _copiedMaterial = null;
+      // _isCopyModeActive = false; // REMOVED this line
+    }
+
     for (final connection in _data.connections.values) {
       if (connection.tooth1Id == tooth.id || connection.tooth2Id == tooth.id) {
         connection.selected = false;
@@ -86,6 +276,25 @@ class TeethCubit extends Cubit<TeethState> {
     }
     emit(TeethLoaded(_data));
   }
+
+    // --- New Method to Clear All Teeth ---
+  void clearAllTeeth() {
+    for (final tooth in _data.teeth.values) {
+      tooth.selected = false;
+      tooth.treatment = null;
+      tooth.material = null;
+    }
+    for (final connection in _data.connections.values) {
+      connection.selected = false;
+    }
+    _copiedTreatment = null;
+    _copiedMaterial = null;
+    _isCopyModeActive = false; // Deactivate copy mode when clearing all
+
+    emit(TeethLoaded(_data)); // Emit state to update the UI
+  }
+
+  // --- SVG Loading and ID Generation (Keep as is) ---
 
   Future<Data> _loadTeethData(String asset) async {
     final xml = await rootBundle.loadString(asset);
@@ -100,15 +309,14 @@ class TeethCubit extends Cubit<TeethState> {
     for (final tooth in teeth) {
       final id = int.parse(tooth.getAttribute('id')!);
       if (id >= 100) {
-        // Calculate rect from path bounds directly
         final path = parseSvgPathData(tooth.getAttribute('d')!);
         final rect = path.getBounds();
         connections[id] = ToothConnection(
           id,
           _generateConnectionIds(id).$1,
           _generateConnectionIds(id).$2,
-          rect, // Use calculated rect
-          path, // Use parsed path
+          rect,
+          path,
         );
       }
     }
@@ -159,86 +367,4 @@ class TeethCubit extends Cubit<TeethState> {
     };
     return (id1, id2);
   }
-}
-
-// Data Models (Assuming these are in a separate file like data_models.dart)
-// If they are in the same file as TeethCubit, keep them here.
-
-class Tooth {
-  Tooth(this.id, Path originalPath) {
-    rect = originalPath.getBounds();
-    path = originalPath.shift(-rect.topLeft);
-  }
-
-  final int id;
-  late final Path path;
-  late final Rect rect;
-  bool selected = false;
-  String? treatment;
-  String? material;
-
-  Color get color {
-    switch (treatment) {
-      case 'تاج': // Updated to Arabic
-        return Colors.lime.shade200;
-      case 'دمية': // Updated to Arabic
-        return Colors.lightBlue.shade200;
-      case 'زرعة': // Updated to Arabic
-        return Colors.green.shade200;
-      case 'فينير': // Updated to Arabic
-        return Colors.pink.shade200;
-      case 'حشوة': // Updated to Arabic
-        return Colors.purple.shade200;
-      case 'بدلة': // Updated to Arabic
-        return Colors.red.shade200;
-      default:
-        return Colors.white;
-    }
-  }
-}
-
-class ToothConnection {
-  ToothConnection(
-      this.id, this.tooth1Id, this.tooth2Id, this.rect, Path originalPath) {
-    rect = originalPath.getBounds();
-    path = originalPath.shift(-rect.topLeft);
-  }
-
-  final int id;
-  final int tooth1Id;
-  final int tooth2Id;
-  Path? path;
-  Rect rect;
-  bool selected = false;
-}
-
-class ToothBorder extends ShapeBorder {
-  const ToothBorder(this.path);
-
-  final Path path;
-
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
-
-  @override
-  Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>
-      getOuterPath(rect);
-
-  @override
-  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    return rect.topLeft == Offset.zero ? path : path.shift(rect.topLeft);
-  }
-
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = .9
-      ..color = Color(0xFFABA9A3);
-
-    canvas.drawPath(getOuterPath(rect), paint);
-  }
-
-  @override
-  ShapeBorder scale(double t) => this;
 }

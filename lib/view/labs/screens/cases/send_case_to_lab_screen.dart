@@ -228,7 +228,8 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                       width: 150,
                       text: 'التالي',
                       function: () {
-                        Navigator.of(context).push(
+                        Navigator.push(
+                          context,
                           MaterialPageRoute(
                             builder: (context) => TeethSelectionScreen(
                               asset: 'assets/teeth.svg',
