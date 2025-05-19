@@ -25,8 +25,8 @@ class MonthlyFinancialData {
 class MonthlyFinancialChart extends StatelessWidget {
   List<MonthlyFinancialData> chartData;
 
-  final double _mainBarWidth = 30.0;
-  final double _rodBorderRadius = 8;
+  final double _mainBarWidth = 14.0;
+  final double _rodBorderRadius = 5;
   double _minY = -10000000;
   double _maxY = 10000000;
   double _yAxisInterval = 1000;

@@ -4,7 +4,7 @@ import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/statistics/component/inventory_count_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_financial_chart.dart';
-import 'package:tlbisibida_doc/view/statistics/component/monthly_frequent_expenses_chart.dart';
+import 'package:tlbisibida_doc/view/statistics/component/monthly_op_expenses_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_patients_chart.dart';
 import 'package:tlbisibida_doc/view/statistics/component/monthly_session_type_chart.dart';
 
@@ -617,7 +617,7 @@ class StatisticsScreen extends StatelessWidget {
                                                                     bottom:
                                                                         20.0),
                                                             child:
-                                                                MonthlyFrequentExpensesChart(),
+                                                                MonthlyOpExpensesChart(),
                                                           ))
                                                     ],
                                                   )),
