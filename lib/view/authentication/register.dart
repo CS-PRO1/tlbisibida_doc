@@ -40,6 +40,29 @@ class Register extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
+            // height: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      'assets/teeth_pattern.png',
+                    ),
+
+                    // fit: BoxFit.,
+                    repeat: ImageRepeat.repeat),
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(149, 229, 243, 241),
+                      cyan50,
+                      cyan100,
+                      cyan100,
+                      // cyan200,
+                      // cyan200,
+                      cyan100,
+                      cyan100,
+                      cyan50,
+                    ])),
             constraints: const BoxConstraints(maxWidth: 400),
             padding: const EdgeInsets.all(24),
             child: SingleChildScrollView(

@@ -179,7 +179,7 @@ class _SearchableExpandableDropdownState
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          color: cyan400, borderRadius: BorderRadius.circular(10)),
+          color: cyan300, borderRadius: BorderRadius.circular(10)),
       child: ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.zero,
@@ -195,16 +195,16 @@ class _SearchableExpandableDropdownState
                 .shrink(); // Hide empty categories unless category name matches filter
           }
           return ExpansionTile(
-            backgroundColor: cyan500,
+            backgroundColor: cyan200,
             title: Text(
               category.categoryName,
-              style: TextStyle(color: cyan50),
+              style: TextStyle(color: white),
             ),
             children: category.items.map((item) {
               return ListTile(
                 title: Text(
                   item,
-                  style: TextStyle(color: cyan50),
+                  style: TextStyle(color: cyan500),
                 ),
                 onTap: () {
                   _selectItem(item);
