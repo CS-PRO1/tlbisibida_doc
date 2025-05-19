@@ -17,26 +17,33 @@ Widget datePicker(BuildContext context) {
   }
 
   return SizedBox(
-    width: 175,
+    width: 185,
     child: Card(
       clipBehavior: Clip.antiAlias,
-      color: cyan100,
-      elevation: 1,
+      color: Colors.transparent,
+      elevation: 0,
       shape: RoundedRectangleBorder(
-          side: const BorderSide(color: cyan400, width: .8),
+          side: const BorderSide(color: cyan300, width: .5),
           borderRadius: BorderRadius.circular(20)),
       child: InkWell(
         onTap: getDatePicker,
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${dateTime.year}/${dateTime.month}/${dateTime.day}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16, color: cyan500),
               ),
-              const Icon(Icons.calendar_month_outlined),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Icon(
+                  Icons.calendar_month_outlined,
+                  color: cyan500,
+                  size: 20,
+                ),
+              ),
             ],
           ),
         ),

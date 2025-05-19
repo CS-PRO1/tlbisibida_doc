@@ -46,20 +46,29 @@ class PaymentManagementDialog extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'تاريخ الدفع',
+                            'تاريخ التسديد',
                             style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(
+                            height: 15,
                           ),
                           datePicker(context),
                           const SizedBox(
                             height: 15,
                           ),
-                          defaultTextField(
-                              costController, context, 'القيمة المدفوعة'),
+                          SizedBox(
+                            width: 180,
+                            child: defaultTextField(
+                              costController,
+                              context,
+                              'القيمة المسددة',
+                            ),
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
                           defaultButton(
-                              text: 'تم',
+                              text: 'إضافة دفعة',
                               function: () {
                                 Navigator.pop(context);
                               })

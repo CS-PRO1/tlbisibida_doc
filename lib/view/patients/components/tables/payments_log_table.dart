@@ -51,7 +51,11 @@ class PaymentsLogTable extends StatelessWidget {
                 count,
                 (index) => const DataRow(
                   cells: [
-                    DataCell(Center(child: CustomText(text: '200 000'))),
+                    DataCell(Center(
+                        child: CustomText(
+                      text: '200,000',
+                      textDirection: TextDirection.ltr,
+                    ))),
                     DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),

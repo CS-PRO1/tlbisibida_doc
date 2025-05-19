@@ -5,7 +5,7 @@ import 'package:tlbisibida_doc/constants/constants.dart';
 Widget defaultTextField(
     TextEditingController controller, BuildContext context, String label,
     {Icon? prefixIcon,
-    int height = 1,
+    int? height,
     TextStyle? style,
     //int maxLines = 1,
     Widget? postfixicon,
@@ -26,6 +26,7 @@ Widget defaultTextField(
         label,
         style: style,
       ),
+      hintStyle: TextStyle(color: cyan500),
       prefixIcon: prefixIcon,
       suffixIcon: postfixicon,
       enabledBorder: OutlineInputBorder(
@@ -33,7 +34,7 @@ Widget defaultTextField(
           borderRadius: standardBorderRadius),
       focusedBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
+            BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
         borderRadius: standardBorderRadius,
       ),
       errorBorder: OutlineInputBorder(

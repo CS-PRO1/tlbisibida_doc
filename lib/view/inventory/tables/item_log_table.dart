@@ -72,21 +72,25 @@ class ItemLogTable extends StatelessWidget {
               cells: [
                 DataCell(Center(
                     child: CustomText(
+                  textDirection: TextDirection.ltr,
                   text: '50',
                   size: 14,
                 ))),
                 DataCell(Center(
                     child: CustomText(
+                  textDirection: TextDirection.ltr,
                   text: '+300',
                   size: 14,
                 ))),
                 DataCell(Center(
                     child: CustomText(
+                  textDirection: TextDirection.ltr,
                   text: '350',
                   size: 14,
                 ))),
                 DataCell(Center(
                     child: CustomText(
+                  textDirection: TextDirection.ltr,
                   text: '1000',
                   size: 14,
                 ))),

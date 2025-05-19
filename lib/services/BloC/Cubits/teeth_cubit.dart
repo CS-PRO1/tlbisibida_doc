@@ -46,15 +46,15 @@ class Tooth {
 
   Color get color {
     switch (treatment) {
-      case 'تاج': // Updated to Arabic
+      case 'تاج' || 'حشوة ضوئية': // Updated to Arabic
         return Colors.lime.shade200;
-      case 'دمية': // Updated to Arabic
+      case 'دمية' || 'تحضير تاج/فينير': // Updated to Arabic
         return Colors.lightBlue.shade200;
-      case 'زرعة': // Updated to Arabic
+      case 'زرعة' || 'قلع': // Updated to Arabic
         return Colors.green.shade200;
-      case 'فينير': // Updated to Arabic
+      case 'فينير' || 'سحب عصب': // Updated to Arabic
         return Colors.pink.shade200;
-      case 'حشوة': // Updated to Arabic
+      case 'حشوة' || 'زرع': // Updated to Arabic
         return Colors.purple.shade200;
       case 'بدلة': // Updated to Arabic
         return Colors.red.shade200;
@@ -220,11 +220,11 @@ class TeethCubit extends Cubit<TeethState> {
 
   void toggleToothSelection(Tooth tooth) {
     // This method is now only called in normal mode via the dialogs
-    if (tooth.treatment != null && tooth.material != null) {
+    if (tooth.treatment != null) {
       tooth.selected = !tooth.selected;
       // Update copied info when a tooth is selected in normal mode
       if (tooth.selected) {
-        setCopiedInfo(tooth.treatment!, tooth.material!);
+        setCopiedInfo(tooth.treatment!, tooth.material ?? '');
       } else {
         // If a tooth is deselected in normal mode, clear copied info
         _copiedTreatment = null;
@@ -277,7 +277,7 @@ class TeethCubit extends Cubit<TeethState> {
     emit(TeethLoaded(_data));
   }
 
-    // --- New Method to Clear All Teeth ---
+  // --- New Method to Clear All Teeth ---
   void clearAllTeeth() {
     for (final tooth in _data.teeth.values) {
       tooth.selected = false;

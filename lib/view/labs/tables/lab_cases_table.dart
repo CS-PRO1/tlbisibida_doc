@@ -11,7 +11,7 @@ import 'package:tlbisibida_doc/services/navigation/routes.dart';
 // ignore: must_be_immutable
 class LabCasesTable extends StatelessWidget {
   LabCasesTable({super.key, this.data});
-  List? data;
+  List? data = [];
   // int count = 10;
   @override
   Widget build(BuildContext context) {

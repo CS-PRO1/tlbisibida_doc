@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -35,15 +33,15 @@ class SessionDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
+                              'اسم المريض',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
                               'اسماعيل احمد كنباوي',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
                                   fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'اسم المريض',
-                              style: TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
@@ -147,6 +145,36 @@ class SessionDetailsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: cyan100, borderRadius: BorderRadius.circular(30)),
+                // height: MediaQuery.of(context).size.height / 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'حساب الجلسة',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '1,150,000',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: cyan600,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
               ),
