@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-
-import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/view/labs/components/shade_guides/vita_classic_guide.dart'; // Import for ui.Color
 
 class HomePage extends StatelessWidget {

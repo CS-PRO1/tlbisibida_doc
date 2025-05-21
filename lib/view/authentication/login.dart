@@ -58,9 +58,16 @@ class LoginScreen extends StatelessWidget {
               Text("تسجيل الدخول",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: cyan500,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold)),
+                    color: cyan500,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                          color: const Color.fromARGB(112, 125, 117, 117),
+                          blurRadius: 2,
+                          offset: Offset(-1, 2))
+                    ],
+                  )),
               const SizedBox(
                 height: 10,
               ),
@@ -111,7 +118,21 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const CustomText(text: "نسيت كلمة المرور؟", color: cyan400)
+                    SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      "نسيت كلمة المرور؟",
+                      style: TextStyle(
+                        color: cyan400,
+                        shadows: [
+                          Shadow(
+                              color: const Color.fromARGB(112, 125, 117, 117),
+                              blurRadius: 2,
+                              offset: Offset(-1, 2))
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -151,7 +172,7 @@ class LoginScreen extends StatelessWidget {
               //   TextSpan(text: "إنشاء حساب", style: TextStyle(color: cyan300))
               // ]))
               SizedBox(
-                width: 250,
+                // width: 255,
                 child: is_den
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

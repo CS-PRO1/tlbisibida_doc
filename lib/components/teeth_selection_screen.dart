@@ -1,6 +1,5 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/components/teeth_dialogs.dart';
@@ -10,10 +9,15 @@ import 'package:tlbisibida_doc/services/BloC/Cubits/teeth_cubit.dart';
 
 class TeethSelectionScreen extends StatelessWidget {
   final String asset;
-
   final bool isDocSheet;
-  const TeethSelectionScreen(
-      {super.key, required this.asset, required this.isDocSheet});
+  final bool showConnections; // Made final and passed through constructor
+
+  const TeethSelectionScreen({
+    super.key,
+    required this.asset,
+    required this.isDocSheet,
+    this.showConnections = true, // Default value, can be overridden
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class TeethSelectionScreen extends StatelessWidget {
               child: Column(
                 // Use Column to stack the chip and the chart
                 children: [
-                  // Copy Choice Chip
+                  // Copy Choice Chip and Clear All Button
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -66,8 +70,8 @@ class TeethSelectionScreen extends StatelessWidget {
                       children: [
                         // Copy Choice Chip
                         ChoiceChip(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 8),
                           label: Icon(
                             Icons.copy_rounded,
                             color: cubit.isCopyModeActive ? cyan500 : cyan400,
@@ -113,12 +117,11 @@ class TeethSelectionScreen extends StatelessWidget {
                             cubit.clearAllTeeth();
                           },
                           style: ElevatedButton.styleFrom(
-                            // fixedSize: Size(20, 20),
                             backgroundColor: redbackground, // Background color
                             foregroundColor: redmain, // Text/icon color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: BorderSide(
+                              side: const BorderSide(
                                 color: redmid,
                                 width: 1.0,
                               ),
@@ -128,13 +131,14 @@ class TeethSelectionScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 7), // Padding
                           ),
-                          child: Icon(Icons.clear_all_rounded),
+                          child: const Icon(Icons.clear_all_rounded),
                         ),
+                        // Removed the Toggle Connections Visibility Row
                       ],
                     ),
                   ),
 
-                  // The Tooth Chart
+                  // The Tooth Chart within a Stack
                   FittedBox(
                     child: SizedBox.fromSize(
                       size: data.size,
@@ -143,119 +147,131 @@ class TeethSelectionScreen extends StatelessWidget {
                           // teeth
                           for (final MapEntry(key: key, value: tooth)
                               in data.teeth.entries)
-                            Positioned.fromRect(
-                              rect: tooth.rect,
-                              child: Stack(
-                                children: [
-                                  AnimatedContainer(
+                            if (tooth.rect.width.isNaN ||
+                                tooth.rect.height.isNaN ||
+                                tooth.rect.width <= 0 ||
+                                tooth.rect.height <= 0)
+                              const SizedBox
+                                  .shrink() // Skip rendering invalid tooth
+                            else
+                              Positioned.fromRect(
+                                rect: tooth.rect,
+                                child: Stack(
+                                  children: [
+                                    AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 250),
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: ShapeDecoration(
+                                        color: tooth.selected
+                                            ? tooth.color
+                                            : const Color(0xFFF8F5ED),
+                                        shadows: tooth.selected
+                                            ? [
+                                                const BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 6))
+                                              ]
+                                            : null,
+                                        shape: ToothBorder(tooth.path),
+                                      ),
+                                      child: Material(
+                                        type: MaterialType.transparency,
+                                        child: InkWell(
+                                          splashColor: tooth.selected
+                                              ? Colors.white
+                                              : Colors.teal.shade100,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () {
+                                            if (cubit.isCopyModeActive) {
+                                              cubit.applyCopiedInfoToTooth(
+                                                  tooth);
+                                            } else {
+                                              if (!tooth.selected) {
+                                                isDocSheet
+                                                    ? showAlertDialogDoc(
+                                                        context, tooth, cubit)
+                                                    : showAlertDialog(
+                                                        context, tooth, cubit);
+                                              } else {
+                                                showClearDialog(
+                                                    context, tooth, cubit);
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned.fill(
+                                      child: IgnorePointer(
+                                        child: Center(
+                                          child: Text(
+                                            '${tooth.id}',
+                                            style: const TextStyle(
+                                              color: cyan600,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                          // connections - conditionally rendered based on constructor value
+                          if (showConnections) // Now uses the final value from the constructor
+                            for (final MapEntry(key: key, value: connection)
+                                in data.connections.entries)
+                              if (connection.rect.width.isNaN ||
+                                  connection.rect.height.isNaN ||
+                                  connection.rect.width <= 0 ||
+                                  connection.rect.height <= 0)
+                                const SizedBox
+                                    .shrink() // Skip rendering invalid connection
+                              else
+                                Positioned.fromRect(
+                                  rect: connection.rect,
+                                  child: AnimatedContainer(
                                     duration: const Duration(milliseconds: 250),
                                     clipBehavior: Clip.antiAlias,
                                     decoration: ShapeDecoration(
-                                      color: tooth.selected
-                                          ? tooth.color
-                                          : const Color(0xFFF8F5ED),
-                                      shadows: tooth.selected
+                                      color: connection.selected
+                                          ? cyan200
+                                          : const Color(
+                                              0xFFE0E0DB), // Unselected connection color
+                                      shadows: connection.selected
                                           ? [
                                               const BoxShadow(
                                                   blurRadius: 4,
                                                   offset: Offset(0, 6))
                                             ]
                                           : null,
-                                      shape: ToothBorder(tooth.path),
+                                      shape: ToothBorder(connection.path!),
                                     ),
                                     child: Material(
                                       type: MaterialType.transparency,
                                       child: InkWell(
-                                        splashColor: tooth.selected
-                                            ? Colors.white
+                                        splashColor: connection.selected
+                                            ? const Color(0xFFE0C99E)
                                             : Colors.teal.shade100,
                                         highlightColor: Colors.transparent,
                                         onTap: () {
-                                          if (cubit.isCopyModeActive) {
-                                            // Apply copied info if in copy mode
-                                            cubit.applyCopiedInfoToTooth(tooth);
+                                          if (!cubit.isCopyModeActive) {
+                                            cubit.toggleConnectionSelection(
+                                                connection);
                                           } else {
-                                            // Show dialogs in normal mode
-                                            if (!tooth.selected) {
-                                              isDocSheet
-                                                  ? showAlertDialogDoc(
-                                                      context, tooth, cubit)
-                                                  : showAlertDialog(
-                                                      context, tooth, cubit);
-                                            } else {
-                                              showClearDialog(
-                                                  context, tooth, cubit);
-                                            }
+                                            print(
+                                                'Cannot select connections in copy mode.');
                                           }
                                         },
                                       ),
                                     ),
                                   ),
-                                  // Wrap the Text with IgnorePointer
-                                  IgnorePointer(
-                                    child: Positioned.fill(
-                                      child: Center(
-                                        child: Text(
-                                          '${tooth.id}',
-                                          style: const TextStyle(
-                                            color: cyan600,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          // connections
-                          for (final MapEntry(key: key, value: connection)
-                              in data.connections.entries)
-                            Positioned.fromRect(
-                              rect: connection.rect,
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 250),
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: connection.selected
-                                      ? cyan200
-                                      : const Color(
-                                          0xFFE0E0DB), // Unselected connection color
-                                  shadows: connection.selected
-                                      ? [
-                                          const BoxShadow(
-                                              blurRadius: 4,
-                                              offset: Offset(0, 6))
-                                        ]
-                                      : null,
-                                  shape: ToothBorder(connection.path!),
                                 ),
-                                child: Material(
-                                  type: MaterialType.transparency,
-                                  child: InkWell(
-                                    splashColor: connection.selected
-                                        ? const Color(0xFFE0C99E)
-                                        : Colors.teal.shade100,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () {
-                                      // Connections can only be selected in normal mode
-                                      if (!cubit.isCopyModeActive) {
-                                        cubit.toggleConnectionSelection(
-                                            connection);
-                                      } else {
-                                        print(
-                                            'Cannot select connections in copy mode.');
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          // Legend (positioned on top of the chart, centered)
+                          // Legend (positioned on top of the chart, centered within the Stack)
                           if (selectedTreatments.isNotEmpty)
                             Positioned(
-                              top:
-                                  0, // Positioned to span the full height and width
+                              top: 0,
                               bottom: 0,
                               left: 0,
                               right: 0,
@@ -282,7 +298,7 @@ class TeethSelectionScreen extends StatelessWidget {
                                                       width: .3),
                                                   color: entry.value,
                                                   shape: BoxShape.circle,
-                                                  boxShadow: [
+                                                  boxShadow: const [
                                                     BoxShadow(
                                                         color: Colors.black45,
                                                         blurRadius: 5,
@@ -295,7 +311,7 @@ class TeethSelectionScreen extends StatelessWidget {
                                                   left: 15),
                                             ),
                                             Text(entry.key,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: cyan600,
                                                     fontSize:
                                                         15)), // Smaller text

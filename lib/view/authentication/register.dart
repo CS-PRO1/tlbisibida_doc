@@ -80,12 +80,21 @@ class Register extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  Text("إنشاء حساب",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: cyan500,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold)),
+                  Text(
+                    "إنشاء حساب",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: cyan500,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                            color: const Color.fromARGB(112, 125, 117, 117),
+                            blurRadius: 2,
+                            offset: Offset(-1, 2))
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

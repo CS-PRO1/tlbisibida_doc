@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:tlbisibida_doc/components/site_layout.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
@@ -20,7 +19,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   setupLocator();
-  KeepScreenOn.turnOn();
+  // KeepScreenOn.turnOn();
 
   // Initialize navigation service after setup
   final navigationService = locator<NavigationService>();

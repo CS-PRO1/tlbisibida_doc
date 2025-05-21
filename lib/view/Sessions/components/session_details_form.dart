@@ -156,6 +156,7 @@ class SessionDetailsForm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: cyan200, width: 2)),
                 child: TeethSelectionScreen(
+                  showConnections: false,
                   asset: 'assets/teeth.svg',
                   isDocSheet: true,
                 )),

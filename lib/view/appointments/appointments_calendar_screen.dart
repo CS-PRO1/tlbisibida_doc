@@ -1,24 +1,18 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
-// Assuming these imports provide necessary constants like cyan50, cyan500, etc.
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:intl/intl.dart';
-// Assuming these imports are for navigation, keep them as is
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'dart:ui' as UI;
+import 'dart:ui' as ui;
 
-// Define the text direction, keeping it outside the widget for simplicity
-UI.TextDirection direction = UI.TextDirection.ltr;
+ui.TextDirection direction = ui.TextDirection.ltr;
 
-// Define an Appointment class to hold appointment details
 class Appointment {
   final String patientName;
   final DateTime startTime;
   final DateTime endTime;
   final String phoneNumber;
-  final Color color; // Color for the vertical indicator
+  final Color color;
 
   Appointment({
     required this.patientName,
@@ -29,16 +23,13 @@ class Appointment {
   });
 }
 
-// StatelessWidget version of the Appointments Calendar Screen
+
 class AppointmentsCalendarScreen extends StatelessWidget {
   AppointmentsCalendarScreen({super.key});
 
-  // Event controller for the DayView
-  // Initialize directly as it's stateless
+
   final EventController _eventController = EventController();
 
-  // Sample appointments (replace with your actual data fetching logic)
-  // Initialize directly as it's stateless
   final List<Appointment> _sampleAppointments = [
     Appointment(
       patientName: 'تحسين التحسيني',
@@ -48,14 +39,14 @@ class AppointmentsCalendarScreen extends StatelessWidget {
           minute: 30,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 1:30 PM today
+          microsecond: 0),
       endTime: DateTime.now().copyWith(
           hour: 14,
           minute: 30,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 2:30 PM today
-      color: Colors.green, // Sample color
+          microsecond: 0), 
+      color: Colors.green, 
     ),
     Appointment(
       patientName: 'محمد حسام محمد السيد خليل',
@@ -65,14 +56,14 @@ class AppointmentsCalendarScreen extends StatelessWidget {
           minute: 30,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 5:30 PM today
+          microsecond: 0), 
       endTime: DateTime.now().copyWith(
           hour: 18,
           minute: 00,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 6:00 PM today
-      color: Colors.green, // Sample color
+          microsecond: 0), 
+      color: Colors.green, 
     ),
     Appointment(
       patientName: 'محمد سمبل',
@@ -82,44 +73,42 @@ class AppointmentsCalendarScreen extends StatelessWidget {
           minute: 0,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 3:00 PM today
+          microsecond: 0),
       endTime: DateTime.now().copyWith(
           hour: 16,
           minute: 0,
           second: 0,
           millisecond: 0,
-          microsecond: 0), // 4:00 PM today
-      color: Colors.orange, // Sample color
+          microsecond: 0), 
+      color: Colors.orange, 
     ),
-    // Add more appointments as needed, tied to a specific date or relative to DateTime.now()
+
   ];
 
-  // Function to add appointments to the event controller
-  // Called once during initialization for stateless widget
   void _addAppointmentsToController() {
-    _eventController.removeWhere((event) => true); // Clear existing events
+    _eventController.removeWhere((event) => true);
     for (var appointment in _sampleAppointments) {
       _eventController.add(CalendarEventData(
         date: appointment.startTime,
         startTime: appointment.startTime,
         endTime: appointment.endTime,
-        title: appointment.patientName, // Use patient name as title
-        event: appointment, // Store the full appointment object
+        title: appointment.patientName, 
+        event: appointment, 
       ));
     }
   }
 
-  // Custom builder for appointment tiles
+
   Widget _buildAppointmentTile(DateTime date, List<CalendarEventData> events,
       Rect boundary, DateTime startDuration, DateTime endDuration) {
     if (events.isEmpty) {
-      return SizedBox(); // Should not happen if events are properly added
+      return SizedBox(); 
     }
 
-    // Assuming one event per tile for simplicity based on the image
+
     final CalendarEventData event = events.first;
     final Appointment appointment =
-        event.event as Appointment; // Cast back to Appointment object
+        event.event as Appointment;
 
     return Container(
       margin: EdgeInsets.only(top: 1.0, bottom: 1.0, right: 50, left: 8.0),
@@ -132,7 +121,7 @@ class AppointmentsCalendarScreen extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 2,
-            offset: Offset(0, 1), // changes position of shadow
+            offset: Offset(0, 1), 
           ),
         ],
       ),
@@ -140,7 +129,7 @@ class AppointmentsCalendarScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Colored vertical indicator
+
           Container(
             width: 4.0,
             color: appointment.color,
@@ -187,23 +176,22 @@ class AppointmentsCalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Add appointments to the controller when the widget is built
-    // For a stateless widget with fixed data, this is sufficient.
+
     _addAppointmentsToController();
 
-    // Define the initial day for the DayView and the displayed date
+
     final DateTime initialDay = DateTime.now();
 
     return CalendarControllerProvider(
-      controller: _eventController, // Use the stateless event controller
+      controller: _eventController, 
       child: Scaffold(
-        backgroundColor: cyan50, // Assuming cyan50 is defined in constants
+        backgroundColor: cyan50,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Display the initial date
+
               Text(
                 DateFormat.E('ar').format(initialDay) +
                     '، ' +
@@ -213,7 +201,7 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: cyan500), // Assuming cyan500 is defined
+                    color: cyan500),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -222,20 +210,20 @@ class AppointmentsCalendarScreen extends StatelessWidget {
               Container(
                 height: .5,
                 width: 200,
-                color: cyan400, // Assuming cyan400 is defined
+                color: cyan400, 
               ),
               SizedBox(
                 height: 15,
               ),
-              // DayView widget within Directionality for text direction control
+            
               Directionality(
-                textDirection: direction, // Use the defined text direction
+                textDirection: direction, 
                 child: Expanded(
                   child: SizedBox(
-                    width: double.infinity, // Use full width
+                    width: double.infinity, 
                     child: DayView(
                       controller:
-                          _eventController, // Use the stateless event controller
+                          _eventController, 
                       showVerticalLine: true,
                       startHour: 8,
                       endHour: 20,
@@ -246,19 +234,18 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                               color: cyan200,
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10)))),
-                      initialDay: initialDay, // Use the defined initial day
+                      initialDay: initialDay, 
 
                       hourIndicatorSettings: HourIndicatorSettings(
-                        color: cyan300, // Assuming cyan300 is defined
+                        color: cyan300,
                       ),
                       halfHourIndicatorSettings: HourIndicatorSettings(
                         dashWidth: 9,
                         dashSpaceWidth: 3,
-                        color: cyan100, // Assuming cyan100 is defined
+                        color: cyan100,
                         lineStyle: LineStyle.dashed,
                       ),
                       eventTileBuilder: _buildAppointmentTile,
-                      // Removed onDayChanged callback as it's a StatelessWidget
                     ),
                   ),
                 ),
@@ -267,21 +254,20 @@ class AppointmentsCalendarScreen extends StatelessWidget {
           ),
         ),
 
-        // Floating action button for navigation
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () { 
             // Navigate to the add appointment route
             // locator<NavigationService>().navigateTo(
             //     addAppointmentRoute); // Assuming addAppointmentRoute is defined
                 Navigator.pushNamed(context, addAppointmentRoute);
           },
           mini: true,
-          backgroundColor: cyan400, // Assuming cyan400 is defined
-          foregroundColor: white, // Assuming white is defined
+          backgroundColor: cyan400,
+          foregroundColor: white,
           shape: RoundedRectangleBorder(
               side: const BorderSide(
-                  color: cyan600, width: 1.5), // Assuming cyan600 is defined
+                  color: cyan600, width: 1.5),
               borderRadius: BorderRadius.circular(10)),
           child: const Icon(
             Icons.add,

@@ -79,7 +79,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                     onChanged: (value) {
                       // locator<NavigationService>().navigateTo(value!.$3);
-                      Navigator.pushNamed(context,value!.$3);
+                      Navigator.pushNamed(context, value!.$3);
                     },
                     dropdownBuilder: (ctx, selectedItem) => Icon(
                       Icons.menu,
@@ -112,7 +112,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(right: 12),
+                              padding: const EdgeInsets.only(left: 5),
                               child: Image.asset(
                                 'assets/icons/arrow-up.png',
                                 color: cyan400,

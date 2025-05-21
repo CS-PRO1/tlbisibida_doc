@@ -60,8 +60,8 @@ class ProfileScreen extends StatelessWidget {
               backgroundImage: NetworkImage(
                   'https://media.istockphoto.com/id/1371009338/photo/portrait-of-confident-a-young-dentist-working-in-his-consulting-room.jpg?s=612x612&w=0&k=20&c=I212vN7lPpAOwGKRoEY9kYWunJaMj9vH2g-8YBGc2MI='),
               onBackgroundImageError: (exception, stackTrace) =>
-                  Image.asset('assets/images/fallback/user_default.jpg'),
-            ),
+                  Image.asset('assets/images/fallback/user_default.jpg',),
+            ),    
             SizedBox(height: 20),
             ListView.separated(
                 shrinkWrap: true,

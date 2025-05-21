@@ -232,6 +232,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => TeethSelectionScreen(
+                              showConnections: true,
                               isDocSheet: false,
                               asset: 'assets/teeth.svg',
                             ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_drawing/path_drawing.dart';
-import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming cyan400, cyan500, cyan600 are defined here
 import 'package:tlbisibida_doc/services/BloC/States/teeth_state.dart';
 import 'package:xml/xml.dart';
 
@@ -32,17 +31,19 @@ class ToothChartData {
 }
 
 class Tooth {
-  Tooth(this.id, Path originalPath) {
-    rect = originalPath.getBounds();
-    path = originalPath.shift(-rect.topLeft);
-  }
-
   final int id;
-  late final Path path;
-  late final Rect rect;
+  final Path path; // Made final and initialized in constructor
+  final Rect rect; // Made final and initialized in constructor
   bool selected = false;
   String? treatment;
   String? material;
+
+  Tooth(this.id, Path originalPath)
+      : rect = originalPath
+            .getBounds(), // Initialize rect directly from originalPath
+        path = originalPath.shift(-originalPath
+            .getBounds()
+            .topLeft); // Shift path based on its own bounds
 
   Color get color {
     switch (treatment) {
@@ -65,18 +66,19 @@ class Tooth {
 }
 
 class ToothConnection {
-  ToothConnection(
-      this.id, this.tooth1Id, this.tooth2Id, this.rect, Path originalPath) {
-    rect = originalPath.getBounds();
-    path = originalPath.shift(-rect.topLeft);
-  }
-
   final int id;
   final int tooth1Id;
   final int tooth2Id;
-  Path? path;
-  Rect rect;
+  final Path path; // Made final and initialized in constructor
+  final Rect rect; // Made final and initialized in constructor
   bool selected = false;
+
+  ToothConnection(this.id, this.tooth1Id, this.tooth2Id, Path originalPath)
+      : rect = originalPath
+            .getBounds(), // Initialize rect directly from originalPath
+        path = originalPath.shift(-originalPath
+            .getBounds()
+            .topLeft); // Shift path based on its own bounds
 }
 
 class ToothBorder extends ShapeBorder {
@@ -93,6 +95,7 @@ class ToothBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    // Ensure the path is shifted correctly relative to the provided rect
     return rect.topLeft == Offset.zero ? path : path.shift(rect.topLeft);
   }
 
@@ -110,22 +113,6 @@ class ToothBorder extends ShapeBorder {
   ShapeBorder scale(double t) => this;
 }
 
-// States (Assuming TeethState is defined elsewhere, e.g., teeth_state.dart)
-// For completeness, a basic definition:
-/*
-abstract class TeethState {}
-
-class TeethInitial extends TeethState {}
-class TeethLoading extends TeethState {}
-class TeethLoaded extends TeethState {
-  final ToothChartData data;
-  TeethLoaded(this.data);
-}
-class TeethError extends TeethState {
-  final String message;
-  TeethError(this.message);
-}
-*/
 
 // Cubit
 typedef Data = ({
@@ -141,10 +128,13 @@ class TeethCubit extends Cubit<TeethState> {
   bool _isCopyModeActive = false;
   String? _copiedTreatment;
   String? _copiedMaterial;
+  bool _showConnections = true; // New: State for connections visibility
 
   bool get isCopyModeActive => _isCopyModeActive;
   String? get copiedTreatment => _copiedTreatment;
   String? get copiedMaterial => _copiedMaterial;
+  bool get showConnections =>
+      _showConnections; // New: Getter for connections visibility
 
   Future<void> loadTeeth(String asset) async {
     emit(TeethLoading());
@@ -180,11 +170,6 @@ class TeethCubit extends Cubit<TeethState> {
 
   void toggleCopyMode(bool isActive) {
     _isCopyModeActive = isActive;
-    if (!isActive) {
-      // Clear copied info when deactivating copy mode
-      // _copiedTreatment = null;
-      // _copiedMaterial = null;
-    }
     // Emit state to rebuild UI and update chip appearance
     if (state is TeethLoaded) {
       emit(TeethLoaded(_data));
@@ -232,7 +217,7 @@ class TeethCubit extends Cubit<TeethState> {
       }
       emit(TeethLoaded(_data));
     } else {
-      print('Select treatment and material before selecting the tooth.');
+      // print('Select treatment and material before selecting the tooth.');
     }
   }
 
@@ -252,7 +237,7 @@ class TeethCubit extends Cubit<TeethState> {
       connection.selected = !connection.selected;
       emit(TeethLoaded(_data));
     } else if (_isCopyModeActive) {
-      print('Cannot select connections in copy mode.');
+      // print('Cannot select connections in copy mode.');
     }
   }
 
@@ -294,6 +279,14 @@ class TeethCubit extends Cubit<TeethState> {
     emit(TeethLoaded(_data)); // Emit state to update the UI
   }
 
+  // New: Method to toggle connections visibility
+  void toggleConnectionsVisibility(bool value) {
+    _showConnections = value;
+    if (state is TeethLoaded) {
+      emit(TeethLoaded(_data)); // Emit state to update the UI
+    }
+  }
+
   // --- SVG Loading and ID Generation (Keep as is) ---
 
   Future<Data> _loadTeethData(String asset) async {
@@ -303,34 +296,43 @@ class TeethCubit extends Cubit<TeethState> {
     final w = double.parse(viewBox[2]);
     final h = double.parse(viewBox[3]);
 
-    final teeth = doc.rootElement.findAllElements('path');
+    final teethElements = doc.rootElement.findAllElements('path');
     final connections = <int, ToothConnection>{};
+    final loadedTeeth = <int, Tooth>{};
 
-    for (final tooth in teeth) {
-      final id = int.parse(tooth.getAttribute('id')!);
+    for (final element in teethElements) {
+      final id = int.parse(element.getAttribute('id')!);
+      final pathData = element.getAttribute('d')!;
+      final originalPath = parseSvgPathData(pathData);
+      final bounds = originalPath.getBounds();
+
+      // Check for invalid bounds manually
+      if (bounds.width.isNaN ||
+          bounds.height.isNaN ||
+          bounds.width <= 0 ||
+          bounds.height <= 0) {
+        // Warning: SVG path for ID $id has invalid or empty bounds (width: ${bounds.width}, height: ${bounds.height}). Skipping this element.
+        continue; // Skip to the next element
+      }
+
       if (id >= 100) {
-        final path = parseSvgPathData(tooth.getAttribute('d')!);
-        final rect = path.getBounds();
         connections[id] = ToothConnection(
           id,
           _generateConnectionIds(id).$1,
           _generateConnectionIds(id).$2,
-          rect,
-          path,
+          originalPath,
+        );
+      } else {
+        loadedTeeth[id] = Tooth(
+          _generateToothId(id),
+          originalPath,
         );
       }
     }
 
     return (
       size: Size(w, h),
-      teeth: <int, Tooth>{
-        for (final tooth in teeth)
-          if (int.parse(tooth.getAttribute('id')!) < 100)
-            int.parse(tooth.getAttribute('id')!): Tooth(
-              _generateToothId(int.parse(tooth.getAttribute('id')!)),
-              parseSvgPathData(tooth.getAttribute('d')!),
-            ),
-      },
+      teeth: loadedTeeth,
       connections: connections,
     );
   }
