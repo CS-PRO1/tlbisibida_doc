@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 
 class NewAppointmentScreen extends StatelessWidget {
   NewAppointmentScreen({super.key});
-  DateTime currentdate = DateTime.now();
-  List lengthchoices = ['30 دقيقة', 'ساعة'];
-  List shortappointments = [
+  final DateTime currentdate = DateTime.now();
+  final List lengthchoices = ['30 دقيقة', 'ساعة'];
+  final List shortappointments = [
     '9:00 AM - 9:30 AM',
     '9:30 AM - 10:00 AM',
     '10:00 AM - 10:30 AM',
@@ -23,7 +23,7 @@ class NewAppointmentScreen extends StatelessWidget {
     '2:00 PM - 2:30 PM',
     '2:30 PM - 3:00 PM',
   ];
-  List longappointments = [
+  final List longappointments = [
     '9:00 AM - 10:00 AM',
     '10:00 AM - 11:00 AM',
     '11:00 AM - 12:00 AM',
@@ -57,7 +57,7 @@ class NewAppointmentScreen extends StatelessWidget {
                         fontSize: 24,
                         color: cyan600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CalendarTimeline(
@@ -74,7 +74,7 @@ class NewAppointmentScreen extends StatelessWidget {
                     dotColor: cyan200,
                     locale: 'ar',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Center(
@@ -84,7 +84,7 @@ class NewAppointmentScreen extends StatelessWidget {
                       width: 300,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -95,7 +95,7 @@ class NewAppointmentScreen extends StatelessWidget {
                         fontSize: 20,
                         color: cyan600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -133,7 +133,7 @@ class NewAppointmentScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Center(
@@ -143,7 +143,7 @@ class NewAppointmentScreen extends StatelessWidget {
                       width: 300,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -154,7 +154,7 @@ class NewAppointmentScreen extends StatelessWidget {
                         fontSize: 20,
                         color: cyan600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -167,7 +167,7 @@ class NewAppointmentScreen extends StatelessWidget {
                                   : showlongappointments(context),
                             )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Center(child: defaultButton(text: 'Next', function: () {}))

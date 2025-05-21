@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LabsListScreen extends StatelessWidget {
@@ -286,7 +286,9 @@ class LabsListScreen extends StatelessWidget {
                             // );
                             // locator<NavigationService>()
                             //     .navigateTo(labInfoRoute);
-                            Navigator.pushNamed(context, labInfoRoute);
+                            // Navigator.pushNamed(context, labInfoRoute);
+                                                    context.push(labInfoRoute);
+
                           }),
                       const SizedBox(
                         height: 50,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
@@ -202,7 +203,8 @@ class SessionDetailsScreen extends StatelessWidget {
                   text: 'إرسال الحالة إلى مخبر',
                   function: () =>
                       // locator<NavigationService>().navigateTo(sendCaseToLabRoute),
-                      Navigator.pushNamed(context, sendCaseToLabRoute))
+                      // Navigator.pushNamed(context, sendCaseToLabRoute))
+                      context.push(patientInfoRoute))
             ],
           ),
         ),
@@ -210,7 +212,8 @@ class SessionDetailsScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, editSessionDetailsRoute);
+          // Navigator.pushNamed(context, editSessionDetailsRoute);
+          context.push(editSessionDetailsRoute);
         },
         mini: true,
         backgroundColor: cyan400,

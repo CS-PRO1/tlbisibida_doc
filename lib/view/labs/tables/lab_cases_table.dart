@@ -1,10 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 /// Example without datasource
@@ -81,7 +81,9 @@ class LabCasesTable extends StatelessWidget {
                       onPressed: () {
                         // locator<NavigationService>()
                         //     .navigateTo(caseDetailsRoute);
-                        Navigator.pushNamed(context, caseDetailsRoute);
+                        // Navigator.pushNamed(context, caseDetailsRoute);
+                                                context.push(caseDetailsRoute);
+
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

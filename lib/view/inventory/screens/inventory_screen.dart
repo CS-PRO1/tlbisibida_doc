@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
@@ -217,7 +218,9 @@ class InventoryScreen extends StatelessWidget {
                 fontSize: 18,
               )),
           onPressed: () {
-            Navigator.pushNamed(context,itemListRoute);
+            // Navigator.pushNamed(context,itemListRoute);
+                                    context.push(itemListRoute);
+
           },
         ),
         Row(

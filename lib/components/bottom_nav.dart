@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
-import 'package:tlbisibida_doc/services/navigation/routes.dart';
+// Removed: import 'package:tlbisibida_doc/services/navigation/locator.dart';
+// Removed: import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+// Removed: import 'package:tlbisibida_doc/services/navigation/routes.dart'; // No longer needed for direct navigation
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentPage;
-  final Function(int) onTabChanged;
+  final Function(int) onTabChanged; // This is the callback
 
   const CustomBottomNavigationBar({
     super.key,
@@ -20,14 +20,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigationService _navigationService = locator<NavigationService>();
-    final List _routes = [
-      patientListRoute,
-      financeRoute,
-      rootRoute,
-      inventoryRoute,
-      myLabsListRoute
-    ];
+    // Removed _navigationService and _routes list from here.
+    // The navigation logic is now handled by the parent (ShellRoute builder).
 
     return CircleBottomNavigation(
       barHeight: 45,
@@ -63,14 +57,15 @@ class CustomBottomNavigationBar extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         TabData(
-          icon: CupertinoIcons.lab_flask_solid,
+          icon:
+              CupertinoIcons.lab_flask_solid, // Assuming this is for Inventory
           iconSize: 20,
           title: 'المخزن',
           fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
         TabData(
-          icon: TuskIcons.lab_icon,
+          icon: TuskIcons.lab_icon, // Assuming this is for Labs
           iconSize: 18,
           title: 'المخابر',
           fontSize: 14,
@@ -78,11 +73,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
       ],
       onTabChangedListener: (index) {
+        // Simply call the provided callback with the selected index.
+        // The actual navigation will happen in the ShellRoute's builder.
         onTabChanged(index);
-        final route = _routes[index];
-        if (route != null) {
-          _navigationService.navigateTo(route);
-        }
       },
     );
   }
