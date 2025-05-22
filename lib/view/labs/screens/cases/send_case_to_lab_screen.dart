@@ -36,7 +36,10 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
   // ignore: unused_field
   String _toothshade = '';
   List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
-  ValueNotifier<String> _targetlabtype = ValueNotifier<String>('تعويض');
+  final ValueNotifier<List<String>> _targetlabtype =
+      ValueNotifier<List<String>>([
+    'تعويض',
+  ]);
   DateTime expectedDeliveryDate = DateTime.now();
   List<File> images = [];
 
@@ -71,11 +74,11 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: InlineChoice<String>.single(
+                      child: InlineChoice<String>.multiple(
                           value: _targetlabtype.value,
-                          onChanged: (value) {
-                            _targetlabtype.value = value!;
-                            print(_targetlabtype.toString());
+                          onChanged: (obj) {
+                            _targetlabtype.value = obj;
+                            // print(_targetlabtype.toString());
                           },
                           clearable: false,
                           itemCount: _labtypes.length,
@@ -238,7 +241,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                             ),
                           ),
                         );
-                        
+
                         // var requestJson = {
                         //   "patient_name": patientnamecontroller.text,
                         //   "age": int.parse(agecontroller.text),

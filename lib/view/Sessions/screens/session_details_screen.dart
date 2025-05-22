@@ -204,7 +204,10 @@ class SessionDetailsScreen extends StatelessWidget {
                   function: () =>
                       // locator<NavigationService>().navigateTo(sendCaseToLabRoute),
                       // Navigator.pushNamed(context, sendCaseToLabRoute))
-                      context.push(patientInfoRoute))
+                      context.push(sendCaseToLabRoute)),
+              SizedBox(
+                height: 30,
+              )
             ],
           ),
         ),
