@@ -52,7 +52,7 @@ dependencies:
   flutter_shapes: null
   get_it: ^8.0.3
   go_router: ^15.1.2
-  image_picker: ^1.0.8
+  image_picker:
   info_popup: null
   intl: null
   path_drawing: ^1.0.1

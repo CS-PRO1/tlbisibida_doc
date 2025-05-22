@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
 
 class ImageGallery extends StatefulWidget {
   final List<String> imageUrls;
@@ -13,7 +14,7 @@ class ImageGallery extends StatefulWidget {
     this.mainImageHeight = 300,
     this.thumbnailSize = 60,
     this.thumbnailSpacing = 8,
-    this.selectedBorderColor = Colors.blue,
+    this.selectedBorderColor = cyan300,
   });
 
   @override

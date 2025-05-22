@@ -66,7 +66,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
               (Icons.logout_rounded, 'تسجيل الخروج', roleRoute),
             ],
             onChanged: (value) {
-              context.go(value!.$3); // Use context.go() for navigation
+              context.push(value!.$3); // Use context.go() for navigation
             },
             dropdownBuilder: (ctx, selectedItem) => Icon(
               Icons.menu,
