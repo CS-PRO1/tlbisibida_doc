@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:io';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
