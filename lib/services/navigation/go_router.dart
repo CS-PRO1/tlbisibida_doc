@@ -10,6 +10,7 @@ import 'package:tlbisibida_doc/view/Sessions/screens/session_details_screen.dart
 import 'package:tlbisibida_doc/view/about/about.dart';
 import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
+import 'package:tlbisibida_doc/view/authentication/email_verification_screen.dart';
 import 'package:tlbisibida_doc/view/authentication/login.dart';
 import 'package:tlbisibida_doc/view/authentication/register.dart';
 import 'package:tlbisibida_doc/view/authentication/role.dart';
@@ -53,6 +54,7 @@ final Map<String, String> routeDisplayNames = {
   aboutRoute: aboutDisplayName,
   registerRoute: registerDisplayName,
   roleRoute: roleDisplayName,
+  emailVerificationRoute: emailVerificationDisplayName,
 };
 
 // Define the order of routes for the bottom navigation bar
@@ -62,8 +64,6 @@ final List<String> bottomNavRoutes = [
   rootRoute, // Index 2 (Appointments)
   inventoryRoute, // Index 3
   myLabsListRoute, // Index 4
-  secretaryRoute, // Index 5
-  statisticsRoute, // Index 6
 ];
 
 class AppRouter {
@@ -82,6 +82,10 @@ class AppRouter {
       GoRoute(
         path: roleRoute,
         builder: (context, state) => RoleScreen(),
+      ),
+      GoRoute(
+        path: emailVerificationRoute,
+        builder: (context, state) => EmailVerificationScreen(),
       ),
 
       // Top-level routes that should have an app bar but NO bottom nav

@@ -70,6 +70,9 @@ const registerRoute = "/register";
 const roleDisplayName = "الدخول كـَ";
 const roleRoute = "/role";
 
+const emailVerificationDisplayName = "التحقق من البريد";
+const emailVerificationRoute = "/verify_email";
+
 
 // class MenuItem {
 //   final String name;

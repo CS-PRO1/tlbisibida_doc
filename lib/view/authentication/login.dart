@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  context.push(rootRoute);
+                  context.go(rootRoute);
                   // Navigator.pushNamed(context, rootRoute);
                 },
                 child: Container(
