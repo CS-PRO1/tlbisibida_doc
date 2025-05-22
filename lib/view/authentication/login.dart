@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
+import 'package:tlbisibida_doc/components/top_nav.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -141,7 +141,8 @@ class LoginScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, rootRoute);
+                  context.push(rootRoute);
+                  // Navigator.pushNamed(context, rootRoute);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -189,7 +190,8 @@ class LoginScreen extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, registerRoute);
+                              // Navigator.pushNamed(context, registerRoute);
+                              context.push(registerRoute);
                             },
                             child: Text(
                               'إنشاء حساب جديد',

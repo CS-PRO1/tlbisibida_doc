@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:tlbisibida_doc/components/site_layout.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
-import 'package:tlbisibida_doc/services/navigation/router.dart';
-import 'package:tlbisibida_doc/services/navigation/routes.dart';
+import 'package:tlbisibida_doc/services/navigation/go_router.dart'; // New: Import the GoRouter setup
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -17,18 +13,9 @@ void main() {
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
-  DioHelper.init();
-  setupLocator();
-  // KeepScreenOn.turnOn();
+  DioHelper.init(); // Assuming DioHelper is still needed for other services
 
-  // Initialize navigation service after setup
-  final navigationService = locator<NavigationService>();
   runApp(const MyApp());
-
-  // Set initial title after app starts
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    navigationService.init();
-  });
 }
 
 class MyApp extends StatelessWidget {
@@ -36,13 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: Locale('ar'),
-      supportedLocales: [
+    return MaterialApp.router(
+      // Use MaterialApp.router for go_router
+      locale: const Locale('ar'),
+      supportedLocales: const [
         Locale('ar'),
         Locale('en'),
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -56,21 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cyan400),
         scaffoldBackgroundColor: cyan50,
       ),
-      onGenerateRoute: (settings) => generateRoute(settings),
-      home: PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) {
-            if (didPop) {
-              print('didpop = true');
-            }
-            print('didpop = false');
-            if (locator<NavigationService>().currentTitle.value !=
-                appointmentDisplayName) {
-              locator<NavigationService>().goBack();
-              print('goback is initiated');
-            }
-          },
-          child: SiteLayout()), // Set home directly
+      routerConfig: AppRouter.router, // Provide the GoRouter instance
     );
   }
 }

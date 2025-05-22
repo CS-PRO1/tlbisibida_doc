@@ -238,6 +238,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                             ),
                           ),
                         );
+                        
                         // var requestJson = {
                         //   "patient_name": patientnamecontroller.text,
                         //   "age": int.parse(agecontroller.text),

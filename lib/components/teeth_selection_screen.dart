@@ -246,7 +246,7 @@ class TeethSelectionScreen extends StatelessWidget {
                                                   offset: Offset(0, 6))
                                             ]
                                           : null,
-                                      shape: ToothBorder(connection.path!),
+                                      shape: ToothBorder(connection.path),
                                     ),
                                     child: Material(
                                       type: MaterialType.transparency,

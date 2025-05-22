@@ -1,10 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class RoleScreen extends StatelessWidget {
@@ -87,7 +86,8 @@ class RoleScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, loginRoute);
+                      // Navigator.pushNamed(context, loginRoute);
+                      context.push(loginRoute);
                     },
                     child: ClipRect(
                       child: BackdropFilter(
@@ -134,7 +134,8 @@ class RoleScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, loginRoute);
+                      // Navigator.pushNamed(context, loginRoute);
+                      context.push(loginRoute);
                     },
                     child: ClipRect(
                       child: BackdropFilter(

@@ -1,5 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
@@ -68,8 +69,7 @@ class PatientsFinanceTable extends StatelessWidget {
                     DataCell(Center(
                         child: CustomText(
                       text: '-350000',
-                                                    textDirection: TextDirection.ltr,
-
+                      textDirection: TextDirection.ltr,
                       alignment: TextAlign.center,
                       size: 14,
                     ))),
@@ -79,7 +79,8 @@ class PatientsFinanceTable extends StatelessWidget {
                         // Navigator.of(context).push(MaterialPageRoute(
                         //   builder: (context) => PatientInfoScreen(),
                         // ));
-                        Navigator.pushNamed(context, patientInfoRoute);
+                        // Navigator.pushNamed(context, patientInfoRoute);
+                        context.push(patientInfoRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

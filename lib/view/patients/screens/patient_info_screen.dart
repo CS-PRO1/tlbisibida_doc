@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
@@ -257,7 +258,9 @@ class PatientInfoScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, addSessionDetailsRoute);
+          // Navigator.pushNamed(context, addSessionDetailsRoute);
+                                  context.push(addSessionDetailsRoute);
+
         },
         mini: true,
         backgroundColor: cyan400,

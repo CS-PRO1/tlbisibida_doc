@@ -2,8 +2,10 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/view/patients/components/bottom_action_buttons_patients.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog.dart';
 import 'package:tlbisibida_doc/view/patients/components/dialogs/patient_info_button.dart';
@@ -318,12 +320,14 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
                     filteredInfo.length,
                     (index) =>
                         itemcard(context, filteredInfo, index, onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PatientsListScreen(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => PatientsListScreen(),
+                      //   ),
+                      // );
+                                              context.push(patientListRoute);
+
                     }),
                   )
                       .animate(interval: const Duration(milliseconds: 50))

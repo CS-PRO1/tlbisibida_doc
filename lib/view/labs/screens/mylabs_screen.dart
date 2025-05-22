@@ -1,8 +1,8 @@
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/constants/constants.dart'; // Assuming constants.dart contains color definitions
-import 'package:tlbisibida_doc/services/navigation/locator.dart';
-import 'package:tlbisibida_doc/services/navigation/navigation_service.dart';
+
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 // import 'package:tlbisibida_doc/view/labs/components/carousel_labs.dart';
 import 'package:tlbisibida_doc/view/labs/tables/lab_bills_table.dart';
@@ -229,7 +229,9 @@ class _MylabsScreenState extends State<MylabsScreen> {
         onPressed: () {
           // locator<NavigationService>()
           //     .navigateTo(labsListRoute); // Assuming labsListRoute is defined
-          Navigator.pushNamed(context, labsListRoute);
+          // Navigator.pushNamed(context, labsListRoute);
+                                  context.push(labsListRoute);
+
         },
         mini: true,
         backgroundColor: cyan400, // Using colors from your constants
