@@ -136,7 +136,7 @@ class AppRouter {
             title: routeDisplayNames[patientInfoRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: const PatientInfoScreen(),
+          body: PatientInfoScreen(),
         ),
       ),
       GoRoute(
