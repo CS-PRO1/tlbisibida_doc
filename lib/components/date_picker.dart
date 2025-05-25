@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 // import 'package:power_overload/Shared/constants.dart';
 
-Widget datePicker(BuildContext context) {
-  DateTime dateTime = DateTime.now();
+Widget datePicker(BuildContext context, DateTime dateTime) {
+  // DateTime dateTime = DateTime.now();
   void getDatePicker() {
     showDatePicker(
       //barrierColor: green400,
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1950),
       lastDate: DateTime(2050),
     ).then((value) {
       value != null ? dateTime = value : dateTime = DateTime.now();

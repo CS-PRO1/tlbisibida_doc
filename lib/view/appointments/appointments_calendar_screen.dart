@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart'; // Import go_router
+import 'package:tlbisibida_doc/view/patients/components/dialogs/add_patient_dialog.dart';
 import 'dart:ui' as ui;
 
 import '../../services/navigation/routes.dart';
@@ -35,52 +36,28 @@ class AppointmentsCalendarScreen extends StatelessWidget {
       patientName: 'تحسين التحسيني',
       phoneNumber: '0987654321',
       startTime: DateTime.now().copyWith(
-          hour: 13,
-          minute: 30,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
+          hour: 13, minute: 30, second: 0, millisecond: 0, microsecond: 0),
       endTime: DateTime.now().copyWith(
-          hour: 14,
-          minute: 30,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
-      color: Colors.green,
+          hour: 14, minute: 30, second: 0, millisecond: 0, microsecond: 0),
+      color: const Color.fromARGB(170, 76, 175, 79),
     ),
     Appointment(
       patientName: 'محمد حسام محمد السيد خليل',
       phoneNumber: '0987654321',
       startTime: DateTime.now().copyWith(
-          hour: 17,
-          minute: 30,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
+          hour: 17, minute: 30, second: 0, millisecond: 0, microsecond: 0),
       endTime: DateTime.now().copyWith(
-          hour: 18,
-          minute: 00,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
-      color: Colors.green,
+          hour: 18, minute: 00, second: 0, millisecond: 0, microsecond: 0),
+      color: const Color.fromARGB(170, 244, 67, 54),
     ),
     Appointment(
       patientName: 'محمد سمبل',
       phoneNumber: '0987654321',
       startTime: DateTime.now().copyWith(
-          hour: 15,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
+          hour: 15, minute: 0, second: 0, millisecond: 0, microsecond: 0),
       endTime: DateTime.now().copyWith(
-          hour: 16,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0),
-      color: Colors.orange,
+          hour: 16, minute: 0, second: 0, millisecond: 0, microsecond: 0),
+      color: const Color.fromARGB(170, 255, 153, 0),
     ),
   ];
 
@@ -97,8 +74,13 @@ class AppointmentsCalendarScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildAppointmentTile(DateTime date, List<CalendarEventData> events,
-      Rect boundary, DateTime startDuration, DateTime endDuration) {
+  Widget _buildAppointmentTile(
+    DateTime date,
+    List<CalendarEventData> events,
+    Rect boundary,
+    DateTime startDuration,
+    DateTime endDuration,
+  ) {
     if (events.isEmpty) {
       return const SizedBox();
     }
@@ -106,31 +88,34 @@ class AppointmentsCalendarScreen extends StatelessWidget {
     final CalendarEventData event = events.first;
     final Appointment appointment = event.event as Appointment;
 
-    return Container(
-      margin: const EdgeInsets.only(top: 1.0, bottom: 1.0, right: 50, left: 8.0),
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: cyan50op,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return Builder(builder: (context) {
+      return Stack(
         children: [
-          Container(
-            width: 4.0,
-            color: appointment.color,
-            margin: const EdgeInsets.only(right: 8.0),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 2.0,
+              color: appointment.color,
+              margin: const EdgeInsets.only(right: 8.0),
+            ),
           ),
-          Expanded(
+          Container(
+            margin: const EdgeInsets.only(
+                top: 1.0, bottom: 1.0, right: 50, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, left: 8.0, right: 20),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(165, 241, 255, 253),
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  offset: const Offset(0, 1),
+                ),
+              ],
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -158,15 +143,43 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                     Text(
                       appointment.phoneNumber,
                       style: TextStyle(color: cyan500),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: appointment.color,
+                child: IconButton(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => addPatientDialog(context,
+                        name: appointment.patientName,
+                        phoneNumber: appointment.phoneNumber),
+                  ),
+                  iconSize: 15,
+                  splashColor: Colors.transparent,
+                  style: ButtonStyle(elevation: WidgetStatePropertyAll(2)),
+                  // splashRadius: 0,
+
+                  icon: Icon(
+                    shadows: [],
+                    color: white,
+                    Icons.person_add_alt_1,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
-      ),
-    );
+      );
+    });
   }
 
   @override
@@ -191,9 +204,7 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                     ' ' +
                     DateFormat.MMM('ar').format(initialDay),
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: cyan500),
+                    fontSize: 20, fontWeight: FontWeight.bold, color: cyan500),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(

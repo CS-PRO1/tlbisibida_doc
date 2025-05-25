@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tlbisibida_doc/components/date_picker.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 
 import 'package:tlbisibida_doc/constants/constants.dart';
 
-Dialog addPatientDialog(BuildContext context) {
-  TextEditingController itemstandardquantitycontroller =
-      TextEditingController();
+Dialog addPatientDialog(BuildContext context,
+    {String? name, String? phoneNumber}) {
   bool v = true;
 
+  TextEditingController patientNameController =
+      TextEditingController(text: name ?? '');
+  TextEditingController phoneNumberController =
+      TextEditingController(text: phoneNumber ?? '');
+  TextEditingController chronicDiseasesController = TextEditingController();
+  TextEditingController medicinesController = TextEditingController();
+  TextEditingController creditController = TextEditingController();
+  DateTime birthdate = DateTime.now();
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -46,23 +54,29 @@ Dialog addPatientDialog(BuildContext context) {
                       SizedBox(
                         //width: 250,
                         child: defaultTextField(
-                            itemstandardquantitycontroller, context, 'الاسم'),
+                            patientNameController, context, 'الاسم'),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
                       SizedBox(
                         //width: 300,
-                        child: defaultTextField(itemstandardquantitycontroller,
-                            context, 'رقم الهاتف'),
+                        child: defaultTextField(
+                            phoneNumberController, context, 'رقم الهاتف'),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      SizedBox(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         //width: 250,
-                        child: defaultTextField(itemstandardquantitycontroller,
-                            context, 'المواليد'),
+                        children: [
+                          Text(
+                            'المواليد',
+                            style: TextStyle(color: cyan600, fontSize: 16),
+                          ),
+                          datePicker(context, birthdate)
+                        ],
                       ),
                       const SizedBox(
                         height: 15,
@@ -73,38 +87,53 @@ Dialog addPatientDialog(BuildContext context) {
                           color: cyan50,
                         ),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Radio(
-                                    value: true,
-                                    groupValue: 'groupValue',
-                                    onChanged: (value) {}),
-                                const SizedBox(
-                                  width: 5,
+                                Row(
+                                  children: [
+                                    Text(
+                                      'ذكر',
+                                      style: TextStyle(
+                                          color: cyan600, fontSize: 16),
+                                    ),
+                                    Radio(
+                                        value: true,
+                                        groupValue: 'groupValue',
+                                        onChanged: (value) {}),
+                                  ],
                                 ),
-                                Text('ذكر '),
-                                Radio(
-                                    value: true,
-                                    groupValue: 'groupValue',
-                                    onChanged: (value) {}),
-                                Text(' أنثى'),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'أنثى',
+                                      style: TextStyle(
+                                          color: cyan600, fontSize: 16),
+                                    ),
+                                    Radio(
+                                        value: true,
+                                        groupValue: 'groupValue',
+                                        onChanged: (value) {}),
+                                  ],
+                                ),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                const Text(
+                                  'مدخن؟',
+                                  style:
+                                      TextStyle(color: cyan600, fontSize: 16),
+                                ),
                                 Checkbox(
                                   value: v,
                                   onChanged: (value) {
                                     value = !v;
                                   },
                                 ),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                const Text('مدخن؟'),
                               ],
                             ),
                           ],
@@ -115,8 +144,8 @@ Dialog addPatientDialog(BuildContext context) {
                       ),
                       SizedBox(
                         // width: 250,
-                        child: defaultTextField(itemstandardquantitycontroller,
-                            context, 'أمراض مزمنة '),
+                        child: defaultTextField(
+                            chronicDiseasesController, context, 'أمراض مزمنة'),
                       ),
                       const SizedBox(
                         height: 15,
@@ -124,7 +153,7 @@ Dialog addPatientDialog(BuildContext context) {
                       SizedBox(
                         //  width: 250,
                         child: defaultTextField(
-                            itemstandardquantitycontroller, context, 'أدوية'),
+                            medicinesController, context, 'أدوية'),
                       ),
                       const SizedBox(
                         height: 15,
@@ -132,7 +161,7 @@ Dialog addPatientDialog(BuildContext context) {
                       SizedBox(
                         //  width: 250,
                         child: defaultTextField(
-                            itemstandardquantitycontroller, context, 'الرصيد'),
+                            creditController, context, 'الرصيد'),
                       ),
                       const SizedBox(
                         height: 15,
