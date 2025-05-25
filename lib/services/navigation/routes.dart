@@ -67,6 +67,9 @@ const aboutRoute = "/about";
 const registerDisplayName = "إنشاء حساب";
 const registerRoute = "/register";
 
+const register2DisplayName = "إنشاء حساب";
+const register2Route = "/register2";
+
 const roleDisplayName = "الدخول كـَ";
 const roleRoute = "/role";
 

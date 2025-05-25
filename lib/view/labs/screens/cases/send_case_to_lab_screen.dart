@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/components/date_picker.dart';
@@ -43,7 +44,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
     'تعويض',
   ]);
   DateTime expectedDeliveryDate = DateTime.now();
-  List<File> images = [];
+  List<Uint8List> images = [];
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +208,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                     SizedBox(
                       height: 30,
                     ),
-                    imagePicker(images),
+                    imagePicker(images, true),
                     SizedBox(
                       height: 30,
                     ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SessionDetailsForm extends StatelessWidget {
   TextEditingController treatmenttypecontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
   TextEditingController costController = TextEditingController();
-  List<File> images = [];
+  List<Uint8List> images = [];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -145,7 +146,7 @@ class SessionDetailsForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: imagePicker(images),
+              child: imagePicker(images, true),
             ),
             SizedBox(
               height: 25,
