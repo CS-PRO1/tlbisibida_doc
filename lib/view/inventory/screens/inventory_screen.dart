@@ -69,11 +69,13 @@ class InventoryScreen extends StatelessWidget {
               context,
               info,
             ),
-            filter: (value) => info
-                .where(
-                  (element) => element['name'].contains(value),
-                )
-                .toList(),
+            filter: (value) {
+              return info
+                  .where((element) =>
+                      element['name'].contains(value) ||
+                      element['subcats'][value].contains(value))
+                  .toList();
+            },
             emptyWidget: const Center(
               child: Text('لم يتم العثور على نتيجة'),
             ),
@@ -82,7 +84,7 @@ class InventoryScreen extends StatelessWidget {
                   Icons.search,
                   color: cyan400,
                 ),
-                labelText: "ابحث عن تصنيف رئيسي",
+                labelText: "ابحث عن صنف",
                 labelStyle: TextStyle(fontSize: 14),
                 fillColor: Colors.white,
                 // enabledBorder: OutlineInputBorder(
@@ -219,8 +221,7 @@ class InventoryScreen extends StatelessWidget {
               )),
           onPressed: () {
             // Navigator.pushNamed(context,itemListRoute);
-                                    context.push(itemListRoute);
-
+            context.push(itemListRoute);
           },
         ),
         Row(

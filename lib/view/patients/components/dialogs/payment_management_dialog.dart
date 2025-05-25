@@ -11,6 +11,7 @@ class PaymentManagementDialog extends StatelessWidget {
   });
   TextEditingController titleController = TextEditingController();
   TextEditingController costController = TextEditingController();
+  DateTime paymentDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -52,7 +53,7 @@ class PaymentManagementDialog extends StatelessWidget {
                           const SizedBox(
                             height: 15,
                           ),
-                          datePicker(context),
+                          datePicker(context, paymentDate),
                           const SizedBox(
                             height: 15,
                           ),

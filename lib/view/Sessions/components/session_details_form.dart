@@ -16,6 +16,7 @@ class SessionDetailsForm extends StatelessWidget {
   TextEditingController descriptioncontroller = TextEditingController();
   TextEditingController costController = TextEditingController();
   List<File> images = [];
+  DateTime sessionDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -53,7 +54,7 @@ class SessionDetailsForm extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                datePicker(context),
+                datePicker(context, sessionDate),
               ],
             ),
             SizedBox(

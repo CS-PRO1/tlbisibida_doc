@@ -193,7 +193,7 @@ class _AddOrderState extends State<SendCaseToLabScreen> {
                         SizedBox(
                           width: 10,
                         ),
-                        datePicker(context),
+                        datePicker(context, expectedDeliveryDate),
                       ],
                     ),
                     SizedBox(
