@@ -44,6 +44,13 @@ class BillDetailsDialog extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const Text(
+                    'الفاتورة النهائية',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -61,13 +68,6 @@ class BillDetailsDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Text(
-                    'الفاتورة النهائية',
-                    style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
@@ -111,15 +111,15 @@ listItemBuilder(context, index) {
             ),
             Column(
               children: [
-                const Text('Patient Name:' +
+                const Text('اسم المريض:' +
                     ' ' +
                     //controller.billsListModel!.data[index].patient_name
-                    'Rokaia'),
-                Text('Date:' +
+                    'تحسين'),
+                Text('التاريخ:' +
                     ' ' +
                     //controller.billsListModel!.data[index].created_at
                     '09/12/2024'.toString().substring(0, 10)),
-                const Text('Bill: ' +
+                const Text('القاتورة: ' +
                     //controller.billsListModel!.data[index].total_price.toString()
                     '3,000,000'),
                 //style: TextStyle(fontSize: 22, color: cyan400),
