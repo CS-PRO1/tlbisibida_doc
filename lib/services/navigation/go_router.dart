@@ -12,6 +12,7 @@ import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.da
 import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
 import 'package:tlbisibida_doc/view/authentication/email_verification_screen.dart';
 import 'package:tlbisibida_doc/view/authentication/login.dart';
+import 'package:tlbisibida_doc/view/authentication/register%202.dart';
 import 'package:tlbisibida_doc/view/authentication/register.dart';
 import 'package:tlbisibida_doc/view/authentication/role.dart';
 import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
@@ -55,6 +56,7 @@ final Map<String, String> routeDisplayNames = {
   registerRoute: registerDisplayName,
   roleRoute: roleDisplayName,
   emailVerificationRoute: emailVerificationDisplayName,
+  register2Route: register2DisplayName,
 };
 
 // Define the order of routes for the bottom navigation bar
@@ -78,6 +80,10 @@ class AppRouter {
       GoRoute(
         path: registerRoute,
         builder: (context, state) => Register(),
+      ),
+      GoRoute(
+        path: register2Route,
+        builder: (context, state) => Register2(),
       ),
       GoRoute(
         path: roleRoute,

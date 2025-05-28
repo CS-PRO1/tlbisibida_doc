@@ -273,7 +273,7 @@ class Register extends StatelessWidget {
                       //       },
 
                       onTap: () {
-                        context.push(emailVerificationRoute);
+                        context.push(register2Route);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -289,7 +289,7 @@ class Register extends StatelessWidget {
                             //             AlwaysStoppedAnimation<Color>(Colors.white))
                             //     :
                             const CustomText(
-                          text: "إنشاء حساب",
+                          text: "متابعة ",
                           color: Colors.white,
                         ),
                       ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 Dialog imagePickDialog(BuildContext context) {
-  List<File> images = [];
+  List<Uint8List> images = [];
 
   return Dialog(
       child: Padding(
@@ -44,7 +45,7 @@ Dialog imagePickDialog(BuildContext context) {
                 ),
               ],
             ),
-            imagePicker(images),
+            imagePicker(images, true),
             defaultButton(
                 text: 'إضافة',
                 function: () {
