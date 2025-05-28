@@ -34,7 +34,7 @@ class BillDetailsDialog extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) =>
                         listItemBuilder(context, index),
-                    itemCount: 5,
+                    itemCount: 4,
                     separatorBuilder: (BuildContext context, int index) =>
                         Container()),
               ),
@@ -98,31 +98,50 @@ listItemBuilder(context, index) {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Text(
-              //controller.billsListModel!.data[index].case_id.toString(),
-              '001',
-              style: TextStyle(fontSize: 18, color: cyan600),
-              overflow: TextOverflow.ellipsis,
-            ),
-            Container(
-              color: cyan200,
-              width: .5,
-              height: 25,
-            ),
             Column(
               children: [
                 const Text('اسم المريض:' +
                     ' ' +
                     //controller.billsListModel!.data[index].patient_name
                     'تحسين'),
-                Text('التاريخ:' +
-                    ' ' +
-                    //controller.billsListModel!.data[index].created_at
-                    '09/12/2024'.toString().substring(0, 10)),
-                const Text('القاتورة: ' +
-                    //controller.billsListModel!.data[index].total_price.toString()
-                    '3,000,000'),
-                //style: TextStyle(fontSize: 22, color: cyan400),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  color: const Color.fromARGB(137, 41, 157, 144),
+                  height: .3,
+                  width: 150,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Text('التاريخ:'),
+                        Text('09/12/2024'.toString().substring(0, 10)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 25,
+                    ),
+                    Container(
+                      color: const Color.fromARGB(137, 41, 157, 144),
+                      width: .3,
+                      height: 40,
+                    ),
+                    SizedBox(
+                      width: 25,
+                    ),
+                    Column(
+                      children: [
+                        const Text('الفاتورة: '),
+                        const Text('3,000,000'),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ],

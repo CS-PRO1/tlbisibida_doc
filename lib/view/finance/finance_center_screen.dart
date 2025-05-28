@@ -140,7 +140,7 @@ class FinanceCenterScreen extends StatelessWidget {
                     ? Column(
                         children: [
                           SizedBox(
-                              height: 464,
+                              height: MediaQuery.of(context).size.height / 1.88,
                               child: SingleChildScrollView(
                                   child: ClinicOpFinancesTable())),
                           addOpButton(context),
@@ -149,7 +149,7 @@ class FinanceCenterScreen extends StatelessWidget {
                     : Column(
                         children: [
                           SizedBox(
-                              height: 464,
+                              height: MediaQuery.of(context).size.height / 1.88,
                               child: SingleChildScrollView(
                                   child: ClinicInfrequentFinancesTable())),
                           addInFButton(context)

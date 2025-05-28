@@ -62,10 +62,38 @@ class LabBillsTable extends StatelessWidget {
                 (index) => DataRow(
                   cells: [
                     DataCell(Center(
-                        child: CustomText(
-                      text: DateFormat.yMd().format(DateTime.now()),
-                      size: 14,
-                      alignment: TextAlign.center,
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'من',
+                              style: TextStyle(color: cyan500),
+                            ),
+                            CustomText(
+                              text: DateFormat.yMd().format(DateTime.now()),
+                              size: 14,
+                              alignment: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'إلى',
+                              style: TextStyle(color: cyan500),
+                            ),
+                            CustomText(
+                              text: DateFormat.yMd().format(DateTime.now()),
+                              size: 14,
+                              alignment: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ],
                     ))),
                     DataCell(Center(
                         child: CustomText(
