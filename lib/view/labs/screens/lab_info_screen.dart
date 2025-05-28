@@ -10,6 +10,24 @@ class LabInfoScreen extends StatelessWidget {
   final List _choices = ['الحالات', 'الفواتير', 'الدفعات'];
   final ValueNotifier<String> _table = ValueNotifier<String>('الحالات');
 
+  List cases = [
+    {
+      'id': 1,
+      'name': 'محسن التحسيني',
+      'date': DateTime(2025, 12, 9),
+    },
+    {
+      'id': 2,
+      'name': 'محسن التحسيني',
+      'date': DateTime(2025, 12, 9),
+    },
+    {
+      'id': 3,
+      'name': 'محسن التحسيني',
+      'date': DateTime(2025, 12, 9),
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +52,8 @@ class LabInfoScreen extends StatelessWidget {
                         children: [
                           Text(
                             '-600,000',
-                                                          textDirection: TextDirection.ltr,
-
+                            textDirection: TextDirection.ltr,
                             style: TextStyle(
-                              
                                 fontSize: 18,
                                 color: cyan600,
                                 fontWeight: FontWeight.bold),
@@ -106,7 +122,9 @@ class LabInfoScreen extends StatelessWidget {
                   child: AnimatedBuilder(
                     animation: _table,
                     builder: (context, child) => (_table.value == 'الحالات')
-                        ? LabCasesTable()
+                        ? LabCasesTable(
+                            data: cases,
+                          )
                         : (_table.value == 'الفواتير')
                             ? LabBillsTable()
                             : LabPaymentsTable(),
