@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:choice/choice.dart';
 import 'package:cupertino_calendar_picker/cupertino_calendar_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +29,8 @@ class _Register2State extends State<Register2> {
   TextEditingController address = TextEditingController();
 
   List<_WorkingHoursData> _workingHoursData = [];
+  final List _subsicribe = ['ربع سنوي', 'نصف سنوي', 'سنوي'];
+  final ValueNotifier<String> _subtype = ValueNotifier('سنوي');
 
   @override
   void initState() {
@@ -93,174 +96,230 @@ class _Register2State extends State<Register2> {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 25, right: 12),
-                  child: Image.asset(
-                    "assets/icons/logo_v2.png",
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  "إنشاء حساب",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: cyan500,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        color: const Color.fromARGB(112, 125, 117, 117),
-                        blurRadius: 2,
-                        offset: Offset(-1, 2),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    color: cyan50op,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'اختر صورة الملف الشخصي',
-                          style: TextStyle(color: cyan600, fontSize: 14),
-                        ),
-                        imagePicker(images, false),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 25, right: 12),
+                  //   child: Image.asset(
+                  //     "assets/icons/logo_v2.png",
+                  //     width: 100,
+                  //     height: 100,
+                  //   ),
+                  // ),
+                  const SizedBox(height: 30),
+                  Text(
+                    "إنشاء حساب",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: cyan500,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: const Color.fromARGB(112, 125, 117, 117),
+                          blurRadius: 2,
+                          offset: Offset(-1, 2),
+                        )
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-
-                // The SINGLE main container for all working hours blocks
-                Container(
-                  height: MediaQuery.of(context).size.height / 2.5,
-                  decoration: BoxDecoration(
-                    color: cyan50op,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16.0), // Padding inside the main container
-                    child: SingleChildScrollView(
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        // Make column only take required space
-                        mainAxisSize: MainAxisSize.min,
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: cyan50op,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text(
-                            'أوقات الدوام',
-                            textAlign: TextAlign.center, // Center the title
-                            style: TextStyle(color: cyan500, fontSize: 16),
+                          Text(
+                            'اختر صورة الملف الشخصي',
+                            style: TextStyle(color: cyan600, fontSize: 14),
                           ),
-                          // Dynamically build each working hours block
-                          ..._workingHoursData.asMap().entries.map((entry) {
-                            int index = entry.key;
-                            _WorkingHoursData data = entry.value;
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 15),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: cyan50op,
-                                  border: Border.all(width: .5, color: cyan300),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                height: 250,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 25),
-                                  child: Column(
-                                    children: [
-                                      _SingleWorkingHoursBlockContent(
-                                        key: ValueKey(
-                                            'working_hours_$index'), // Unique key for each block
-                                        data: data,
-                                        onDelete: () {
-                                          _deleteWorkingHoursData(index);
-                                        },
-                                        showDeleteButton:
-                                            _workingHoursData.length >
-                                                1, // Pass condition
-                                        onDataChanged: () {
-                                          // Callback to rebuild parent when data changes
-                                          setState(() {});
-                                        },
-                                      ),
-                                      //dd separator if not the last item
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
+                          imagePicker(images, false),
                         ],
                       ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 10),
 
-                const SizedBox(height: 15),
-                // Button to add more working hours
-                InkWell(
-                  onTap: _addWorkingHoursData,
-                  child: Container(
+                  Container(
                     decoration: BoxDecoration(
                       color: cyan50op,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: cyan500, width: 1.5),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    alignment: Alignment.center,
-                    width: double.maxFinite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add, color: cyan400),
-                        const SizedBox(width: 8),
-                        const CustomText(
-                          text: "إضافة أوقات دوام أخرى",
-                          color: cyan400,
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'اختر مدة الاشتراك',
+                            style: TextStyle(color: cyan500, fontSize: 16),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: InlineChoice<String>.single(
+                                value: _subtype.value,
+                                onChanged: (obj) {
+                                  _subtype.value = obj!;
+                                  // print(_targetlabtype.toString());
+                                },
+                                clearable: false,
+                                itemCount: _subsicribe.length,
+                                itemBuilder: (state, i) {
+                                  return ChoiceChip(
+                                    selectedColor: cyan200,
+                                    side: const BorderSide(color: cyan300),
+                                    selected: state.selected(_subsicribe[i]),
+                                    onSelected:
+                                        state.onSelected(_subsicribe[i]),
+                                    label: Text(_subsicribe[i]),
+                                    showCheckmark: false,
+                                  );
+                                },
+                                listBuilder: ChoiceList.createWrapped(
+                                    // runAlignment: WrapAlignment.spaceAround,
+                                    alignment: WrapAlignment.spaceAround,
+                                    direction: Axis.horizontal,
+                                    textDirection: TextDirection.rtl,
+                                    //spacing: 10,
+                                    //runSpacing: 10,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 5,
+                                    ))),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                InkWell(
-                  onTap: () {
-                    context.push(emailVerificationRoute);
-                  },
-                  child: Container(
+                  const SizedBox(height: 10),
+
+                  // The SINGLE main container for all working hours blocks
+                  Container(
+                    height: MediaQuery.of(context).size.height / 2.5,
                     decoration: BoxDecoration(
-                      color: cyan400,
-                      borderRadius: BorderRadius.circular(20),
+                      color: cyan50op,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    alignment: Alignment.center,
-                    width: double.maxFinite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const CustomText(
-                      text: "إنشاء حساب",
-                      color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0), // Padding inside the main container
+                      child: SingleChildScrollView(
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          // Make column only take required space
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'أوقات الدوام',
+                              textAlign: TextAlign.center, // Center the title
+                              style: TextStyle(color: cyan500, fontSize: 16),
+                            ),
+                            // Dynamically build each working hours block
+                            ..._workingHoursData.asMap().entries.map((entry) {
+                              int index = entry.key;
+                              _WorkingHoursData data = entry.value;
+
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 15),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: cyan50op,
+                                    border:
+                                        Border.all(width: .5, color: cyan300),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  height: 250,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 25),
+                                    child: Column(
+                                      children: [
+                                        _SingleWorkingHoursBlockContent(
+                                          key: ValueKey(
+                                              'working_hours_$index'), // Unique key for each block
+                                          data: data,
+                                          onDelete: () {
+                                            _deleteWorkingHoursData(index);
+                                          },
+                                          showDeleteButton:
+                                              _workingHoursData.length >
+                                                  1, // Pass condition
+                                          onDataChanged: () {
+                                            // Callback to rebuild parent when data changes
+                                            setState(() {});
+                                          },
+                                        ),
+                                        //dd separator if not the last item
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 25,
-                )
-              ],
+
+                  const SizedBox(height: 15),
+                  // Button to add more working hours
+                  InkWell(
+                    onTap: _addWorkingHoursData,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: cyan50op,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: cyan500, width: 1.5),
+                      ),
+                      alignment: Alignment.center,
+                      width: double.maxFinite,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add, color: cyan400),
+                          const SizedBox(width: 8),
+                          const CustomText(
+                            text: "إضافة أوقات دوام أخرى",
+                            color: cyan400,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {
+                      context.push(emailVerificationRoute);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: cyan400,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      alignment: Alignment.center,
+                      width: double.maxFinite,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: const CustomText(
+                        text: "إنشاء حساب",
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  )
+                ],
+              ),
             ),
           ),
         ),
