@@ -4,31 +4,31 @@ import 'package:tlbisibida_doc/components/bottom_nav.dart'; // Re-use your botto
 import 'package:tlbisibida_doc/components/top_nav.dart'; // Re-use your top nav
 import 'package:tlbisibida_doc/constants/constants.dart'; // For route names and display names
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/add_session_details_screen%20.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/edit_session_details_screen.dart';
-import 'package:tlbisibida_doc/view/Sessions/screens/session_details_screen.dart';
-import 'package:tlbisibida_doc/view/about/about.dart';
-import 'package:tlbisibida_doc/view/appointments/appointments_calendar_screen.dart';
-import 'package:tlbisibida_doc/view/appointments/new_appointment_screen.dart';
-import 'package:tlbisibida_doc/view/authentication/email_verification_screen.dart';
-import 'package:tlbisibida_doc/view/authentication/login.dart';
-import 'package:tlbisibida_doc/view/authentication/register%202.dart';
-import 'package:tlbisibida_doc/view/authentication/register.dart';
-import 'package:tlbisibida_doc/view/authentication/role.dart';
-import 'package:tlbisibida_doc/view/finance/finance_center_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/inventory_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/cases/case_details_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/lab_info_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/mylabs_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/new_labs_list_screen.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patient_info_screen.dart';
-import 'package:tlbisibida_doc/view/patients/screens/patients_list_screen.dart';
-import 'package:tlbisibida_doc/view/labs/screens/cases/send_case_to_lab_screen.dart';
-import 'package:tlbisibida_doc/view/profile/profile_edit_screen.dart';
-import 'package:tlbisibida_doc/view/profile/profile_screen.dart';
-import 'package:tlbisibida_doc/view/secretary/secretary_screen.dart';
-import 'package:tlbisibida_doc/view/statistics/statistics_screen.dart';
-import 'package:tlbisibida_doc/view/inventory/screens/item_list_screen.dart'; // Ensure this is imported
+import 'package:tlbisibida_doc/presentation/Sessions/screens/add_session_details_screen%20.dart';
+import 'package:tlbisibida_doc/presentation/Sessions/screens/edit_session_details_screen.dart';
+import 'package:tlbisibida_doc/presentation/Sessions/screens/session_details_screen.dart';
+import 'package:tlbisibida_doc/presentation/about/about.dart';
+import 'package:tlbisibida_doc/presentation/appointments/appointments_calendar_screen.dart';
+import 'package:tlbisibida_doc/presentation/appointments/new_appointment_screen.dart';
+import 'package:tlbisibida_doc/presentation/authentication/email_verification_screen.dart';
+import 'package:tlbisibida_doc/presentation/authentication/login.dart';
+import 'package:tlbisibida_doc/presentation/authentication/register%202.dart';
+import 'package:tlbisibida_doc/presentation/authentication/register.dart';
+import 'package:tlbisibida_doc/presentation/authentication/role.dart';
+import 'package:tlbisibida_doc/presentation/finance/finance_center_screen.dart';
+import 'package:tlbisibida_doc/presentation/inventory/screens/inventory_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cases/case_details_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/lab_info_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/mylabs_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/new_labs_list_screen.dart';
+import 'package:tlbisibida_doc/presentation/patients/screens/patient_info_screen.dart';
+import 'package:tlbisibida_doc/presentation/patients/screens/patients_list_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cases/send_case_to_lab_screen.dart';
+import 'package:tlbisibida_doc/presentation/profile/profile_edit_screen.dart';
+import 'package:tlbisibida_doc/presentation/profile/profile_screen.dart';
+import 'package:tlbisibida_doc/presentation/secretary/secretary_screen.dart';
+import 'package:tlbisibida_doc/presentation/statistics/statistics_screen.dart';
+import 'package:tlbisibida_doc/presentation/inventory/screens/item_list_screen.dart'; // Ensure this is imported
 
 // Define a map to easily get display names from route paths
 final Map<String, String> routeDisplayNames = {
