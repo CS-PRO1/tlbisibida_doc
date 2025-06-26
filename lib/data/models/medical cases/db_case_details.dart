@@ -1,5 +1,5 @@
 // medical_case_response.dart
-import 'dart:convert'; // For json.decode and json.encode if you're testing this standalone
+// import 'dart:convert'; // For json.decode and json.encode if you're testing this standalone
 
 class MedicalCaseResponse {
   bool? status;
