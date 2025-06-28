@@ -1,18 +1,18 @@
-class TreatmentDetailsResponse {
+class DBTreatmentDetailsResponse {
   bool? status;
   int? successCode;
   TreatmentDetails? treatmentDetails;
   String? successMessage;
 
-  TreatmentDetailsResponse({
+  DBTreatmentDetailsResponse({
     this.status,
     this.successCode,
     this.treatmentDetails,
     this.successMessage,
   });
 
-  factory TreatmentDetailsResponse.fromJson(Map<String, dynamic> json) {
-    return TreatmentDetailsResponse(
+  factory DBTreatmentDetailsResponse.fromJson(Map<String, dynamic> json) {
+    return DBTreatmentDetailsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       treatmentDetails: json['treatment_details'] != null

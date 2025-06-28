@@ -1,18 +1,18 @@
-class DoctorGainsStatisticsResponse {
+class DBDoctorGainsStatisticsResponse {
   bool? status;
   int? successCode;
   List<DoctorGainsStatistic>? doctorGainsStatistics;
   String? successMessage;
 
-  DoctorGainsStatisticsResponse({
+  DBDoctorGainsStatisticsResponse({
     this.status,
     this.successCode,
     this.doctorGainsStatistics,
     this.successMessage,
   });
 
-  factory DoctorGainsStatisticsResponse.fromJson(Map<String, dynamic> json) {
-    return DoctorGainsStatisticsResponse(
+  factory DBDoctorGainsStatisticsResponse.fromJson(Map<String, dynamic> json) {
+    return DBDoctorGainsStatisticsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       doctorGainsStatistics: (json['doctor_gains_statistics'] as List<dynamic>?)

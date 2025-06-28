@@ -1,18 +1,18 @@
-class AvailableSlotsResponse {
+class DBAvailableSlotsResponse {
   String? date; // Consider parsing to DateTime if date object is preferred
   String? dayName;
   int? duration;
   List<TimeSlot>? availableSlots;
 
-  AvailableSlotsResponse({
+  DBAvailableSlotsResponse({
     this.date,
     this.dayName,
     this.duration,
     this.availableSlots,
   });
 
-  factory AvailableSlotsResponse.fromJson(Map<String, dynamic> json) {
-    return AvailableSlotsResponse(
+  factory DBAvailableSlotsResponse.fromJson(Map<String, dynamic> json) {
+    return DBAvailableSlotsResponse(
       date: json['date'] as String?,
       dayName: json['day_name'] as String?,
       duration: json['duration'] as int?,

@@ -1,19 +1,19 @@
-class SubcategoryStatisticsResponse {
+class DBSubcategoryStatisticsResponse {
   bool? status;
   int? successCode;
   List<SubcategoryStatistic>?
       statisticsOfSubcategories; // Corrected to match JSON key "statistics of subcategories"
   String? successMessage;
 
-  SubcategoryStatisticsResponse({
+  DBSubcategoryStatisticsResponse({
     this.status,
     this.successCode,
     this.statisticsOfSubcategories,
     this.successMessage,
   });
 
-  factory SubcategoryStatisticsResponse.fromJson(Map<String, dynamic> json) {
-    return SubcategoryStatisticsResponse(
+  factory DBSubcategoryStatisticsResponse.fromJson(Map<String, dynamic> json) {
+    return DBSubcategoryStatisticsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       statisticsOfSubcategories: (json['statistics of subcategories']

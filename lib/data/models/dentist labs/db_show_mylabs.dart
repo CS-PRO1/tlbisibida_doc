@@ -1,18 +1,18 @@
-class LabsJoinedResponse {
+class DBLabsJoinedResponse {
   bool? status;
   int? successCode;
   List<JoinedLab>? labsIamJoind; // Corrected to match JSON key "labs iam joind"
   String? successMessage;
 
-  LabsJoinedResponse({
+  DBLabsJoinedResponse({
     this.status,
     this.successCode,
     this.labsIamJoind,
     this.successMessage,
   });
 
-  factory LabsJoinedResponse.fromJson(Map<String, dynamic> json) {
-    return LabsJoinedResponse(
+  factory DBLabsJoinedResponse.fromJson(Map<String, dynamic> json) {
+    return DBLabsJoinedResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       labsIamJoind: (json['labs iam joind'] as List<dynamic>?)

@@ -1,17 +1,17 @@
-class PatientDetailsResponse {
+class DBPatientDetailsResponse {
   bool? status;
   int? successCode;
   PatientDetails? patientDetails;
   String? successMessage;
 
-  PatientDetailsResponse({
+  DBPatientDetailsResponse({
     this.status,
     this.successCode,
     this.patientDetails,
     this.successMessage,
   });
 
-  PatientDetailsResponse.fromJson(Map<String, dynamic> json) {
+  DBPatientDetailsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     patientDetails = json['patient_details'] != null

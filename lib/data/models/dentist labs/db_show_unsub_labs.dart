@@ -1,18 +1,18 @@
-class AllLabsResponse {
+class DBAllLabsResponse {
   bool? status;
   int? successCode;
   AllLabsPaginationData? allLabs; // Renamed to reflect content
   String? successMessage;
 
-  AllLabsResponse({
+  DBAllLabsResponse({
     this.status,
     this.successCode,
     this.allLabs,
     this.successMessage,
   });
 
-  factory AllLabsResponse.fromJson(Map<String, dynamic> json) {
-    return AllLabsResponse(
+  factory DBAllLabsResponse.fromJson(Map<String, dynamic> json) {
+    return DBAllLabsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       allLabs: json[' Latest Account of this lab '] != null

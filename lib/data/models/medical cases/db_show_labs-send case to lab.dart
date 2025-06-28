@@ -1,19 +1,19 @@
 // labs_response.dart
 
-class LabsResponse {
+class DBLabsResponse {
   bool? status;
   int? successCode;
   List<LabNameItem>? labs;
   String? successMessage;
 
-  LabsResponse({
+  DBLabsResponse({
     this.status,
     this.successCode,
     this.labs,
     this.successMessage,
   });
 
-  LabsResponse.fromJson(Map<String, dynamic> json) {
+  DBLabsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     if (json['labs'] != null) {

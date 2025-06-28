@@ -1,18 +1,18 @@
-class AppointmentsResponse {
+class DBAppointmentsResponse {
   bool? status;
   int? successCode;
   List<Appointment>? appointments;
   String? successMessage;
 
-  AppointmentsResponse({
+  DBAppointmentsResponse({
     this.status,
     this.successCode,
     this.appointments,
     this.successMessage,
   });
 
-  factory AppointmentsResponse.fromJson(Map<String, dynamic> json) {
-    return AppointmentsResponse(
+  factory DBAppointmentsResponse.fromJson(Map<String, dynamic> json) {
+    return DBAppointmentsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       appointments: (json['appointments'] as List<dynamic>?)

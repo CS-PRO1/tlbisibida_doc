@@ -1,17 +1,17 @@
-class BillDetailsResponse {
+class DBBillDetailsResponse {
   bool? status;
   int? successCode;
   BillDetailsData? billDetails;
   String? successMessage;
 
-  BillDetailsResponse({
+  DBBillDetailsResponse({
     this.status,
     this.successCode,
     this.billDetails,
     this.successMessage,
   });
 
-  BillDetailsResponse.fromJson(Map<String, dynamic> json) {
+  DBBillDetailsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     billDetails = json['bill_details'] != null

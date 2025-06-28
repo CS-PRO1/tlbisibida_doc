@@ -1,17 +1,17 @@
-class PatientPaymentsResponse {
+class DBPatientPaymentsResponse {
   bool? status;
   int? successCode;
   List<PatientPayment>? patientPayments;
   String? successMessage;
 
-  PatientPaymentsResponse({
+  DBPatientPaymentsResponse({
     this.status,
     this.successCode,
     this.patientPayments,
     this.successMessage,
   });
 
-  PatientPaymentsResponse.fromJson(Map<String, dynamic> json) {
+  DBPatientPaymentsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     if (json['patient_payments'] != null) {

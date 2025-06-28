@@ -1,18 +1,18 @@
-class OperatingPaymentsResponse {
+class DBOperatingPaymentsResponse {
   bool? status;
   int? successCode;
   List<OperatingPayment>? operatingPayments;
   String? successMessage;
 
-  OperatingPaymentsResponse({
+  DBOperatingPaymentsResponse({
     this.status,
     this.successCode,
     this.operatingPayments,
     this.successMessage,
   });
 
-  factory OperatingPaymentsResponse.fromJson(Map<String, dynamic> json) {
-    return OperatingPaymentsResponse(
+  factory DBOperatingPaymentsResponse.fromJson(Map<String, dynamic> json) {
+    return DBOperatingPaymentsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       operatingPayments: (json['operating_payments'] as List<dynamic>?)

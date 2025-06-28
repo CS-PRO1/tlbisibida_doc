@@ -1,18 +1,18 @@
-class SecretariesResponse {
+class DBSecretariesResponse {
   bool? status;
   int? successCode;
   List<Secretary>? secretaries;
   String? successMessage;
 
-  SecretariesResponse({
+  DBSecretariesResponse({
     this.status,
     this.successCode,
     this.secretaries,
     this.successMessage,
   });
 
-  factory SecretariesResponse.fromJson(Map<String, dynamic> json) {
-    return SecretariesResponse(
+  factory DBSecretariesResponse.fromJson(Map<String, dynamic> json) {
+    return DBSecretariesResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       secretaries: (json['secretaries'] as List<dynamic>?)

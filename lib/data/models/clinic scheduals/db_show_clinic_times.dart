@@ -1,17 +1,17 @@
-class DentistScheduleResponse {
+class DBDentistScheduleResponse {
   bool? status;
   int? successCode;
   List<DentistSchedule>? dentistSchedule;
   String? successMessage;
 
-  DentistScheduleResponse({
+  DBDentistScheduleResponse({
     this.status,
     this.successCode,
     this.dentistSchedule,
     this.successMessage,
   });
 
-  DentistScheduleResponse.fromJson(Map<String, dynamic> json) {
+  DBDentistScheduleResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     if (json['dentist_schedule'] != null) {

@@ -1,20 +1,20 @@
-class OperatingPaymentsStatisticsResponse {
+class DBOperatingPaymentsStatisticsResponse {
   bool? status;
   int? successCode;
   List<OperatingPaymentStatistic>?
       operatingPayments; // Corrected to match JSON key "Operating_Payments"
   String? successMessage;
 
-  OperatingPaymentsStatisticsResponse({
+  DBOperatingPaymentsStatisticsResponse({
     this.status,
     this.successCode,
     this.operatingPayments,
     this.successMessage,
   });
 
-  factory OperatingPaymentsStatisticsResponse.fromJson(
+  factory DBOperatingPaymentsStatisticsResponse.fromJson(
       Map<String, dynamic> json) {
-    return OperatingPaymentsStatisticsResponse(
+    return DBOperatingPaymentsStatisticsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       operatingPayments: (json['Operating_Payments'] as List<dynamic>?)

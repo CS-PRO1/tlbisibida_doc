@@ -1,18 +1,18 @@
-class PatientTreatmentsResponse {
+class DBPatientTreatmentsResponse {
   bool? status;
   int? successCode;
   List<PatientTreatment>? patientTreatments;
   String? successMessage;
 
-  PatientTreatmentsResponse({
+  DBPatientTreatmentsResponse({
     this.status,
     this.successCode,
     this.patientTreatments,
     this.successMessage,
   });
 
-  factory PatientTreatmentsResponse.fromJson(Map<String, dynamic> json) {
-    return PatientTreatmentsResponse(
+  factory DBPatientTreatmentsResponse.fromJson(Map<String, dynamic> json) {
+    return DBPatientTreatmentsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       patientTreatments: (json['patient_treatments'] as List<dynamic>?)

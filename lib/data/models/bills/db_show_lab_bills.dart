@@ -1,17 +1,17 @@
-class LabBillsResponse {
+class DBLabBillsResponse {
   bool? status;
   int? successCode;
   LabBillsData? labBills;
   String? successMessage;
 
-  LabBillsResponse({
+  DBLabBillsResponse({
     this.status,
     this.successCode,
     this.labBills,
     this.successMessage,
   });
 
-  LabBillsResponse.fromJson(Map<String, dynamic> json) {
+  DBLabBillsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     labBills = json['lab_bills'] != null

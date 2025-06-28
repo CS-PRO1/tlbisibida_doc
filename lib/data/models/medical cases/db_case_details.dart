@@ -1,20 +1,20 @@
 // medical_case_response.dart
 // import 'dart:convert'; // For json.decode and json.encode if you're testing this standalone
 
-class MedicalCaseResponse {
+class DBMedicalCaseResponse {
   bool? status;
   int? successCode;
   MedicalCase? medicalCase; // Note the direct object, not a list
   String? successMessage;
 
-  MedicalCaseResponse({
+  DBMedicalCaseResponse({
     this.status,
     this.successCode,
     this.medicalCase,
     this.successMessage,
   });
 
-  MedicalCaseResponse.fromJson(Map<String, dynamic> json) {
+  DBMedicalCaseResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     medicalCase = json['medical_case'] != null

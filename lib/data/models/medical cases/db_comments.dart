@@ -1,17 +1,17 @@
-class CommentsResponse {
+class DBCommentsResponse {
   bool? status;
   int? successCode;
   List<Comment>? comments;
   String? successMessage;
 
-  CommentsResponse({
+  DBCommentsResponse({
     this.status,
     this.successCode,
     this.comments,
     this.successMessage,
   });
 
-  CommentsResponse.fromJson(Map<String, dynamic> json) {
+  DBCommentsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     if (json['comments'] != null) {

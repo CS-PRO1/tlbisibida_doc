@@ -1,19 +1,19 @@
-class PatientStatisticsResponse {
+class DBPatientStatisticsResponse {
   bool? status;
   int? successCode;
   List<PatientStatistic>?
       patientsStatistic; // Corrected to match JSON key "paitents_statistic"
   String? successMessage;
 
-  PatientStatisticsResponse({
+  DBPatientStatisticsResponse({
     this.status,
     this.successCode,
     this.patientsStatistic,
     this.successMessage,
   });
 
-  factory PatientStatisticsResponse.fromJson(Map<String, dynamic> json) {
-    return PatientStatisticsResponse(
+  factory DBPatientStatisticsResponse.fromJson(Map<String, dynamic> json) {
+    return DBPatientStatisticsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       patientsStatistic: (json['paitents_statistic'] as List<dynamic>?)

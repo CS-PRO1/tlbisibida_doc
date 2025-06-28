@@ -1,19 +1,19 @@
-class LatestLabAccountResponse {
+class DBLatestLabAccountResponse {
   bool? status;
   int? successCode;
   LatestAccountData?
       latestAccountOfThisLab; // Corrected to match JSON key " Latest Account of this lab "
   String? successMessage;
 
-  LatestLabAccountResponse({
+  DBLatestLabAccountResponse({
     this.status,
     this.successCode,
     this.latestAccountOfThisLab,
     this.successMessage,
   });
 
-  factory LatestLabAccountResponse.fromJson(Map<String, dynamic> json) {
-    return LatestLabAccountResponse(
+  factory DBLatestLabAccountResponse.fromJson(Map<String, dynamic> json) {
+    return DBLatestLabAccountResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       latestAccountOfThisLab: json[' Latest Account of this lab '] != null

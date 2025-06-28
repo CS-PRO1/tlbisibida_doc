@@ -1,18 +1,18 @@
-class LabDetailsResponse {
+class DBLabDetailsResponse {
   bool? status;
   int? successCode;
   LabDetails? labDetails; // Corrected to match JSON key " Lab Details "
   String? successMessage;
 
-  LabDetailsResponse({
+  DBLabDetailsResponse({
     this.status,
     this.successCode,
     this.labDetails,
     this.successMessage,
   });
 
-  factory LabDetailsResponse.fromJson(Map<String, dynamic> json) {
-    return LabDetailsResponse(
+  factory DBLabDetailsResponse.fromJson(Map<String, dynamic> json) {
+    return DBLabDetailsResponse(
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       labDetails: json[' Lab Details '] != null

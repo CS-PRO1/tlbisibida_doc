@@ -1,19 +1,19 @@
 // medical_cases_list_response.dart
 
-class MedicalCasesListResponse {
+class DBMedicalCasesListResponse {
   bool? status;
   int? successCode;
   List<MedicalCaseItem>? medicalCases;
   String? successMessage;
 
-  MedicalCasesListResponse({
+  DBMedicalCasesListResponse({
     this.status,
     this.successCode,
     this.medicalCases,
     this.successMessage,
   });
 
-  MedicalCasesListResponse.fromJson(Map<String, dynamic> json) {
+  DBMedicalCasesListResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     if (json['medical_cases'] != null) {
