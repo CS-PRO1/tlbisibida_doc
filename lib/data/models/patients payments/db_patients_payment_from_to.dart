@@ -1,7 +1,9 @@
+import '../../../domain/models/patients payments/patients_payment_from_to.dart';
+
 class DBPatientsPaymentsFromToResponse {
   bool? status;
   int? successCode;
-  List<PatientBalance>? patientsPayments;
+  List<DBPatientBalance>? patientsPayments;
   String? successMessage;
 
   DBPatientsPaymentsFromToResponse({
@@ -15,9 +17,9 @@ class DBPatientsPaymentsFromToResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['patients_payments'] != null) {
-      patientsPayments = <PatientBalance>[];
+      patientsPayments = <DBPatientBalance>[];
       json['patients_payments'].forEach((v) {
-        patientsPayments!.add(PatientBalance.fromJson(v));
+        patientsPayments!.add(DBPatientBalance.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -36,18 +38,18 @@ class DBPatientsPaymentsFromToResponse {
   }
 }
 
-class PatientBalance {
+class DBPatientBalance {
   int? id;
   String? fullName;
   int? currentBalance;
 
-  PatientBalance({
+  DBPatientBalance({
     this.id,
     this.fullName,
     this.currentBalance,
   });
 
-  PatientBalance.fromJson(Map<String, dynamic> json) {
+  DBPatientBalance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullName = json['full_name'];
     currentBalance = json['current_balance'];
@@ -59,5 +61,25 @@ class PatientBalance {
     data['full_name'] = fullName;
     data['current_balance'] = currentBalance;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  // Since DBPatientBalance and PatientBalance are identical, the mapping is direct.
+  PatientBalance toDomain() {
+    return PatientBalance(
+      id: id,
+      fullName: fullName,
+      currentBalance: currentBalance,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBPatientBalance and PatientBalance are identical, the mapping is direct.
+  static DBPatientBalance fromDomain(PatientBalance domain) {
+    return DBPatientBalance(
+      id: domain.id,
+      fullName: domain.fullName,
+      currentBalance: domain.currentBalance,
+    );
   }
 }

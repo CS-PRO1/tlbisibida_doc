@@ -1,39 +1,39 @@
-class TreatmentDetailsResponse {
-  bool? status;
-  int? successCode;
-  TreatmentDetails? treatmentDetails;
-  String? successMessage;
+// class TreatmentDetailsResponse {
+//   bool? status;
+//   int? successCode;
+//   TreatmentDetails? treatmentDetails;
+//   String? successMessage;
 
-  TreatmentDetailsResponse({
-    this.status,
-    this.successCode,
-    this.treatmentDetails,
-    this.successMessage,
-  });
+//   TreatmentDetailsResponse({
+//     this.status,
+//     this.successCode,
+//     this.treatmentDetails,
+//     this.successMessage,
+//   });
 
-  factory TreatmentDetailsResponse.fromJson(Map<String, dynamic> json) {
-    return TreatmentDetailsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      treatmentDetails: json['treatment_details'] != null
-          ? TreatmentDetails.fromJson(
-              json['treatment_details'] as Map<String, dynamic>)
-          : null,
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory TreatmentDetailsResponse.fromJson(Map<String, dynamic> json) {
+//     return TreatmentDetailsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       treatmentDetails: json['treatment_details'] != null
+//           ? TreatmentDetails.fromJson(
+//               json['treatment_details'] as Map<String, dynamic>)
+//           : null,
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (treatmentDetails != null) {
-      data['treatment_details'] = treatmentDetails!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (treatmentDetails != null) {
+//       data['treatment_details'] = treatmentDetails!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class TreatmentDetails {
   int? id;
@@ -45,7 +45,7 @@ class TreatmentDetails {
   String? type;
   String? details;
   String? date; // Consider parsing to DateTime if needed
-  int? isPaid; // Consider using bool?
+  bool? isPaid; // Consider using bool?
   String? createdAt; // Consider parsing to DateTime
   String? updatedAt; // Consider parsing to DateTime
   List<TreatmentImage>? images;
@@ -77,7 +77,7 @@ class TreatmentDetails {
       type: json['type'] as String?,
       details: json['details'] as String?,
       date: json['date'] as String?,
-      isPaid: json['is_paid'] as int?,
+      isPaid: json['is_paid'] as bool?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       images: (json['images'] as List<dynamic>?)
@@ -111,7 +111,7 @@ class TreatmentImage {
   int? id;
   int? treatmentId;
   String? name;
-  int? isDiagram; // Consider using bool?
+  bool? isDiagram; // Consider using bool?
 
   TreatmentImage({
     this.id,
@@ -125,7 +125,7 @@ class TreatmentImage {
       id: json['id'] as int?,
       treatmentId: json['treatment_id'] as int?,
       name: json['name'] as String?,
-      isDiagram: json['is_diagram'] as int?,
+      isDiagram: json['is_diagram'] as bool?,
     );
   }
 

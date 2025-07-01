@@ -1,7 +1,9 @@
+import '../../../domain/models/statistics/patients.dart';
+
 class DBPatientStatisticsResponse {
   bool? status;
   int? successCode;
-  List<PatientStatistic>?
+  List<DBPatientStatistic>?
       patientsStatistic; // Corrected to match JSON key "paitents_statistic"
   String? successMessage;
 
@@ -17,7 +19,7 @@ class DBPatientStatisticsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       patientsStatistic: (json['paitents_statistic'] as List<dynamic>?)
-          ?.map((e) => PatientStatistic.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBPatientStatistic.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -36,17 +38,17 @@ class DBPatientStatisticsResponse {
   }
 }
 
-class PatientStatistic {
+class DBPatientStatistic {
   int? month;
   int? patientCount;
 
-  PatientStatistic({
+  DBPatientStatistic({
     this.month,
     this.patientCount,
   });
 
-  factory PatientStatistic.fromJson(Map<String, dynamic> json) {
-    return PatientStatistic(
+  factory DBPatientStatistic.fromJson(Map<String, dynamic> json) {
+    return DBPatientStatistic(
       month: json['month'] as int?,
       patientCount: json['patient_count'] as int?,
     );
@@ -57,5 +59,22 @@ class PatientStatistic {
     data['month'] = month;
     data['patient_count'] = patientCount;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBPatientStatistic and PatientStatistic are identical, the mapping is direct.
+  PatientStatistic toDomain() {
+    return PatientStatistic(
+      month: month,
+      patientCount: patientCount,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBPatientStatistic and PatientStatistic are identical, the mapping is direct.
+  static DBPatientStatistic fromDomain(PatientStatistic domain) {
+    return DBPatientStatistic(
+      month: domain.month,
+      patientCount: domain.patientCount,
+    );
   }
 }

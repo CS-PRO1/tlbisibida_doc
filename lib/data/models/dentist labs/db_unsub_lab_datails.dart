@@ -1,7 +1,9 @@
+import '../../../domain/models/dentist labs/unsub_lab_datails.dart';
+
 class DBLabDetailsResponse {
   bool? status;
   int? successCode;
-  LabDetails? labDetails; // Corrected to match JSON key " Lab Details "
+  DBLabDetails? labDetails; // Corrected to match JSON key " Lab Details "
   String? successMessage;
 
   DBLabDetailsResponse({
@@ -16,7 +18,7 @@ class DBLabDetailsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       labDetails: json[' Lab Details '] != null
-          ? LabDetails.fromJson(json[' Lab Details '] as Map<String, dynamic>)
+          ? DBLabDetails.fromJson(json[' Lab Details '] as Map<String, dynamic>)
           : null,
       successMessage: json['success_message'] as String?,
     );
@@ -34,7 +36,7 @@ class DBLabDetailsResponse {
   }
 }
 
-class LabDetails {
+class DBLabDetails {
   String? fullName;
   String? labFromHour; // Consider parsing to TimeOfDay or DateTime
   String? labToHour; // Consider parsing to TimeOfDay or DateTime
@@ -45,7 +47,7 @@ class LabDetails {
   String? labLogo;
   String? labType;
 
-  LabDetails({
+  DBLabDetails({
     this.fullName,
     this.labFromHour,
     this.labToHour,
@@ -56,8 +58,8 @@ class LabDetails {
     this.labType,
   });
 
-  factory LabDetails.fromJson(Map<String, dynamic> json) {
-    return LabDetails(
+  factory DBLabDetails.fromJson(Map<String, dynamic> json) {
+    return DBLabDetails(
       fullName: json['full_name'] as String?,
       labFromHour: json['lab_from_hour'] as String?,
       labToHour: json['lab_to_hour'] as String?,
@@ -81,5 +83,37 @@ class LabDetails {
     data['lab_logo'] = labLogo;
     data['lab_type'] = labType;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  LabDetails toDomain() {
+    return LabDetails(
+      fullName: fullName,
+      labFromHour: labFromHour,
+      labToHour: labToHour,
+      // If labPhone needs to be parsed into a different type (e.g., List<String> or a custom Phone object)
+      // in the domain layer, you'd do that parsing here:
+      // Example: labPhone: labPhone != null ? jsonDecode(labPhone!) as List<String> : null,
+      labPhone: labPhone, // Currently, just passing the String
+      labName: labName,
+      labAddress: labAddress,
+      labLogo: labLogo,
+      labType: labType,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBLabDetails fromDomain(LabDetails domain) {
+    return DBLabDetails(
+      fullName: domain.fullName,
+      labFromHour: domain.labFromHour,
+      labToHour: domain.labToHour,
+      // If labPhone was parsed in toDomain, you'd convert it back to a JSON string here:
+      // Example: labPhone: domain.labPhone != null ? jsonEncode(domain.labPhone) : null,
+      labPhone: domain.labPhone, // Currently, just passing the String
+      labName: domain.labName,
+      labAddress: domain.labAddress,
+      labLogo: domain.labLogo,
+      labType: domain.labType,
+    );
   }
 }

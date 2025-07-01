@@ -1,38 +1,38 @@
-class LabDetailsResponse {
-  bool? status;
-  int? successCode;
-  LabDetails? labDetails; // Corrected to match JSON key " Lab Details "
-  String? successMessage;
+// class LabDetailsResponse {
+//   bool? status;
+//   int? successCode;
+//   LabDetails? labDetails; // Corrected to match JSON key " Lab Details "
+//   String? successMessage;
 
-  LabDetailsResponse({
-    this.status,
-    this.successCode,
-    this.labDetails,
-    this.successMessage,
-  });
+//   LabDetailsResponse({
+//     this.status,
+//     this.successCode,
+//     this.labDetails,
+//     this.successMessage,
+//   });
 
-  factory LabDetailsResponse.fromJson(Map<String, dynamic> json) {
-    return LabDetailsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      labDetails: json[' Lab Details '] != null
-          ? LabDetails.fromJson(json[' Lab Details '] as Map<String, dynamic>)
-          : null,
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory LabDetailsResponse.fromJson(Map<String, dynamic> json) {
+//     return LabDetailsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       labDetails: json[' Lab Details '] != null
+//           ? LabDetails.fromJson(json[' Lab Details '] as Map<String, dynamic>)
+//           : null,
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (labDetails != null) {
-      data[' Lab Details '] = labDetails!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (labDetails != null) {
+//       data[' Lab Details '] = labDetails!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class LabDetails {
   String? fullName;

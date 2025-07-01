@@ -1,40 +1,40 @@
-class DentistScheduleResponse {
-  bool? status;
-  int? successCode;
-  List<DentistSchedule>? dentistSchedule;
-  String? successMessage;
+// class DentistScheduleResponse {
+//   bool? status;
+//   int? successCode;
+//   List<DentistSchedule>? dentistSchedule;
+//   String? successMessage;
 
-  DentistScheduleResponse({
-    this.status,
-    this.successCode,
-    this.dentistSchedule,
-    this.successMessage,
-  });
+//   DentistScheduleResponse({
+//     this.status,
+//     this.successCode,
+//     this.dentistSchedule,
+//     this.successMessage,
+//   });
 
-  DentistScheduleResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    if (json['dentist_schedule'] != null) {
-      dentistSchedule = <DentistSchedule>[];
-      json['dentist_schedule'].forEach((v) {
-        dentistSchedule!.add(DentistSchedule.fromJson(v));
-      });
-    }
-    successMessage = json['success_message'];
-  }
+//   DentistScheduleResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     if (json['dentist_schedule'] != null) {
+//       dentistSchedule = <DentistSchedule>[];
+//       json['dentist_schedule'].forEach((v) {
+//         dentistSchedule!.add(DentistSchedule.fromJson(v));
+//       });
+//     }
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (dentistSchedule != null) {
-      data['dentist_schedule'] =
-          dentistSchedule!.map((v) => v.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (dentistSchedule != null) {
+//       data['dentist_schedule'] =
+//           dentistSchedule!.map((v) => v.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class DentistSchedule {
   int? id;

@@ -1,7 +1,9 @@
+import '../../../domain/models/medical cases/comments.dart';
+
 class DBCommentsResponse {
   bool? status;
   int? successCode;
-  List<Comment>? comments;
+  List<DBComment>? comments;
   String? successMessage;
 
   DBCommentsResponse({
@@ -15,9 +17,9 @@ class DBCommentsResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['comments'] != null) {
-      comments = <Comment>[];
+      comments = <DBComment>[];
       json['comments'].forEach((v) {
-        comments!.add(Comment.fromJson(v));
+        comments!.add(DBComment.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -35,7 +37,7 @@ class DBCommentsResponse {
   }
 }
 
-class Comment {
+class DBComment {
   int? id;
   int? medicalCaseId;
   int? dentistId;
@@ -44,7 +46,7 @@ class Comment {
   String? createdAt; // Consider parsing to DateTime if you need date objects
   String? updatedAt; // Consider parsing to DateTime if you need date objects
 
-  Comment({
+  DBComment({
     this.id,
     this.medicalCaseId,
     this.dentistId,
@@ -54,7 +56,7 @@ class Comment {
     this.updatedAt,
   });
 
-  Comment.fromJson(Map<String, dynamic> json) {
+  DBComment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     medicalCaseId = json['medical_case_id'];
     dentistId = json['dentist_id'];
@@ -74,5 +76,31 @@ class Comment {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  Comment toDomain() {
+    return Comment(
+        id: id,
+        medicalCaseId: medicalCaseId,
+        dentistId: dentistId,
+        labManagerId: labManagerId,
+        comment: comment,
+        createdAt: createdAt, // Convert String to DateTime
+        updatedAt: updatedAt // Convert String to DateTime
+        );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBComment fromDomain(Comment domain) {
+    return DBComment(
+      id: domain.id,
+      medicalCaseId: domain.medicalCaseId,
+      dentistId: domain.dentistId,
+      labManagerId: domain.labManagerId,
+      comment: domain.comment,
+      createdAt: domain.createdAt, // Convert DateTime to String
+      updatedAt: domain.updatedAt, // Convert DateTime to String
+    );
   }
 }

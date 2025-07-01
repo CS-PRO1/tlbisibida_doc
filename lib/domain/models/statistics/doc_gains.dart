@@ -1,39 +1,39 @@
-class DoctorGainsStatisticsResponse {
-  bool? status;
-  int? successCode;
-  List<DoctorGainsStatistic>? doctorGainsStatistics;
-  String? successMessage;
+// class DoctorGainsStatisticsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<DoctorGainsStatistic>? doctorGainsStatistics;
+//   String? successMessage;
 
-  DoctorGainsStatisticsResponse({
-    this.status,
-    this.successCode,
-    this.doctorGainsStatistics,
-    this.successMessage,
-  });
+//   DoctorGainsStatisticsResponse({
+//     this.status,
+//     this.successCode,
+//     this.doctorGainsStatistics,
+//     this.successMessage,
+//   });
 
-  factory DoctorGainsStatisticsResponse.fromJson(Map<String, dynamic> json) {
-    return DoctorGainsStatisticsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      doctorGainsStatistics: (json['doctor_gains_statistics'] as List<dynamic>?)
-          ?.map((e) => DoctorGainsStatistic.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory DoctorGainsStatisticsResponse.fromJson(Map<String, dynamic> json) {
+//     return DoctorGainsStatisticsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       doctorGainsStatistics: (json['doctor_gains_statistics'] as List<dynamic>?)
+//           ?.map((e) => DoctorGainsStatistic.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (doctorGainsStatistics != null) {
-      data['doctor_gains_statistics'] =
-          doctorGainsStatistics!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (doctorGainsStatistics != null) {
+//       data['doctor_gains_statistics'] =
+//           doctorGainsStatistics!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class DoctorGainsStatistic {
   int? monthNumber;

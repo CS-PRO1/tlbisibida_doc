@@ -1,38 +1,38 @@
 // bill_details_response.dart
 
-class BillDetailsResponse {
-  bool? status;
-  int? successCode;
-  BillDetailsData? billDetails; // The main bill_details object
-  String? successMessage;
+// class BillDetailsResponse {
+//   bool? status;
+//   int? successCode;
+//   BillDetailsData? billDetails; // The main bill_details object
+//   String? successMessage;
 
-  BillDetailsResponse({
-    this.status,
-    this.successCode,
-    this.billDetails,
-    this.successMessage,
-  });
+//   BillDetailsResponse({
+//     this.status,
+//     this.successCode,
+//     this.billDetails,
+//     this.successMessage,
+//   });
 
-  BillDetailsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    billDetails = json['bill_details'] != null
-        ? BillDetailsData.fromJson(json['bill_details'])
-        : null;
-    successMessage = json['success_message'];
-  }
+//   BillDetailsResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     billDetails = json['bill_details'] != null
+//         ? BillDetailsData.fromJson(json['bill_details'])
+//         : null;
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (billDetails != null) {
-      data['bill_details'] = billDetails!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (billDetails != null) {
+//       data['bill_details'] = billDetails!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class BillDetailsData {
   Bill? bill; // The nested bill object

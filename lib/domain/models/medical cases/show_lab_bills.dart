@@ -1,38 +1,38 @@
 // lab_bills_response.dart
 
-class LabBillsResponse {
-  bool? status;
-  int? successCode;
-  LabBillsData? labBills; // Note: this is an object, not a list
-  String? successMessage;
+// class LabBillsResponse {
+//   bool? status;
+//   int? successCode;
+//   LabBillsData? labBills; // Note: this is an object, not a list
+//   String? successMessage;
 
-  LabBillsResponse({
-    this.status,
-    this.successCode,
-    this.labBills,
-    this.successMessage,
-  });
+//   LabBillsResponse({
+//     this.status,
+//     this.successCode,
+//     this.labBills,
+//     this.successMessage,
+//   });
 
-  LabBillsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    labBills = json['lab_bills'] != null
-        ? LabBillsData.fromJson(json['lab_bills'])
-        : null;
-    successMessage = json['success_message'];
-  }
+//   LabBillsResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     labBills = json['lab_bills'] != null
+//         ? LabBillsData.fromJson(json['lab_bills'])
+//         : null;
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (labBills != null) {
-      data['lab_bills'] = labBills!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (labBills != null) {
+//       data['lab_bills'] = labBills!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class LabBillsData {
   LabOverview? lab; // The nested lab object

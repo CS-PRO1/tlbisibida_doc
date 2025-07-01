@@ -1,7 +1,9 @@
+import 'package:tlbisibida_doc/domain/models/appoinments%20&%20patients/show_patient_details_withimg.dart';
+
 class DBPatientDetailsResponse {
   bool? status;
   int? successCode;
-  PatientDetails? patientDetails;
+  DBPatientDetails? patientDetails;
   String? successMessage;
 
   DBPatientDetailsResponse({
@@ -15,7 +17,7 @@ class DBPatientDetailsResponse {
     status = json['status'];
     successCode = json['success_code'];
     patientDetails = json['patient_details'] != null
-        ? PatientDetails.fromJson(json['patient_details'])
+        ? DBPatientDetails.fromJson(json['patient_details'])
         : null;
     successMessage = json['success_message'];
   }
@@ -32,7 +34,7 @@ class DBPatientDetailsResponse {
   }
 }
 
-class PatientDetails {
+class DBPatientDetails {
   int? id;
   int? dentistId;
   String? fullName;
@@ -46,9 +48,9 @@ class PatientDetails {
   String? illnessName; // Can be null
   String? createdAt; // Consider parsing to DateTime
   String? updatedAt; // Consider parsing to DateTime
-  List<PatientImage>? images;
+  List<DBPatientImage>? images;
 
-  PatientDetails({
+  DBPatientDetails({
     this.id,
     this.dentistId,
     this.fullName,
@@ -65,7 +67,7 @@ class PatientDetails {
     this.images,
   });
 
-  PatientDetails.fromJson(Map<String, dynamic> json) {
+  DBPatientDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     dentistId = json['dentist_id'];
     fullName = json['full_name'];
@@ -80,9 +82,9 @@ class PatientDetails {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['images'] != null) {
-      images = <PatientImage>[];
+      images = <DBPatientImage>[];
       json['images'].forEach((v) {
-        images!.add(PatientImage.fromJson(v));
+        images!.add(DBPatientImage.fromJson(v));
       });
     }
   }
@@ -107,20 +109,51 @@ class PatientDetails {
     }
     return data;
   }
+
+  PatientDetails todomain() {
+    return PatientDetails(
+      address: address,
+      birthday: birthday,
+      createdAt: createdAt,
+      currentBalance: currentBalance,
+      dentistId: dentistId,
+      fullName: fullName,
+      gender: gender,
+      id: id,
+      isSmoker: isSmoker,
+      phone: phone,
+      updatedAt: updatedAt,
+    );
+  }
+
+  static DBPatientDetails fromjson(PatientDetails pd) {
+    return DBPatientDetails()
+      ..address = pd.address
+      ..birthday = pd.birthday
+      ..createdAt = pd.createdAt
+      ..currentBalance = pd.currentBalance
+      ..dentistId = pd.dentistId
+      ..fullName = pd.fullName
+      ..gender = pd.gender
+      ..id = pd.id
+      ..isSmoker = pd.isSmoker
+      ..phone = pd.phone
+      ..updatedAt = pd.updatedAt;
+  }
 }
 
-class PatientImage {
+class DBPatientImage {
   int? id;
   int? patientId;
   String? name;
 
-  PatientImage({
+  DBPatientImage({
     this.id,
     this.patientId,
     this.name,
   });
 
-  PatientImage.fromJson(Map<String, dynamic> json) {
+  DBPatientImage.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     patientId = json['patient_id'];
     name = json['name'];
@@ -132,5 +165,16 @@ class PatientImage {
     data['patient_id'] = patientId;
     data['name'] = name;
     return data;
+  }
+
+  PatientImage todomain() {
+    return PatientImage(id: id, name: name, patientId: patientId);
+  }
+
+  static DBPatientImage fromdomain(PatientImage pi) {
+    return DBPatientImage()
+      ..id = pi.id
+      ..name = pi.name
+      ..patientId = pi.patientId;
   }
 }

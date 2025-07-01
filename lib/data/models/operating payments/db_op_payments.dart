@@ -1,7 +1,9 @@
+import '../../../domain/models/operating payments/op_payments.dart';
+
 class DBOperatingPaymentsResponse {
   bool? status;
   int? successCode;
-  List<OperatingPayment>? operatingPayments;
+  List<DBOperatingPayment>? operatingPayments;
   String? successMessage;
 
   DBOperatingPaymentsResponse({
@@ -16,7 +18,7 @@ class DBOperatingPaymentsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       operatingPayments: (json['operating_payments'] as List<dynamic>?)
-          ?.map((e) => OperatingPayment.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBOperatingPayment.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -35,7 +37,7 @@ class DBOperatingPaymentsResponse {
   }
 }
 
-class OperatingPayment {
+class DBOperatingPayment {
   int? id;
   String? creatorableType;
   int? creatorableId;
@@ -44,7 +46,7 @@ class OperatingPayment {
   String? createdAt; // Consider parsing to DateTime if you need date objects
   String? updatedAt; // Consider parsing to DateTime if you need date objects
 
-  OperatingPayment({
+  DBOperatingPayment({
     this.id,
     this.creatorableType,
     this.creatorableId,
@@ -54,8 +56,8 @@ class OperatingPayment {
     this.updatedAt,
   });
 
-  factory OperatingPayment.fromJson(Map<String, dynamic> json) {
-    return OperatingPayment(
+  factory DBOperatingPayment.fromJson(Map<String, dynamic> json) {
+    return DBOperatingPayment(
       id: json['id'] as int?,
       creatorableType: json['creatorable_type'] as String?,
       creatorableId: json['creatorable_id'] as int?,
@@ -76,5 +78,30 @@ class OperatingPayment {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  OperatingPayment toDomain() {
+    return OperatingPayment(
+      id: id,
+      creatorableType: creatorableType,
+      creatorableId: creatorableId,
+      name: name,
+      value: value,
+      createdAt: createdAt, // Convert String to DateTime
+      updatedAt: updatedAt, // Convert String to DateTime
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBOperatingPayment fromDomain(OperatingPayment domain) {
+    return DBOperatingPayment(
+      id: domain.id,
+      creatorableType: domain.creatorableType,
+      creatorableId: domain.creatorableId,
+      name: domain.name,
+      value: domain.value,
+      createdAt: domain.createdAt, // Convert DateTime to String
+      updatedAt: domain.updatedAt, // Convert DateTime to String
+    );
   }
 }

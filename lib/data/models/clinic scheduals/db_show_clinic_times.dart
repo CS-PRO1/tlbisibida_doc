@@ -1,7 +1,9 @@
+import '../../../domain/models/clinic scheduals/show_clinic_times.dart';
+
 class DBDentistScheduleResponse {
   bool? status;
   int? successCode;
-  List<DentistSchedule>? dentistSchedule;
+  List<DBDentistSchedule>? dentistSchedule;
   String? successMessage;
 
   DBDentistScheduleResponse({
@@ -15,9 +17,9 @@ class DBDentistScheduleResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['dentist_schedule'] != null) {
-      dentistSchedule = <DentistSchedule>[];
+      dentistSchedule = <DBDentistSchedule>[];
       json['dentist_schedule'].forEach((v) {
-        dentistSchedule!.add(DentistSchedule.fromJson(v));
+        dentistSchedule!.add(DBDentistSchedule.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -36,7 +38,7 @@ class DBDentistScheduleResponse {
   }
 }
 
-class DentistSchedule {
+class DBDentistSchedule {
   int? id;
   int? dentistId;
   String? day;
@@ -48,7 +50,7 @@ class DentistSchedule {
   String? createdAt; // Can be parsed to DateTime if needed
   String? updatedAt; // Can be parsed to DateTime if needed
 
-  DentistSchedule({
+  DBDentistSchedule({
     this.id,
     this.dentistId,
     this.day,
@@ -60,7 +62,7 @@ class DentistSchedule {
     this.updatedAt,
   });
 
-  DentistSchedule.fromJson(Map<String, dynamic> json) {
+  DBDentistSchedule.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     dentistId = json['dentist_id'];
     day = json['day'];
@@ -84,5 +86,35 @@ class DentistSchedule {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+  DentistSchedule toDomain() {
+    return DentistSchedule(
+      id: id,
+      dentistId: dentistId,
+      day: day,
+      startTime: startTime,
+      endTime: endTime,
+      startRest: startRest,
+      endRest: endRest,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBDentistSchedule fromDomain(DentistSchedule domain) {
+    return DBDentistSchedule(
+      id: domain.id,
+      dentistId: domain.dentistId,
+      day: domain.day,
+      startTime: domain.startTime,
+      endTime: domain.endTime,
+      startRest: domain.startRest,
+      endRest: domain.endRest,
+      createdAt: domain.createdAt,
+      updatedAt: domain.updatedAt,
+    );
   }
 }

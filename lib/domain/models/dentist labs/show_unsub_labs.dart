@@ -1,40 +1,40 @@
-class AllLabsResponse {
-  bool? status;
-  int? successCode;
-  AllLabsPaginationData? allLabs; // Renamed to reflect content
-  String? successMessage;
+// class AllLabsResponse {
+//   bool? status;
+//   int? successCode;
+//   AllLabsPaginationData? allLabs; // Renamed to reflect content
+//   String? successMessage;
 
-  AllLabsResponse({
-    this.status,
-    this.successCode,
-    this.allLabs,
-    this.successMessage,
-  });
+//   AllLabsResponse({
+//     this.status,
+//     this.successCode,
+//     this.allLabs,
+//     this.successMessage,
+//   });
 
-  factory AllLabsResponse.fromJson(Map<String, dynamic> json) {
-    return AllLabsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      allLabs: json[' Latest Account of this lab '] != null
-          ? AllLabsPaginationData.fromJson(
-              json[' Latest Account of this lab '] as Map<String, dynamic>)
-          : null,
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory AllLabsResponse.fromJson(Map<String, dynamic> json) {
+//     return AllLabsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       allLabs: json[' Latest Account of this lab '] != null
+//           ? AllLabsPaginationData.fromJson(
+//               json[' Latest Account of this lab '] as Map<String, dynamic>)
+//           : null,
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (allLabs != null) {
-      data[' Latest Account of this lab '] =
-          allLabs!.toJson(); // Keep original key for serialization
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (allLabs != null) {
+//       data[' Latest Account of this lab '] =
+//           allLabs!.toJson(); // Keep original key for serialization
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class AllLabsPaginationData {
   int? currentPage;

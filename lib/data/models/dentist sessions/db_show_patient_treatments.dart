@@ -1,7 +1,9 @@
+import '../../../domain/models/dentist sessions/show_patient_treatments.dart';
+
 class DBPatientTreatmentsResponse {
   bool? status;
   int? successCode;
-  List<PatientTreatment>? patientTreatments;
+  List<DBPatientTreatment>? patientTreatments;
   String? successMessage;
 
   DBPatientTreatmentsResponse({
@@ -16,7 +18,7 @@ class DBPatientTreatmentsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       patientTreatments: (json['patient_treatments'] as List<dynamic>?)
-          ?.map((e) => PatientTreatment.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBPatientTreatment.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -35,19 +37,19 @@ class DBPatientTreatmentsResponse {
   }
 }
 
-class PatientTreatment {
+class DBPatientTreatment {
   int? id;
   String? type;
   String? date; // Consider parsing to DateTime if you need a DateTime object
 
-  PatientTreatment({
+  DBPatientTreatment({
     this.id,
     this.type,
     this.date,
   });
 
-  factory PatientTreatment.fromJson(Map<String, dynamic> json) {
-    return PatientTreatment(
+  factory DBPatientTreatment.fromJson(Map<String, dynamic> json) {
+    return DBPatientTreatment(
       id: json['id'] as int?,
       type: json['type'] as String?,
       date: json['date'] as String?,
@@ -60,5 +62,23 @@ class PatientTreatment {
     data['type'] = type;
     data['date'] = date;
     return data;
+  }
+
+  // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+  PatientTreatment toDomain() {
+    return PatientTreatment(
+      id: id,
+      type: type,
+      date: date,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBPatientTreatment fromDomain(PatientTreatment domain) {
+    return DBPatientTreatment(
+      id: domain.id,
+      type: domain.type,
+      date: domain.date,
+    );
   }
 }

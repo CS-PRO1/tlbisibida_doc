@@ -1,7 +1,9 @@
+import '../../../domain/models/statistics/treatments.dart';
+
 class DBTreatmentsStatisticsResponse {
   bool? status;
   int? successCode;
-  Map<String, MonthTreatmentStatistics>? treatmentsStatistics;
+  Map<String, DBMonthTreatmentStatistics>? treatmentsStatistics;
   String? successMessage;
 
   DBTreatmentsStatisticsResponse({
@@ -19,7 +21,7 @@ class DBTreatmentsStatisticsResponse {
           (json['treatments_statistics'] as Map<String, dynamic>?)?.map(
         (key, value) => MapEntry(
           key,
-          MonthTreatmentStatistics.fromJson(value as Map<String, dynamic>),
+          DBMonthTreatmentStatistics.fromJson(value as Map<String, dynamic>),
         ),
       ),
       successMessage: json['success_message'] as String?,
@@ -39,19 +41,19 @@ class DBTreatmentsStatisticsResponse {
   }
 }
 
-class MonthTreatmentStatistics {
+class DBMonthTreatmentStatistics {
   int? restoration; // "ترميم"
   int? rootCanal; // "سحب عصب"
   int? surgicalExtraction; // "قلع جراحي"
 
-  MonthTreatmentStatistics({
+  DBMonthTreatmentStatistics({
     this.restoration,
     this.rootCanal,
     this.surgicalExtraction,
   });
 
-  factory MonthTreatmentStatistics.fromJson(Map<String, dynamic> json) {
-    return MonthTreatmentStatistics(
+  factory DBMonthTreatmentStatistics.fromJson(Map<String, dynamic> json) {
+    return DBMonthTreatmentStatistics(
       restoration: json['ترميم'] as int?,
       rootCanal: json['سحب عصب'] as int?,
       surgicalExtraction: json['قلع جراحي'] as int?,
@@ -64,5 +66,25 @@ class MonthTreatmentStatistics {
     data['سحب عصب'] = rootCanal;
     data['قلع جراحي'] = surgicalExtraction;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBMonthTreatmentStatistics and MonthTreatmentStatistics are identical, the mapping is direct.
+  MonthTreatmentStatistics toDomain() {
+    return MonthTreatmentStatistics(
+      restoration: restoration,
+      rootCanal: rootCanal,
+      surgicalExtraction: surgicalExtraction,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBMonthTreatmentStatistics and MonthTreatmentStatistics are identical, the mapping is direct.
+  static DBMonthTreatmentStatistics fromDomain(
+      MonthTreatmentStatistics domain) {
+    return DBMonthTreatmentStatistics(
+      restoration: domain.restoration,
+      rootCanal: domain.rootCanal,
+      surgicalExtraction: domain.surgicalExtraction,
+    );
   }
 }

@@ -1,3 +1,6 @@
+import 'package:tlbisibida_doc/domain/models/bills/show_bill_details.dart';
+// import 'package:tlbisibida_doc/domain/models/medical%20cases/show_bill_details.dart';
+
 class DBBillDetailsResponse {
   bool? status;
   int? successCode;
@@ -33,17 +36,17 @@ class DBBillDetailsResponse {
 }
 
 class BillDetailsData {
-  Bill? bill;
-  List<BillCase>? billCases;
+  DBBill? bill;
+  List<DBBillCase>? billCases;
 
   BillDetailsData({this.bill, this.billCases});
 
   BillDetailsData.fromJson(Map<String, dynamic> json) {
-    bill = json['bill'] != null ? Bill.fromJson(json['bill']) : null;
+    bill = json['bill'] != null ? DBBill.fromJson(json['bill']) : null;
     if (json['bill_cases'] != null) {
-      billCases = <BillCase>[];
+      billCases = <DBBillCase>[];
       json['bill_cases'].forEach((v) {
-        billCases!.add(BillCase.fromJson(v));
+        billCases!.add(DBBillCase.fromJson(v));
       });
     }
   }
@@ -60,7 +63,7 @@ class BillDetailsData {
   }
 }
 
-class Bill {
+class DBBill {
   int? id;
   String? billNumber;
   int? dentistId;
@@ -73,7 +76,7 @@ class Bill {
   String? createdAt; // Can be parsed to DateTime if needed
   String? updatedAt; // Can be parsed to DateTime if needed (nullable in JSON)
 
-  Bill({
+  DBBill({
     this.id,
     this.billNumber,
     this.dentistId,
@@ -87,7 +90,7 @@ class Bill {
     this.updatedAt,
   });
 
-  Bill.fromJson(Map<String, dynamic> json) {
+  DBBill.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     billNumber = json['bill_number'];
     dentistId = json['dentist_id'];
@@ -116,9 +119,41 @@ class Bill {
     data['updated_at'] = updatedAt;
     return data;
   }
+
+  Bill toDomain() {
+    return Bill(
+      id: id,
+      billNumber: billNumber,
+      dentistId: dentistId,
+      labManagerId: labManagerId,
+      creatorableType: creatorableType,
+      creatorableId: creatorableId,
+      totalCost: totalCost,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  static DBBill fromDomain(Bill domain) {
+    return DBBill(
+      id: domain.id,
+      billNumber: domain.billNumber,
+      dentistId: domain.dentistId,
+      labManagerId: domain.labManagerId,
+      creatorableType: domain.creatorableType,
+      creatorableId: domain.creatorableId,
+      totalCost: domain.totalCost,
+      dateFrom: domain.dateFrom,
+      dateTo: domain.dateTo,
+      createdAt: domain.createdAt,
+      updatedAt: domain.updatedAt,
+    );
+  }
 }
 
-class BillCase {
+class DBBillCase {
   int? id;
   int? billId;
   int? medicalCaseId;
@@ -128,7 +163,7 @@ class BillCase {
   String? expectedDeliveryDate; // Can be parsed to DateTime if needed
   String? fullName;
 
-  BillCase({
+  DBBillCase({
     this.id,
     this.billId,
     this.medicalCaseId,
@@ -139,7 +174,7 @@ class BillCase {
     this.fullName,
   });
 
-  BillCase.fromJson(Map<String, dynamic> json) {
+  DBBillCase.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     billId = json['bill_id'];
     medicalCaseId = json['medical_case_id'];
@@ -161,5 +196,31 @@ class BillCase {
     data['expected_delivery_date'] = expectedDeliveryDate;
     data['full_name'] = fullName;
     return data;
+  }
+
+  BillCase toDomain() {
+    return BillCase(
+      id: id,
+      billId: billId,
+      medicalCaseId: medicalCaseId,
+      caseCost: caseCost,
+      createdAt: createdAt,
+      patientId: patientId,
+      expectedDeliveryDate: expectedDeliveryDate,
+      fullName: fullName,
+    );
+  }
+
+  static DBBillCase fromDomain(BillCase domain) {
+    return DBBillCase(
+      id: domain.id,
+      billId: domain.billId,
+      medicalCaseId: domain.medicalCaseId,
+      caseCost: domain.caseCost,
+      createdAt: domain.createdAt,
+      patientId: domain.patientId,
+      expectedDeliveryDate: domain.expectedDeliveryDate,
+      fullName: domain.fullName,
+    );
   }
 }

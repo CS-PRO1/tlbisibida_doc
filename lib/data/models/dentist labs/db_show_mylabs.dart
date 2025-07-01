@@ -1,7 +1,10 @@
+import '../../../domain/models/dentist labs/show_mylabs.dart';
+
 class DBLabsJoinedResponse {
   bool? status;
   int? successCode;
-  List<JoinedLab>? labsIamJoind; // Corrected to match JSON key "labs iam joind"
+  List<DBJoinedLab>?
+      labsIamJoind; // Corrected to match JSON key "labs iam joind"
   String? successMessage;
 
   DBLabsJoinedResponse({
@@ -16,7 +19,7 @@ class DBLabsJoinedResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       labsIamJoind: (json['labs iam joind'] as List<dynamic>?)
-          ?.map((e) => JoinedLab.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBJoinedLab.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -34,23 +37,23 @@ class DBLabsJoinedResponse {
   }
 }
 
-class JoinedLab {
+class DBJoinedLab {
   String? labName;
   String? labLogo;
-  Pivot? pivot;
+  DBPivot? pivot;
 
-  JoinedLab({
+  DBJoinedLab({
     this.labName,
     this.labLogo,
     this.pivot,
   });
 
-  factory JoinedLab.fromJson(Map<String, dynamic> json) {
-    return JoinedLab(
+  factory DBJoinedLab.fromJson(Map<String, dynamic> json) {
+    return DBJoinedLab(
       labName: json['lab_name'] as String?,
       labLogo: json['lab_logo'] as String?,
       pivot: json['pivot'] != null
-          ? Pivot.fromJson(json['pivot'] as Map<String, dynamic>)
+          ? DBPivot.fromJson(json['pivot'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -63,20 +66,39 @@ class JoinedLab {
       data['pivot'] = pivot!.toJson();
     }
     return data;
+  } // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+
+  JoinedLab toDomain() {
+    return JoinedLab(
+      labName: labName,
+      labLogo: labLogo,
+      pivot: pivot?.toDomain(), // Recursively call toDomain
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBJoinedLab fromDomain(JoinedLab domain) {
+    return DBJoinedLab(
+      labName: domain.labName,
+      labLogo: domain.labLogo,
+      pivot: domain.pivot != null
+          ? DBPivot.fromDomain(domain.pivot!)
+          : null, // Recursively call fromDomain
+    );
   }
 }
 
-class Pivot {
+class DBPivot {
   int? dentistId;
   int? labManagerId;
 
-  Pivot({
+  DBPivot({
     this.dentistId,
     this.labManagerId,
   });
 
-  factory Pivot.fromJson(Map<String, dynamic> json) {
-    return Pivot(
+  factory DBPivot.fromJson(Map<String, dynamic> json) {
+    return DBPivot(
       dentistId: json['dentist_id'] as int?,
       labManagerId: json['lab_manager_id'] as int?,
     );
@@ -87,5 +109,20 @@ class Pivot {
     data['dentist_id'] = dentistId;
     data['lab_manager_id'] = labManagerId;
     return data;
+  } // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+
+  Pivot toDomain() {
+    return Pivot(
+      dentistId: dentistId,
+      labManagerId: labManagerId,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBPivot fromDomain(Pivot domain) {
+    return DBPivot(
+      dentistId: domain.dentistId,
+      labManagerId: domain.labManagerId,
+    );
   }
 }

@@ -1,9 +1,11 @@
 // lab_bills_response.dart
 
+import '../../../domain/models/medical cases/show_lab_bills.dart';
+
 class DBLabBillsResponse {
   bool? status;
   int? successCode;
-  LabBillsData? labBills; // Note: this is an object, not a list
+  DBLabBillsData? labBills; // Note: this is an object, not a list
   String? successMessage;
 
   DBLabBillsResponse({
@@ -17,7 +19,7 @@ class DBLabBillsResponse {
     status = json['status'];
     successCode = json['success_code'];
     labBills = json['lab_bills'] != null
-        ? LabBillsData.fromJson(json['lab_bills'])
+        ? DBLabBillsData.fromJson(json['lab_bills'])
         : null;
     successMessage = json['success_message'];
   }
@@ -34,18 +36,18 @@ class DBLabBillsResponse {
   }
 }
 
-class LabBillsData {
-  LabOverview? lab; // The nested lab object
-  List<BillItem>? bills; // The list of bills
+class DBLabBillsData {
+  DBLabOverview? lab; // The nested lab object
+  List<DBBillItem>? bills; // The list of bills
 
-  LabBillsData({this.lab, this.bills});
+  DBLabBillsData({this.lab, this.bills});
 
-  LabBillsData.fromJson(Map<String, dynamic> json) {
-    lab = json['lab'] != null ? LabOverview.fromJson(json['lab']) : null;
+  DBLabBillsData.fromJson(Map<String, dynamic> json) {
+    lab = json['lab'] != null ? DBLabOverview.fromJson(json['lab']) : null;
     if (json['bills'] != null) {
-      bills = <BillItem>[];
+      bills = <DBBillItem>[];
       json['bills'].forEach((v) {
-        bills!.add(BillItem.fromJson(v));
+        bills!.add(DBBillItem.fromJson(v));
       });
     }
   }
@@ -60,15 +62,31 @@ class LabBillsData {
     }
     return data;
   }
+
+  // --- TO DOMAIN FUNCTION ---
+  LabBillsData toDomain() {
+    return LabBillsData(
+      lab: lab?.toDomain(),
+      bills: bills?.map((e) => e.toDomain()).toList(),
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBLabBillsData fromDomain(LabBillsData domain) {
+    return DBLabBillsData(
+      lab: domain.lab != null ? DBLabOverview.fromDomain(domain.lab!) : null,
+      bills: domain.bills?.map((e) => DBBillItem.fromDomain(e)).toList(),
+    );
+  }
 }
 
-class LabOverview {
+class DBLabOverview {
   int? id;
   String? labName;
 
-  LabOverview({this.id, this.labName});
+  DBLabOverview({this.id, this.labName});
 
-  LabOverview.fromJson(Map<String, dynamic> json) {
+  DBLabOverview.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     labName = json['lab_name'];
   }
@@ -78,20 +96,37 @@ class LabOverview {
     data['id'] = id;
     data['lab_name'] = labName;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBLabOverview and LabOverview are identical, the mapping is direct.
+  LabOverview toDomain() {
+    return LabOverview(
+      id: id,
+      labName: labName,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBLabOverview and LabOverview are identical, the mapping is direct.
+  static DBLabOverview fromDomain(LabOverview domain) {
+    return DBLabOverview(
+      id: domain.id,
+      labName: domain.labName,
+    );
   }
 }
 
-class BillItem {
+class DBBillItem {
   int? id;
   int? totalCost;
   String? dateFrom;
   String? dateTo;
   String? createdAt;
 
-  BillItem(
+  DBBillItem(
       {this.id, this.totalCost, this.dateFrom, this.dateTo, this.createdAt});
 
-  BillItem.fromJson(Map<String, dynamic> json) {
+  DBBillItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     totalCost = json['total_cost'];
     dateFrom = json['date_from'];
@@ -107,5 +142,27 @@ class BillItem {
     data['date_to'] = dateTo;
     data['created_at'] = createdAt;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  BillItem toDomain() {
+    return BillItem(
+      id: id,
+      totalCost: totalCost,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      createdAt: createdAt,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBBillItem fromDomain(BillItem domain) {
+    return DBBillItem(
+      id: domain.id,
+      totalCost: domain.totalCost,
+      dateFrom: domain.dateFrom,
+      dateTo: domain.dateTo,
+      createdAt: domain.createdAt,
+    );
   }
 }

@@ -1,39 +1,39 @@
 // medical_case_response.dart
 // import 'dart:convert'; // For json.decode and json.encode if you're testing this standalone
 
-class MedicalCaseResponse {
-  bool? status;
-  int? successCode;
-  MedicalCase? medicalCase; // Note the direct object, not a list
-  String? successMessage;
+// class MedicalCaseResponse {
+//   bool? status;
+//   int? successCode;
+//   MedicalCase? medicalCase; // Note the direct object, not a list
+//   String? successMessage;
 
-  MedicalCaseResponse({
-    this.status,
-    this.successCode,
-    this.medicalCase,
-    this.successMessage,
-  });
+//   MedicalCaseResponse({
+//     this.status,
+//     this.successCode,
+//     this.medicalCase,
+//     this.successMessage,
+//   });
 
-  MedicalCaseResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    medicalCase = json['medical_case'] != null
-        ? MedicalCase.fromJson(json['medical_case'])
-        : null;
-    successMessage = json['success_message'];
-  }
+//   MedicalCaseResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     medicalCase = json['medical_case'] != null
+//         ? MedicalCase.fromJson(json['medical_case'])
+//         : null;
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (medicalCase != null) {
-      data['medical_case'] = medicalCase!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (medicalCase != null) {
+//       data['medical_case'] = medicalCase!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class MedicalCase {
   MedicalCaseDetails? medicalCaseDetails;
@@ -86,13 +86,13 @@ class MedicalCaseDetails {
   int? labManagerId;
   int? patientId;
   String? age; // Note: "22" is a string in JSON, so mapping to String
-  int? needTrial;
-  int? repeat;
+  bool? needTrial;
+  bool? repeat;
   String? shade;
   String? expectedDeliveryDate;
   String? notes;
   int? status;
-  int? confirmDelivery;
+  bool? confirmDelivery;
   int? cost;
   String? teethCrown; // These can be null, so String?
   String? teethPontic;
@@ -210,7 +210,7 @@ class PatientDetails {
   String? phone; // Note: "0980000854" is a string in JSON
   String? birthday;
   int? currentBalance;
-  int? isSmoker;
+  bool? isSmoker;
   String? gender;
   String? createdAt;
   String? updatedAt;
@@ -264,7 +264,7 @@ class MedicalCaseFile {
   int? id;
   int? medicalCaseId;
   String? name;
-  int? isCaseImage;
+  bool? isCaseImage;
   String? createdAt;
   String? updatedAt;
 

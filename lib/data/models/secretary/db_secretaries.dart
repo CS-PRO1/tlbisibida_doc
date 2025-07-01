@@ -1,7 +1,9 @@
+import '../../../domain/models/secretary/secretaries.dart';
+
 class DBSecretariesResponse {
   bool? status;
   int? successCode;
-  List<Secretary>? secretaries;
+  List<DBSecretary>? secretaries;
   String? successMessage;
 
   DBSecretariesResponse({
@@ -16,7 +18,7 @@ class DBSecretariesResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       secretaries: (json['secretaries'] as List<dynamic>?)
-          ?.map((e) => Secretary.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBSecretary.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -34,7 +36,7 @@ class DBSecretariesResponse {
   }
 }
 
-class Secretary {
+class DBSecretary {
   int? id;
   String? fullName;
   String? phone;
@@ -42,7 +44,7 @@ class Secretary {
   String? attendanceTime;
   String? address;
 
-  Secretary({
+  DBSecretary({
     this.id,
     this.fullName,
     this.phone,
@@ -51,8 +53,8 @@ class Secretary {
     this.address,
   });
 
-  factory Secretary.fromJson(Map<String, dynamic> json) {
-    return Secretary(
+  factory DBSecretary.fromJson(Map<String, dynamic> json) {
+    return DBSecretary(
       id: json['id'] as int?,
       fullName: json['full_name'] as String?,
       phone: json['phone'] as String?,
@@ -71,5 +73,19 @@ class Secretary {
     data['attendence_time'] = attendanceTime;
     data['address'] = address;
     return data;
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBSecretary fromDomain(Secretary domain) {
+    return DBSecretary(
+      id: domain.id,
+      fullName: domain.fullName,
+      phone: domain.phone,
+      email: domain.email,
+      // Convert DateTime back to "HH:mm" string.
+      // Make sure to handle nullability for attendanceTime
+      attendanceTime: domain.attendanceTime,
+      address: domain.address,
+    );
   }
 }

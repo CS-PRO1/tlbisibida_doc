@@ -1,7 +1,9 @@
+import '../../../domain/models/patients payments/patient_payments.dart';
+
 class DBPatientPaymentsResponse {
   bool? status;
   int? successCode;
-  List<PatientPayment>? patientPayments;
+  List<DBPatientPayment>? patientPayments;
   String? successMessage;
 
   DBPatientPaymentsResponse({
@@ -15,9 +17,9 @@ class DBPatientPaymentsResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['patient_payments'] != null) {
-      patientPayments = <PatientPayment>[];
+      patientPayments = <DBPatientPayment>[];
       json['patient_payments'].forEach((v) {
-        patientPayments!.add(PatientPayment.fromJson(v));
+        patientPayments!.add(DBPatientPayment.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -36,18 +38,18 @@ class DBPatientPaymentsResponse {
   }
 }
 
-class PatientPayment {
+class DBPatientPayment {
   int? id;
   int? value;
   String? paymentDate; // Consider parsing to DateTime if needed
 
-  PatientPayment({
+  DBPatientPayment({
     this.id,
     this.value,
     this.paymentDate,
   });
 
-  PatientPayment.fromJson(Map<String, dynamic> json) {
+  DBPatientPayment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     value = json['value'];
     paymentDate = json['payment_date'];
@@ -59,5 +61,22 @@ class PatientPayment {
     data['value'] = value;
     data['payment_date'] = paymentDate;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  PatientPayment toDomain() {
+    return PatientPayment(
+      id: id,
+      value: value,
+      paymentDate: paymentDate, // Convert String to DateTime
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBPatientPayment fromDomain(PatientPayment domain) {
+    return DBPatientPayment(
+      id: domain.id,
+      value: domain.value,
+      paymentDate: domain.paymentDate, // Convert DateTime to String
+    );
   }
 }

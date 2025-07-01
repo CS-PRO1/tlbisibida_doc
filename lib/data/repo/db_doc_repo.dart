@@ -9,7 +9,7 @@ import 'package:tlbisibida_doc/data/models/dentist%20labs/db_show_unsub_labs.dar
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_unsub_lab_datails.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_patient_treatments.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_treatment_details.dart';
-import 'package:tlbisibida_doc/data/models/inventory/db_rare_items.dart';
+import 'package:tlbisibida_doc/data/models/inventory/db_rare_n_repeated_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_cats.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_items_log.dart';

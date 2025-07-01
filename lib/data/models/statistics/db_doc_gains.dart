@@ -1,7 +1,9 @@
+import '../../../domain/models/statistics/doc_gains.dart';
+
 class DBDoctorGainsStatisticsResponse {
   bool? status;
   int? successCode;
-  List<DoctorGainsStatistic>? doctorGainsStatistics;
+  List<DBDoctorGainsStatistic>? doctorGainsStatistics;
   String? successMessage;
 
   DBDoctorGainsStatisticsResponse({
@@ -16,7 +18,8 @@ class DBDoctorGainsStatisticsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       doctorGainsStatistics: (json['doctor_gains_statistics'] as List<dynamic>?)
-          ?.map((e) => DoctorGainsStatistic.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => DBDoctorGainsStatistic.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -35,21 +38,21 @@ class DBDoctorGainsStatisticsResponse {
   }
 }
 
-class DoctorGainsStatistic {
+class DBDoctorGainsStatistic {
   int? monthNumber;
   int? income;
   int? outcome;
   int? gain;
 
-  DoctorGainsStatistic({
+  DBDoctorGainsStatistic({
     this.monthNumber,
     this.income,
     this.outcome,
     this.gain,
   });
 
-  factory DoctorGainsStatistic.fromJson(Map<String, dynamic> json) {
-    return DoctorGainsStatistic(
+  factory DBDoctorGainsStatistic.fromJson(Map<String, dynamic> json) {
+    return DBDoctorGainsStatistic(
       monthNumber: json['month_number'] as int?,
       income: json['income'] as int?,
       outcome: json['outcome'] as int?,
@@ -64,5 +67,26 @@ class DoctorGainsStatistic {
     data['outcome'] = outcome;
     data['gain'] = gain;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBDoctorGainsStatistic and DoctorGainsStatistic are identical, the mapping is direct.
+  DoctorGainsStatistic toDomain() {
+    return DoctorGainsStatistic(
+      monthNumber: monthNumber,
+      income: income,
+      outcome: outcome,
+      gain: gain,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBDoctorGainsStatistic and DoctorGainsStatistic are identical, the mapping is direct.
+  static DBDoctorGainsStatistic fromDomain(DoctorGainsStatistic domain) {
+    return DBDoctorGainsStatistic(
+      monthNumber: domain.monthNumber,
+      income: domain.income,
+      outcome: domain.outcome,
+      gain: domain.gain,
+    );
   }
 }

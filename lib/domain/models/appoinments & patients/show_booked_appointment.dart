@@ -1,38 +1,38 @@
-class AppointmentsResponse {
-  bool? status;
-  int? successCode;
-  List<Appointment>? appointments;
-  String? successMessage;
+// class AppointmentsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<Appointment>? appointments;
+//   String? successMessage;
 
-  AppointmentsResponse({
-    this.status,
-    this.successCode,
-    this.appointments,
-    this.successMessage,
-  });
+//   AppointmentsResponse({
+//     this.status,
+//     this.successCode,
+//     this.appointments,
+//     this.successMessage,
+//   });
 
-  factory AppointmentsResponse.fromJson(Map<String, dynamic> json) {
-    return AppointmentsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      appointments: (json['appointments'] as List<dynamic>?)
-          ?.map((e) => Appointment.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory AppointmentsResponse.fromJson(Map<String, dynamic> json) {
+//     return AppointmentsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       appointments: (json['appointments'] as List<dynamic>?)
+//           ?.map((e) => Appointment.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (appointments != null) {
-      data['appointments'] = appointments!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (appointments != null) {
+//       data['appointments'] = appointments!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class Appointment {
   int? id;

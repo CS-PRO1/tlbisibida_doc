@@ -1,7 +1,10 @@
+import '../../../domain/models/bills/show_lab_bills.dart';
+// import '../../../domain/models/dentist labs/show_unsub_labs.dart';
+
 class DBLabBillsResponse {
   bool? status;
   int? successCode;
-  LabBillsData? labBills;
+  DBLabBillsData? labBills;
   String? successMessage;
 
   DBLabBillsResponse({
@@ -15,7 +18,7 @@ class DBLabBillsResponse {
     status = json['status'];
     successCode = json['success_code'];
     labBills = json['lab_bills'] != null
-        ? LabBillsData.fromJson(json['lab_bills'])
+        ? DBLabBillsData.fromJson(json['lab_bills'])
         : null;
     successMessage = json['success_message'];
   }
@@ -32,18 +35,18 @@ class DBLabBillsResponse {
   }
 }
 
-class LabBillsData {
-  LabInfo? lab;
-  List<BillDetails>? bills;
+class DBLabBillsData {
+  DBLabInfo? lab;
+  List<DBBillDetails>? bills;
 
-  LabBillsData({this.lab, this.bills});
+  DBLabBillsData({this.lab, this.bills});
 
-  LabBillsData.fromJson(Map<String, dynamic> json) {
-    lab = json['lab'] != null ? LabInfo.fromJson(json['lab']) : null;
+  DBLabBillsData.fromJson(Map<String, dynamic> json) {
+    lab = json['lab'] != null ? DBLabInfo.fromJson(json['lab']) : null;
     if (json['bills'] != null) {
-      bills = <BillDetails>[];
+      bills = <DBBillDetails>[];
       json['bills'].forEach((v) {
-        bills!.add(BillDetails.fromJson(v));
+        bills!.add(DBBillDetails.fromJson(v));
       });
     }
   }
@@ -60,13 +63,13 @@ class LabBillsData {
   }
 }
 
-class LabInfo {
+class DBLabInfo {
   int? id;
   String? labName;
 
-  LabInfo({this.id, this.labName});
+  DBLabInfo({this.id, this.labName});
 
-  LabInfo.fromJson(Map<String, dynamic> json) {
+  DBLabInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     labName = json['lab_name'];
   }
@@ -77,16 +80,30 @@ class LabInfo {
     data['lab_name'] = labName;
     return data;
   }
+
+  LabInfo toDomain() {
+    return LabInfo(
+      id: id,
+      labName: labName,
+    );
+  }
+
+  static DBLabInfo fromDomain(LabInfo domain) {
+    return DBLabInfo(
+      id: domain.id,
+      labName: domain.labName,
+    );
+  }
 }
 
-class BillDetails {
+class DBBillDetails {
   int? id;
   int? totalCost;
   String? dateFrom; // Can be parsed to DateTime if needed
   String? dateTo; // Can be parsed to DateTime if needed
   String? createdAt; // Can be parsed to DateTime if needed
 
-  BillDetails({
+  DBBillDetails({
     this.id,
     this.totalCost,
     this.dateFrom,
@@ -94,7 +111,7 @@ class BillDetails {
     this.createdAt,
   });
 
-  BillDetails.fromJson(Map<String, dynamic> json) {
+  DBBillDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     totalCost = json['total_cost'];
     dateFrom = json['date_from'];
@@ -110,5 +127,25 @@ class BillDetails {
     data['date_to'] = dateTo;
     data['created_at'] = createdAt;
     return data;
+  }
+
+  BillDetails toDomain() {
+    return BillDetails(
+      id: id,
+      totalCost: totalCost,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      createdAt: createdAt,
+    );
+  }
+
+  static DBBillDetails fromDomain(BillDetails domain) {
+    return DBBillDetails(
+      id: domain.id,
+      totalCost: domain.totalCost,
+      dateFrom: domain.dateFrom,
+      dateTo: domain.dateTo,
+      createdAt: domain.createdAt,
+    );
   }
 }

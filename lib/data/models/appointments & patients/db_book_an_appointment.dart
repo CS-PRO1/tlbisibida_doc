@@ -1,3 +1,5 @@
+import 'package:tlbisibida_doc/domain/models/appoinments%20&%20patients/book_an_appointment.dart';
+
 class DBAvailableSlotsResponse {
   String? date; // Consider parsing to DateTime if date object is preferred
   String? dayName;
@@ -34,19 +36,19 @@ class DBAvailableSlotsResponse {
   }
 }
 
-class TimeSlot {
+class DBTimeSlot {
   String?
       start; // Consider parsing to TimeOfDay or DateTime if precise time objects are needed
   String?
       end; // Consider parsing to TimeOfDay or DateTime if precise time objects are needed
 
-  TimeSlot({
+  DBTimeSlot({
     this.start,
     this.end,
   });
 
-  factory TimeSlot.fromJson(Map<String, dynamic> json) {
-    return TimeSlot(
+  factory DBTimeSlot.fromJson(Map<String, dynamic> json) {
+    return DBTimeSlot(
       start: json['start'] as String?,
       end: json['end'] as String?,
     );
@@ -57,5 +59,15 @@ class TimeSlot {
     data['start'] = start;
     data['end'] = end;
     return data;
+  }
+
+  TimeSlot todomain() {
+    return TimeSlot(start: start, end: end);
+  }
+
+  static DBTimeSlot fromdomain(TimeSlot timeslot) {
+    return DBTimeSlot()
+      ..start = timeslot.start
+      ..end = timeslot.end;
   }
 }

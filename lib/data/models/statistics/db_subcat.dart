@@ -1,7 +1,9 @@
+import '../../../domain/models/statistics/subcat.dart';
+
 class DBSubcategoryStatisticsResponse {
   bool? status;
   int? successCode;
-  List<SubcategoryStatistic>?
+  List<DBSubcategoryStatistic>?
       statisticsOfSubcategories; // Corrected to match JSON key "statistics of subcategories"
   String? successMessage;
 
@@ -18,7 +20,8 @@ class DBSubcategoryStatisticsResponse {
       successCode: json['success_code'] as int?,
       statisticsOfSubcategories: (json['statistics of subcategories']
               as List<dynamic>?)
-          ?.map((e) => SubcategoryStatistic.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => DBSubcategoryStatistic.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -37,7 +40,7 @@ class DBSubcategoryStatisticsResponse {
   }
 }
 
-class SubcategoryStatistic {
+class DBSubcategoryStatistic {
   int? subcategoryId;
   String? subcategoryName;
   int? totalPriceLastMonth;
@@ -45,7 +48,7 @@ class SubcategoryStatistic {
   String?
       percentage; // Can be parsed to double if arithmetic operations are needed
 
-  SubcategoryStatistic({
+  DBSubcategoryStatistic({
     this.subcategoryId,
     this.subcategoryName,
     this.totalPriceLastMonth,
@@ -53,8 +56,8 @@ class SubcategoryStatistic {
     this.percentage,
   });
 
-  factory SubcategoryStatistic.fromJson(Map<String, dynamic> json) {
-    return SubcategoryStatistic(
+  factory DBSubcategoryStatistic.fromJson(Map<String, dynamic> json) {
+    return DBSubcategoryStatistic(
       subcategoryId: json['subcategory_id'] as int?,
       subcategoryName: json['subcategory_name'] as String?,
       totalPriceLastMonth: json['total_price_last_month'] as int?,
@@ -71,5 +74,27 @@ class SubcategoryStatistic {
     data['total_quantity_last_month'] = totalQuantityLastMonth;
     data['percentage'] = percentage;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  SubcategoryStatistic toDomain() {
+    return SubcategoryStatistic(
+        subcategoryId: subcategoryId,
+        subcategoryName: subcategoryName,
+        totalPriceLastMonth: totalPriceLastMonth,
+        totalQuantityLastMonth: totalQuantityLastMonth,
+        percentage: percentage // Convert String to double
+        );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBSubcategoryStatistic fromDomain(SubcategoryStatistic domain) {
+    return DBSubcategoryStatistic(
+      subcategoryId: domain.subcategoryId,
+      subcategoryName: domain.subcategoryName,
+      totalPriceLastMonth: domain.totalPriceLastMonth,
+      totalQuantityLastMonth: domain.totalQuantityLastMonth,
+      percentage: domain.percentage?.toString(), // Convert double to String
+    );
   }
 }

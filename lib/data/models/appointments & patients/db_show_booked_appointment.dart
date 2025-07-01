@@ -1,7 +1,9 @@
+import '../../../domain/models/appoinments & patients/show_booked_appointment.dart';
+
 class DBAppointmentsResponse {
   bool? status;
   int? successCode;
-  List<Appointment>? appointments;
+  List<DBAppointment>? appointments;
   String? successMessage;
 
   DBAppointmentsResponse({
@@ -16,7 +18,7 @@ class DBAppointmentsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       appointments: (json['appointments'] as List<dynamic>?)
-          ?.map((e) => Appointment.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBAppointment.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -34,7 +36,7 @@ class DBAppointmentsResponse {
   }
 }
 
-class Appointment {
+class DBAppointment {
   int? id;
   int? dentistId;
   String? creatorableType;
@@ -47,7 +49,7 @@ class Appointment {
   String? createdAt; // Consider parsing to DateTime
   String? updatedAt; // Can be null, consider parsing to DateTime
 
-  Appointment({
+  DBAppointment({
     this.id,
     this.dentistId,
     this.creatorableType,
@@ -61,8 +63,8 @@ class Appointment {
     this.updatedAt,
   });
 
-  factory Appointment.fromJson(Map<String, dynamic> json) {
-    return Appointment(
+  factory DBAppointment.fromJson(Map<String, dynamic> json) {
+    return DBAppointment(
       id: json['id'] as int?,
       dentistId: json['dentist_id'] as int?,
       creatorableType: json['creatorable_type'] as String?,
@@ -91,5 +93,35 @@ class Appointment {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  Appointment todomain() {
+    return Appointment(
+        createdAt: createdAt,
+        creatorableId: creatorableId,
+        creatorableType: creatorableType,
+        date: date,
+        dentistId: dentistId,
+        id: id,
+        patientName: patientName,
+        patientPhone: patientPhone,
+        timeFrom: timeFrom,
+        timeTo: timeTo,
+        updatedAt: updatedAt);
+  }
+
+  static DBAppointment fromjson(Appointment ap) {
+    return DBAppointment()
+      ..createdAt = ap.createdAt
+      ..creatorableId = ap.creatorableId
+      ..creatorableType = ap.creatorableType
+      ..dentistId = ap.dentistId
+      ..patientName = ap.patientName
+      ..patientPhone = ap.patientPhone
+      ..timeFrom = ap.timeFrom
+      ..timeTo = ap.timeTo
+      ..updatedAt = ap.updatedAt
+      ..id = ap.id
+      ..date = ap.date;
   }
 }

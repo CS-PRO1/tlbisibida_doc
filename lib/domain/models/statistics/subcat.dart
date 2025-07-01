@@ -1,41 +1,41 @@
-class SubcategoryStatisticsResponse {
-  bool? status;
-  int? successCode;
-  List<SubcategoryStatistic>?
-      statisticsOfSubcategories; // Corrected to match JSON key "statistics of subcategories"
-  String? successMessage;
+// class SubcategoryStatisticsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<SubcategoryStatistic>?
+//       statisticsOfSubcategories; // Corrected to match JSON key "statistics of subcategories"
+//   String? successMessage;
 
-  SubcategoryStatisticsResponse({
-    this.status,
-    this.successCode,
-    this.statisticsOfSubcategories,
-    this.successMessage,
-  });
+//   SubcategoryStatisticsResponse({
+//     this.status,
+//     this.successCode,
+//     this.statisticsOfSubcategories,
+//     this.successMessage,
+//   });
 
-  factory SubcategoryStatisticsResponse.fromJson(Map<String, dynamic> json) {
-    return SubcategoryStatisticsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      statisticsOfSubcategories: (json['statistics of subcategories']
-              as List<dynamic>?)
-          ?.map((e) => SubcategoryStatistic.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory SubcategoryStatisticsResponse.fromJson(Map<String, dynamic> json) {
+//     return SubcategoryStatisticsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       statisticsOfSubcategories: (json['statistics of subcategories']
+//               as List<dynamic>?)
+//           ?.map((e) => SubcategoryStatistic.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (statisticsOfSubcategories != null) {
-      data['statistics of subcategories'] =
-          statisticsOfSubcategories!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (statisticsOfSubcategories != null) {
+//       data['statistics of subcategories'] =
+//           statisticsOfSubcategories!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class SubcategoryStatistic {
   int? subcategoryId;

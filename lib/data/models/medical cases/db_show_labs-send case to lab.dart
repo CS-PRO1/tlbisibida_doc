@@ -1,9 +1,11 @@
 // labs_response.dart
 
+import '../../../domain/models/medical cases/show_labs-send case to lab.dart';
+
 class DBLabsResponse {
   bool? status;
   int? successCode;
-  List<LabNameItem>? labs;
+  List<DBLabNameItem>? labs;
   String? successMessage;
 
   DBLabsResponse({
@@ -17,9 +19,9 @@ class DBLabsResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['labs'] != null) {
-      labs = <LabNameItem>[];
+      labs = <DBLabNameItem>[];
       json['labs'].forEach((v) {
-        labs!.add(LabNameItem.fromJson(v));
+        labs!.add(DBLabNameItem.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -37,12 +39,12 @@ class DBLabsResponse {
   }
 }
 
-class LabNameItem {
+class DBLabNameItem {
   String? labName;
 
-  LabNameItem({this.labName});
+  DBLabNameItem({this.labName});
 
-  LabNameItem.fromJson(Map<String, dynamic> json) {
+  DBLabNameItem.fromJson(Map<String, dynamic> json) {
     labName = json['lab_name'];
   }
 
@@ -50,5 +52,20 @@ class LabNameItem {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['lab_name'] = labName;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBLabNameItem and LabNameItem are identical, the mapping is direct.
+  LabNameItem toDomain() {
+    return LabNameItem(
+      labName: labName,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBLabNameItem and LabNameItem are identical, the mapping is direct.
+  static DBLabNameItem fromDomain(LabNameItem domain) {
+    return DBLabNameItem(
+      labName: domain.labName,
+    );
   }
 }

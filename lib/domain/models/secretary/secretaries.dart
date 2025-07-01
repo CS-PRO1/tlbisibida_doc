@@ -1,38 +1,38 @@
-class SecretariesResponse {
-  bool? status;
-  int? successCode;
-  List<Secretary>? secretaries;
-  String? successMessage;
+// class SecretariesResponse {
+//   bool? status;
+//   int? successCode;
+//   List<Secretary>? secretaries;
+//   String? successMessage;
 
-  SecretariesResponse({
-    this.status,
-    this.successCode,
-    this.secretaries,
-    this.successMessage,
-  });
+//   SecretariesResponse({
+//     this.status,
+//     this.successCode,
+//     this.secretaries,
+//     this.successMessage,
+//   });
 
-  factory SecretariesResponse.fromJson(Map<String, dynamic> json) {
-    return SecretariesResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      secretaries: (json['secretaries'] as List<dynamic>?)
-          ?.map((e) => Secretary.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory SecretariesResponse.fromJson(Map<String, dynamic> json) {
+//     return SecretariesResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       secretaries: (json['secretaries'] as List<dynamic>?)
+//           ?.map((e) => Secretary.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (secretaries != null) {
-      data['secretaries'] = secretaries!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (secretaries != null) {
+//       data['secretaries'] = secretaries!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class Secretary {
   int? id;

@@ -1,9 +1,11 @@
 // medical_cases_list_response.dart
 
+import '../../../domain/models/medical cases/caselist_from_lab.dart';
+
 class DBMedicalCasesListResponse {
   bool? status;
   int? successCode;
-  List<MedicalCaseItem>? medicalCases;
+  List<DBMedicalCaseItem>? medicalCases;
   String? successMessage;
 
   DBMedicalCasesListResponse({
@@ -17,9 +19,9 @@ class DBMedicalCasesListResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['medical_cases'] != null) {
-      medicalCases = <MedicalCaseItem>[];
+      medicalCases = <DBMedicalCaseItem>[];
       json['medical_cases'].forEach((v) {
-        medicalCases!.add(MedicalCaseItem.fromJson(v));
+        medicalCases!.add(DBMedicalCaseItem.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -37,14 +39,14 @@ class DBMedicalCasesListResponse {
   }
 }
 
-class MedicalCaseItem {
+class DBMedicalCaseItem {
   int? id;
   int? patientId;
   String? expectedDeliveryDate;
   String? createdAt;
-  PatientSummary? patient; // Nested patient object
+  DBPatientSummary? patient; // Nested patient object
 
-  MedicalCaseItem({
+  DBMedicalCaseItem({
     this.id,
     this.patientId,
     this.expectedDeliveryDate,
@@ -52,13 +54,13 @@ class MedicalCaseItem {
     this.patient,
   });
 
-  MedicalCaseItem.fromJson(Map<String, dynamic> json) {
+  DBMedicalCaseItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     patientId = json['patient_id'];
     expectedDeliveryDate = json['expected_delivery_date'];
     createdAt = json['created_at'];
     patient = json['patient'] != null
-        ? PatientSummary.fromJson(json['patient'])
+        ? DBPatientSummary.fromJson(json['patient'])
         : null;
   }
 
@@ -72,16 +74,40 @@ class MedicalCaseItem {
       data['patient'] = patient!.toJson();
     }
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  MedicalCaseItem toDomain() {
+    return MedicalCaseItem(
+      id: id,
+      patientId: patientId,
+      expectedDeliveryDate: expectedDeliveryDate, // Convert String to DateTime
+      createdAt: createdAt, // Convert String to DateTime
+      patient: patient?.toDomain(),
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBMedicalCaseItem fromDomain(MedicalCaseItem domain) {
+    return DBMedicalCaseItem(
+      id: domain.id,
+      patientId: domain.patientId,
+      expectedDeliveryDate:
+          domain.expectedDeliveryDate, // Convert DateTime to String
+      createdAt: domain.createdAt, // Convert DateTime to String
+      patient: domain.patient != null
+          ? DBPatientSummary.fromDomain(domain.patient!)
+          : null,
+    );
   }
 }
 
-class PatientSummary {
+class DBPatientSummary {
   int? id;
   String? fullName;
 
-  PatientSummary({this.id, this.fullName});
+  DBPatientSummary({this.id, this.fullName});
 
-  PatientSummary.fromJson(Map<String, dynamic> json) {
+  DBPatientSummary.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullName = json['full_name'];
   }
@@ -91,5 +117,22 @@ class PatientSummary {
     data['id'] = id;
     data['full_name'] = fullName;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBPatientSummary and PatientSummary are identical, the mapping is direct.
+  PatientSummary toDomain() {
+    return PatientSummary(
+      id: id,
+      fullName: fullName,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBPatientSummary and PatientSummary are identical, the mapping is direct.
+  static DBPatientSummary fromDomain(PatientSummary domain) {
+    return DBPatientSummary(
+      id: domain.id,
+      fullName: domain.fullName,
+    );
   }
 }

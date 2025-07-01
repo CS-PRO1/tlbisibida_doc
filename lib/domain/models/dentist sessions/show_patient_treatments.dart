@@ -1,39 +1,39 @@
-class PatientTreatmentsResponse {
-  bool? status;
-  int? successCode;
-  List<PatientTreatment>? patientTreatments;
-  String? successMessage;
+// class PatientTreatmentsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<PatientTreatment>? patientTreatments;
+//   String? successMessage;
 
-  PatientTreatmentsResponse({
-    this.status,
-    this.successCode,
-    this.patientTreatments,
-    this.successMessage,
-  });
+//   PatientTreatmentsResponse({
+//     this.status,
+//     this.successCode,
+//     this.patientTreatments,
+//     this.successMessage,
+//   });
 
-  factory PatientTreatmentsResponse.fromJson(Map<String, dynamic> json) {
-    return PatientTreatmentsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      patientTreatments: (json['patient_treatments'] as List<dynamic>?)
-          ?.map((e) => PatientTreatment.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory PatientTreatmentsResponse.fromJson(Map<String, dynamic> json) {
+//     return PatientTreatmentsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       patientTreatments: (json['patient_treatments'] as List<dynamic>?)
+//           ?.map((e) => PatientTreatment.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (patientTreatments != null) {
-      data['patient_treatments'] =
-          patientTreatments!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (patientTreatments != null) {
+//       data['patient_treatments'] =
+//           patientTreatments!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class PatientTreatment {
   int? id;

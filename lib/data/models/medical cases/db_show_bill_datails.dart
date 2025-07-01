@@ -1,9 +1,11 @@
 // bill_details_response.dart
 
+import '../../../domain/models/medical cases/show_bill_details.dart';
+
 class DBBillDetailsResponse {
   bool? status;
   int? successCode;
-  BillDetailsData? billDetails; // The main bill_details object
+  DBBillDetailsData? billDetails; // The main bill_details object
   String? successMessage;
 
   DBBillDetailsResponse({
@@ -17,7 +19,7 @@ class DBBillDetailsResponse {
     status = json['status'];
     successCode = json['success_code'];
     billDetails = json['bill_details'] != null
-        ? BillDetailsData.fromJson(json['bill_details'])
+        ? DBBillDetailsData.fromJson(json['bill_details'])
         : null;
     successMessage = json['success_message'];
   }
@@ -34,18 +36,18 @@ class DBBillDetailsResponse {
   }
 }
 
-class BillDetailsData {
-  Bill? bill; // The nested bill object
-  List<BillCaseItem>? billCases; // The list of bill cases
+class DBBillDetailsData {
+  DBBill? bill; // The nested bill object
+  List<DBBillCaseItem>? billCases; // The list of bill cases
 
-  BillDetailsData({this.bill, this.billCases});
+  DBBillDetailsData({this.bill, this.billCases});
 
-  BillDetailsData.fromJson(Map<String, dynamic> json) {
-    bill = json['bill'] != null ? Bill.fromJson(json['bill']) : null;
+  DBBillDetailsData.fromJson(Map<String, dynamic> json) {
+    bill = json['bill'] != null ? DBBill.fromJson(json['bill']) : null;
     if (json['bill_cases'] != null) {
-      billCases = <BillCaseItem>[];
+      billCases = <DBBillCaseItem>[];
       json['bill_cases'].forEach((v) {
-        billCases!.add(BillCaseItem.fromJson(v));
+        billCases!.add(DBBillCaseItem.fromJson(v));
       });
     }
   }
@@ -60,9 +62,26 @@ class BillDetailsData {
     }
     return data;
   }
+
+  // --- TO DOMAIN FUNCTION ---
+  BillDetailsData toDomain() {
+    return BillDetailsData(
+      bill: bill?.toDomain(),
+      billCases: billCases?.map((e) => e.toDomain()).toList(),
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBBillDetailsData fromDomain(BillDetailsData domain) {
+    return DBBillDetailsData(
+      bill: domain.bill != null ? DBBill.fromDomain(domain.bill!) : null,
+      billCases:
+          domain.billCases?.map((e) => DBBillCaseItem.fromDomain(e)).toList(),
+    );
+  }
 }
 
-class Bill {
+class DBBill {
   int? id;
   String? billNumber;
   int? dentistId;
@@ -75,7 +94,7 @@ class Bill {
   String? createdAt;
   String? updatedAt;
 
-  Bill({
+  DBBill({
     this.id,
     this.billNumber,
     this.dentistId,
@@ -89,7 +108,7 @@ class Bill {
     this.updatedAt,
   });
 
-  Bill.fromJson(Map<String, dynamic> json) {
+  DBBill.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     billNumber = json['bill_number'];
     dentistId = json['dentist_id'];
@@ -117,10 +136,43 @@ class Bill {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  Bill toDomain() {
+    return Bill(
+      id: id,
+      billNumber: billNumber,
+      dentistId: dentistId,
+      labManagerId: labManagerId,
+      creatorableType: creatorableType,
+      creatorableId: creatorableId,
+      totalCost: totalCost,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBBill fromDomain(Bill domain) {
+    return DBBill(
+      id: domain.id,
+      billNumber: domain.billNumber,
+      dentistId: domain.dentistId,
+      labManagerId: domain.labManagerId,
+      creatorableType: domain.creatorableType,
+      creatorableId: domain.creatorableId,
+      totalCost: domain.totalCost,
+      dateFrom: domain.dateFrom,
+      dateTo: domain.dateTo,
+      createdAt: domain.createdAt,
+      updatedAt: domain.updatedAt,
+    );
   }
 }
 
-class BillCaseItem {
+class DBBillCaseItem {
   int? id;
   int? billId;
   int? medicalCaseId;
@@ -130,7 +182,7 @@ class BillCaseItem {
   String? expectedDeliveryDate;
   String? fullName;
 
-  BillCaseItem({
+  DBBillCaseItem({
     this.id,
     this.billId,
     this.medicalCaseId,
@@ -141,7 +193,7 @@ class BillCaseItem {
     this.fullName,
   });
 
-  BillCaseItem.fromJson(Map<String, dynamic> json) {
+  DBBillCaseItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     billId = json['bill_id'];
     medicalCaseId = json['medical_case_id'];
@@ -163,5 +215,32 @@ class BillCaseItem {
     data['expected_delivery_date'] = expectedDeliveryDate;
     data['full_name'] = fullName;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  BillCaseItem toDomain() {
+    return BillCaseItem(
+      id: id,
+      billId: billId,
+      medicalCaseId: medicalCaseId,
+      caseCost: caseCost,
+      createdAt: createdAt,
+      patientId: patientId,
+      expectedDeliveryDate: expectedDeliveryDate,
+      fullName: fullName,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBBillCaseItem fromDomain(BillCaseItem domain) {
+    return DBBillCaseItem(
+      id: domain.id,
+      billId: domain.billId,
+      medicalCaseId: domain.medicalCaseId,
+      caseCost: domain.caseCost,
+      createdAt: domain.createdAt,
+      patientId: domain.patientId,
+      expectedDeliveryDate: domain.expectedDeliveryDate,
+      fullName: domain.fullName,
+    );
   }
 }

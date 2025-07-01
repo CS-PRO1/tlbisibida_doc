@@ -1,7 +1,9 @@
+import '../../../domain/models/dentist labs/show_unsub_labs.dart';
+
 class DBAllLabsResponse {
   bool? status;
   int? successCode;
-  AllLabsPaginationData? allLabs; // Renamed to reflect content
+  DBAllLabsPaginationData? allLabs; // Renamed to reflect content
   String? successMessage;
 
   DBAllLabsResponse({
@@ -16,7 +18,7 @@ class DBAllLabsResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       allLabs: json[' Latest Account of this lab '] != null
-          ? AllLabsPaginationData.fromJson(
+          ? DBAllLabsPaginationData.fromJson(
               json[' Latest Account of this lab '] as Map<String, dynamic>)
           : null,
       successMessage: json['success_message'] as String?,
@@ -36,14 +38,14 @@ class DBAllLabsResponse {
   }
 }
 
-class AllLabsPaginationData {
+class DBAllLabsPaginationData {
   int? currentPage;
-  List<LabInfo>? data;
+  List<DBLabInfo>? data;
   String? firstPageUrl;
   int? from;
   int? lastPage;
   String? lastPageUrl;
-  List<Link>?
+  List<DBLink>?
       links; // Reusing the Link class if defined elsewhere, or define here
   String? nextPageUrl;
   String? path;
@@ -52,7 +54,7 @@ class AllLabsPaginationData {
   int? to;
   int? total;
 
-  AllLabsPaginationData({
+  DBAllLabsPaginationData({
     this.currentPage,
     this.data,
     this.firstPageUrl,
@@ -68,18 +70,18 @@ class AllLabsPaginationData {
     this.total,
   });
 
-  factory AllLabsPaginationData.fromJson(Map<String, dynamic> json) {
-    return AllLabsPaginationData(
+  factory DBAllLabsPaginationData.fromJson(Map<String, dynamic> json) {
+    return DBAllLabsPaginationData(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => LabInfo.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBLabInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
       from: json['from'] as int?,
       lastPage: json['last_page'] as int?,
       lastPageUrl: json['last_page_url'] as String?,
       links: (json['links'] as List<dynamic>?)
-          ?.map((e) => Link.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBLink.fromJson(e as Map<String, dynamic>))
           .toList(),
       nextPageUrl: json['next_page_url'] as String?,
       path: json['path'] as String?,
@@ -110,22 +112,63 @@ class AllLabsPaginationData {
     data['to'] = to;
     data['total'] = total;
     return data;
+  } // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+
+  AllLabsPaginationData toDomain() {
+    return AllLabsPaginationData(
+      currentPage: currentPage,
+      data: data?.map((e) => e.toDomain()).toList(), // Map list items
+      firstPageUrl: firstPageUrl,
+      from: from,
+      lastPage: lastPage,
+      lastPageUrl: lastPageUrl,
+      links: links?.map((e) => e.toDomain()).toList(), // Map list items
+      nextPageUrl: nextPageUrl,
+      path: path,
+      perPage: perPage,
+      prevPageUrl: prevPageUrl,
+      to: to,
+      total: total,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBAllLabsPaginationData fromDomain(AllLabsPaginationData domain) {
+    return DBAllLabsPaginationData(
+      currentPage: domain.currentPage,
+      data: domain.data
+          ?.map((e) => DBLabInfo.fromDomain(e))
+          .toList(), // Map list items
+      firstPageUrl: domain.firstPageUrl,
+      from: domain.from,
+      lastPage: domain.lastPage,
+      lastPageUrl: domain.lastPageUrl,
+      links: domain.links
+          ?.map((e) => DBLink.fromDomain(e))
+          .toList(), // Map list items
+      nextPageUrl: domain.nextPageUrl,
+      path: domain.path,
+      perPage: domain.perPage,
+      prevPageUrl: domain.prevPageUrl,
+      to: domain.to,
+      total: domain.total,
+    );
   }
 }
 
-class LabInfo {
+class DBLabInfo {
   int? id;
   String? labName;
   String? labLogo;
 
-  LabInfo({
+  DBLabInfo({
     this.id,
     this.labName,
     this.labLogo,
   });
 
-  factory LabInfo.fromJson(Map<String, dynamic> json) {
-    return LabInfo(
+  factory DBLabInfo.fromJson(Map<String, dynamic> json) {
+    return DBLabInfo(
       id: json['id'] as int?,
       labName: json['lab_name'] as String?,
       labLogo: json['lab_logo'] as String?,
@@ -138,24 +181,41 @@ class LabInfo {
     data['lab_name'] = labName;
     data['lab_logo'] = labLogo;
     return data;
+  } // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+
+  LabInfo toDomain() {
+    return LabInfo(
+      id: id,
+      labName: labName,
+      labLogo: labLogo,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBLabInfo fromDomain(LabInfo domain) {
+    return DBLabInfo(
+      id: domain.id,
+      labName: domain.labName,
+      labLogo: domain.labLogo,
+    );
   }
 }
 
 // Assuming Link class is similar to what you might have already,
 // otherwise, define it as follows:
-class Link {
+class DBLink {
   String? url;
   String? label;
   bool? active;
 
-  Link({
+  DBLink({
     this.url,
     this.label,
     this.active,
   });
 
-  factory Link.fromJson(Map<String, dynamic> json) {
-    return Link(
+  factory DBLink.fromJson(Map<String, dynamic> json) {
+    return DBLink(
       url: json['url'] as String?,
       label: json['label'] as String?,
       active: json['active'] as bool?,
@@ -168,5 +228,23 @@ class Link {
     data['label'] = label;
     data['active'] = active;
     return data;
+  }
+
+  // >>>>>>>>>>>>>> TO DOMAIN FUNCTION <<<<<<<<<<<<<<
+  Link toDomain() {
+    return Link(
+      url: url,
+      label: label,
+      active: active,
+    );
+  }
+
+  // >>>>>>>>>>>>>> FROM DOMAIN FUNCTION <<<<<<<<<<<<<<
+  static DBLink fromDomain(Link domain) {
+    return DBLink(
+      url: domain.url,
+      label: domain.label,
+      active: domain.active,
+    );
   }
 }

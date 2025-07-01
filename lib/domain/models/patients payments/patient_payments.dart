@@ -1,40 +1,40 @@
-class PatientPaymentsResponse {
-  bool? status;
-  int? successCode;
-  List<PatientPayment>? patientPayments;
-  String? successMessage;
+// class PatientPaymentsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<PatientPayment>? patientPayments;
+//   String? successMessage;
 
-  PatientPaymentsResponse({
-    this.status,
-    this.successCode,
-    this.patientPayments,
-    this.successMessage,
-  });
+//   PatientPaymentsResponse({
+//     this.status,
+//     this.successCode,
+//     this.patientPayments,
+//     this.successMessage,
+//   });
 
-  PatientPaymentsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    if (json['patient_payments'] != null) {
-      patientPayments = <PatientPayment>[];
-      json['patient_payments'].forEach((v) {
-        patientPayments!.add(PatientPayment.fromJson(v));
-      });
-    }
-    successMessage = json['success_message'];
-  }
+//   PatientPaymentsResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     if (json['patient_payments'] != null) {
+//       patientPayments = <PatientPayment>[];
+//       json['patient_payments'].forEach((v) {
+//         patientPayments!.add(PatientPayment.fromJson(v));
+//       });
+//     }
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (patientPayments != null) {
-      data['patient_payments'] =
-          patientPayments!.map((v) => v.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (patientPayments != null) {
+//       data['patient_payments'] =
+//           patientPayments!.map((v) => v.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class PatientPayment {
   int? id;

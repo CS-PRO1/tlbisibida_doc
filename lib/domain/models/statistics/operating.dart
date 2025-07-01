@@ -1,42 +1,42 @@
-class OperatingPaymentsStatisticsResponse {
-  bool? status;
-  int? successCode;
-  List<OperatingPaymentStatistic>?
-      operatingPayments; // Corrected to match JSON key "Operating_Payments"
-  String? successMessage;
+// class OperatingPaymentsStatisticsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<OperatingPaymentStatistic>?
+//       operatingPayments; // Corrected to match JSON key "Operating_Payments"
+//   String? successMessage;
 
-  OperatingPaymentsStatisticsResponse({
-    this.status,
-    this.successCode,
-    this.operatingPayments,
-    this.successMessage,
-  });
+//   OperatingPaymentsStatisticsResponse({
+//     this.status,
+//     this.successCode,
+//     this.operatingPayments,
+//     this.successMessage,
+//   });
 
-  factory OperatingPaymentsStatisticsResponse.fromJson(
-      Map<String, dynamic> json) {
-    return OperatingPaymentsStatisticsResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      operatingPayments: (json['Operating_Payments'] as List<dynamic>?)
-          ?.map((e) =>
-              OperatingPaymentStatistic.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory OperatingPaymentsStatisticsResponse.fromJson(
+//       Map<String, dynamic> json) {
+//     return OperatingPaymentsStatisticsResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       operatingPayments: (json['Operating_Payments'] as List<dynamic>?)
+//           ?.map((e) =>
+//               OperatingPaymentStatistic.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (operatingPayments != null) {
-      data['Operating_Payments'] =
-          operatingPayments!.map((e) => e.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (operatingPayments != null) {
+//       data['Operating_Payments'] =
+//           operatingPayments!.map((e) => e.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class OperatingPaymentStatistic {
   String? name;

@@ -1,36 +1,36 @@
-class PatientDetailsResponse {
-  bool? status;
-  int? successCode;
-  PatientDetails? patientDetails;
-  String? successMessage;
+// class PatientDetailsResponse {
+//   bool? status;
+//   int? successCode;
+//   PatientDetails? patientDetails;
+//   String? successMessage;
 
-  PatientDetailsResponse({
-    this.status,
-    this.successCode,
-    this.patientDetails,
-    this.successMessage,
-  });
+//   PatientDetailsResponse({
+//     this.status,
+//     this.successCode,
+//     this.patientDetails,
+//     this.successMessage,
+//   });
 
-  PatientDetailsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    patientDetails = json['patient_details'] != null
-        ? PatientDetails.fromJson(json['patient_details'])
-        : null;
-    successMessage = json['success_message'];
-  }
+//   PatientDetailsResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     patientDetails = json['patient_details'] != null
+//         ? PatientDetails.fromJson(json['patient_details'])
+//         : null;
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (patientDetails != null) {
-      data['patient_details'] = patientDetails!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (patientDetails != null) {
+//       data['patient_details'] = patientDetails!.toJson();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class PatientDetails {
   int? id;
