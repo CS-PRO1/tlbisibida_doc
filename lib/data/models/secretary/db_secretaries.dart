@@ -75,6 +75,17 @@ class DBSecretary {
     return data;
   }
 
+  Secretary toDomain() {
+    return Secretary(
+      id: id,
+      fullName: fullName,
+      address: address,
+      attendanceTime: attendanceTime,
+      email: email,
+      phone: phone,
+    );
+  }
+
   // --- FROM DOMAIN FUNCTION ---
   static DBSecretary fromDomain(Secretary domain) {
     return DBSecretary(
@@ -82,8 +93,6 @@ class DBSecretary {
       fullName: domain.fullName,
       phone: domain.phone,
       email: domain.email,
-      // Convert DateTime back to "HH:mm" string.
-      // Make sure to handle nullability for attendanceTime
       attendanceTime: domain.attendanceTime,
       address: domain.address,
     );
