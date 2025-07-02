@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_book_an_appointment.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_booked_appointment.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_patient_details_withimg.dart';
@@ -29,6 +31,7 @@ import 'package:tlbisibida_doc/data/models/statistics/db_patients.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_subcat.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_treatments.dart';
 import 'package:tlbisibida_doc/domain/repo/doc_repo.dart';
+import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 
@@ -413,4 +416,78 @@ class DbDocRepo implements DocRepo {
       print('error in getcaseList: ' + error.toString());
     });
   }
+
+  @override
+  Future<bool> delSecretary(int id) async => await DioHelper.deleteData(
+        'dentist/secretaries/delete/$id',
+      ).then((value) {
+        if (value != null && value.data['status']) {
+          CacheHelper.setString(
+              'token', 'Bearer ' + value.data['data']['access_token']);
+          print("Login successful. Token: ${CacheHelper.get('token')}");
+          return true;
+        } else {
+          print("Login failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return false;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return false;
+      });
+
+  @override
+  Future<bool> postAddSecretary(String firstName, String lastName, String phone,
+          String email, String attendenceTime, String address) async =>
+      await DioHelper.postData('dentist/secretaries/addsecretary', {
+        'firstname': firstName,
+        'lastname': lastName,
+        'phone': phone,
+        'email': email,
+        'attendencetime': attendenceTime,
+        'address': address
+      }).then((value) {
+        if (value != null && value.data['status']) {
+          CacheHelper.setString(
+              'token', 'Bearer ' + value.data['data']['access_token']);
+          print(" successful. Token: ${CacheHelper.get('token')}");
+          return true;
+        } else {
+          print(" failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return false;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return false;
+      });
+
+  @override
+  Future<bool> updateSecretary(
+          int id,
+          String firstName,
+          String lastName,
+          String phone,
+          String email,
+          String attendenceTime,
+          String address) async =>
+      await DioHelper.updateData('dentist/secretaries/update/$id', {
+        'firstname': firstName,
+        'lastname': lastName,
+        'phone': phone,
+        'email': email,
+        'attendencetime': attendenceTime,
+        'address': address
+      }).then((value) {
+        if (value != null && value.data['status']) {
+          CacheHelper.setString(
+              'token', 'Bearer ' + value.data['data']['access_token']);
+          print(" successful. Token: ${CacheHelper.get('token')}");
+          return true;
+        } else {
+          print(" failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return false;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return false;
+      });
 }
