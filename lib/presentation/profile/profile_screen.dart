@@ -1,36 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/profile/cubit/profile_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/presentation/profile/profile_edit_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  List userInfo = [
-    {
-      'title': 'الاسم:',
-      'info': 'د. تحسين التحسيني',
-      'icon': Icons.person,
-    },
-    {
-      'title': 'البريد:',
-      'info': 'drtahseeeeeeeen@tahseenee.net',
-      'icon': CupertinoIcons.mail_solid,
-    },
-    {
-      'title': 'الهاتف:',
-      'info': '0987631345',
-      'icon': CupertinoIcons.phone_circle_fill,
-    },
-    {
-      'title': 'العنوان:',
-      'info': 'دمشق - الجسر الأبيض',
-      'icon': CupertinoIcons.placemark_fill,
-    },
-  ];
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+
+    List userInfo = [
+      {
+        'title': 'الاسم:',
+        'info': cubit.profile!.firstName! + cubit.profile!.lastName!,
+        'icon': Icons.person,
+      },
+      {
+        'title': 'البريد:',
+        'info': cubit.profile!.email!,
+        'icon': CupertinoIcons.mail_solid,
+      },
+      {
+        'title': 'الهاتف:',
+        'info': cubit.profile!.phone,
+        'icon': CupertinoIcons.phone_circle_fill,
+      },
+      {
+        'title': 'العنوان:',
+        'info': cubit.profile!.address,
+        'icon': CupertinoIcons.placemark_fill,
+      },
+    ];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -50,34 +54,44 @@ class ProfileScreen extends StatelessWidget {
           size: 20,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 100,
-              backgroundImage: NetworkImage(
-                  'https://media.istockphoto.com/id/1371009338/photo/portrait-of-confident-a-young-dentist-working-in-his-consulting-room.jpg?s=612x612&w=0&k=20&c=I212vN7lPpAOwGKRoEY9kYWunJaMj9vH2g-8YBGc2MI='),
-              onBackgroundImageError: (exception, stackTrace) => Image.asset(
-                'assets/images/fallback/user_default.jpg',
-              ),
+      body: BlocConsumer<ProfileCubit, String>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 100,
+                  backgroundImage: NetworkImage(''),
+                  // 'https://media.istockphoto.com/id/1371009338/photo/portrait-of-confident-a-young-dentist-working-in-his-consulting-room.jpg?s=612x612&w=0&k=20&c=I212vN7lPpAOwGKRoEY9kYWunJaMj9vH2g-8YBGc2MI='),
+                  onBackgroundImageError: (exception, stackTrace) =>
+                      Image.asset(
+                    'assets/images/fallback/user_default.jpg',
+                  ),
+                ),
+                SizedBox(height: 20),
+                ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        itemBuilder(userInfo[index]),
+                    separatorBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                          child: Container(
+                            height: 1,
+                            color: cyan300,
+                            width: 150,
+                          ),
+                        ),
+                    itemCount: userInfo.length),
+              ],
             ),
-            SizedBox(height: 20),
-            ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) => itemBuilder(userInfo[index]),
-                separatorBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                      child: Container(
-                        height: 1,
-                        color: cyan300,
-                        width: 150,
-                      ),
-                    ),
-                itemCount: userInfo.length),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

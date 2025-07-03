@@ -24,6 +24,7 @@ import 'package:tlbisibida_doc/data/models/medical%20cases/db_show_labs-send%20c
 import 'package:tlbisibida_doc/data/models/operating%20payments/db_op_payments.dart';
 import 'package:tlbisibida_doc/data/models/patients%20payments/db_patient_payments.dart';
 import 'package:tlbisibida_doc/data/models/patients%20payments/db_patients_payment_from_to.dart';
+import 'package:tlbisibida_doc/data/models/profile/db_dentist.dart';
 import 'package:tlbisibida_doc/data/models/secretary/db_secretaries.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_doc_gains.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_operating.dart';

@@ -58,8 +58,6 @@ class AuthCubit extends Cubit<String> {
     required String passwordConfirmation,
     required String phone,
     required String address,
-    required Map<String, String> workingHours,
-    required int subscriptionDuration,
   }) {
     registrydata = {
       'guard': guard,
@@ -70,6 +68,15 @@ class AuthCubit extends Cubit<String> {
       'password_confirmation': passwordConfirmation,
       'phone': phone,
       'address': address,
+    };
+    register();
+  }
+
+  void cookregistry2({
+    required Map<String, String> workingHours,
+    required int subscriptionDuration,
+  }) {
+    registrydata = {
       ...workingHours, // Spread the working hours map directly into the data
       'register_subscription_duration': subscriptionDuration,
     };

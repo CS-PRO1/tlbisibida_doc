@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/secretary/dialogs/sec_delete_confirmation_dialog.dart';
 
-Widget deleteSecButton(BuildContext context) {
+Widget deleteSecButton(BuildContext context, int id) {
   return InkWell(
     onTap: () {
       showDialog(
         context: context,
         builder: (context) {
-          return secDeleteConfirmationDialog(context);
+          return secDeleteConfirmationDialog(context, id);
         },
       );
     },

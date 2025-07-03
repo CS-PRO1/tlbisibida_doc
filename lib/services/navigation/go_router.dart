@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/bottom_nav.dart'; // Re-use your bottom nav
 import 'package:tlbisibida_doc/components/top_nav.dart'; // Re-use your top nav
 import 'package:tlbisibida_doc/constants/constants.dart'; // For route names and display names
+import 'package:tlbisibida_doc/presentation/authentication/provider/auth_provider.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/presentation/Sessions/screens/add_session_details_screen%20.dart';
 import 'package:tlbisibida_doc/presentation/Sessions/screens/edit_session_details_screen.dart';
@@ -10,11 +11,11 @@ import 'package:tlbisibida_doc/presentation/Sessions/screens/session_details_scr
 import 'package:tlbisibida_doc/presentation/about/about.dart';
 import 'package:tlbisibida_doc/presentation/appointments/appointments_calendar_screen.dart';
 import 'package:tlbisibida_doc/presentation/appointments/new_appointment_screen.dart';
-import 'package:tlbisibida_doc/presentation/authentication/email_verification_screen.dart';
-import 'package:tlbisibida_doc/presentation/authentication/login.dart';
-import 'package:tlbisibida_doc/presentation/authentication/register%202.dart';
-import 'package:tlbisibida_doc/presentation/authentication/register.dart';
-import 'package:tlbisibida_doc/presentation/authentication/role.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/email_verification_screen.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/login.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/register%202.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/register.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/role.dart';
 import 'package:tlbisibida_doc/presentation/finance/finance_center_screen.dart';
 import 'package:tlbisibida_doc/presentation/inventory/screens/inventory_screen.dart';
 import 'package:tlbisibida_doc/presentation/labs/screens/cases/case_details_screen.dart';
@@ -75,15 +76,15 @@ class AppRouter {
       // Top-level routes that should NOT have any app bar (e.g., authentication)
       GoRoute(
         path: loginRoute,
-        builder: (context, state) => LoginScreen(),
+        builder: (context, state) => LoginProvider(),
       ),
       GoRoute(
         path: registerRoute,
-        builder: (context, state) => Register(),
+        builder: (context, state) => RegisterProvider(),
       ),
       GoRoute(
         path: register2Route,
-        builder: (context, state) => Register2(),
+        builder: (context, state) => Register2Provider(),
       ),
       GoRoute(
         path: roleRoute,

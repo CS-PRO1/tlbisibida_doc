@@ -2,13 +2,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/secretary/secretaries.dart';
 import 'package:tlbisibida_doc/domain/repo/doc_repo.dart';
 
-class AuthCubit extends Cubit<String> {
+class SecCubit extends Cubit<String> {
   final DocRepo repo;
 
-  AuthCubit(this.repo) : super('');
+  SecCubit(this.repo) : super('');
 
   //get sec
   bool auth = false;
+  List<Secretary> sec = [];
   Future<void> getsec() async {
     emit('get sec');
     try {
@@ -17,7 +18,6 @@ class AuthCubit extends Cubit<String> {
       emit('error');
       print(e.toString());
     }
-    List<Secretary> sec = [];
     for (var secretary in repo.dbSecretariesResponse!.secretaries!) {
       sec.add(secretary.toDomain());
     }

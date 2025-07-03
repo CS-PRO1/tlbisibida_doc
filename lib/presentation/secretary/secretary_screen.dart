@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/secretary/component/carousel.dart';
+import 'package:tlbisibida_doc/presentation/secretary/cubit/secretary_cubit.dart';
 import 'package:tlbisibida_doc/presentation/secretary/dialogs/sec_add_edit_dialog.dart';
 
 class SecretaryScreen extends StatelessWidget {
@@ -9,19 +11,26 @@ class SecretaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                height: 15,
+      body: BlocConsumer<SecCubit, String>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(height: 680, child: Carousel()),
+                ],
               ),
-              SizedBox(height: 680, child: Carousel()),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

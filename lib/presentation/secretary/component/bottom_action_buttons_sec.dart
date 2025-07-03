@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/secretary/cubit/secretary_cubit.dart';
 import 'package:tlbisibida_doc/presentation/secretary/dialogs/sec_delete_confirmation_dialog.dart';
 
-Row bottomActionButtonsSec(BuildContext context) {
+Row bottomActionButtonsSec(BuildContext context, int id) {
+  TextEditingController secretaryEmailController = TextEditingController();
+  TextEditingController secretaryNameController = TextEditingController();
+  TextEditingController secretaryAddressController = TextEditingController();
+  TextEditingController secretaryAttendenceTimeController =
+      TextEditingController();
+  TextEditingController secretaryPhoneNumberController =
+      TextEditingController();
+  final cubit = context.read<SecCubit>();
+
   return Row(
     children: [
       Expanded(
@@ -11,7 +22,7 @@ Row bottomActionButtonsSec(BuildContext context) {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return secDeleteConfirmationDialog(context);
+                  return secDeleteConfirmationDialog(context, id);
                 });
           },
           child: Container(
@@ -36,8 +47,18 @@ Row bottomActionButtonsSec(BuildContext context) {
             decoration: const BoxDecoration(
               color: cyan200,
             ),
-            child: const Icon(
-              Icons.check_rounded,
+            child: IconButton(
+              icon: const Icon(Icons.check_rounded),
+              onPressed: () {
+                cubit.updatesec(
+                    id,
+                    secretaryNameController.text,
+                    ' ',
+                    secretaryPhoneNumberController.text,
+                    secretaryEmailController.text,
+                    secretaryAttendenceTimeController.text,
+                    secretaryAddressController.text);
+              },
               color: cyan400,
             ),
           ),

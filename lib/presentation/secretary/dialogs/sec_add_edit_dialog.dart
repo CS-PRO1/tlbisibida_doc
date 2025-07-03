@@ -1,11 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/default_textfield.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/presentation/secretary/component/carousel.dart';
+import 'package:tlbisibida_doc/presentation/secretary/cubit/secretary_cubit.dart';
 
 Dialog secAddEditDialog(BuildContext context, String title) {
+  final cubit = context.read<SecCubit>();
+  TextEditingController secretaryEmailController = TextEditingController();
+  TextEditingController secretaryNameController = TextEditingController();
+  TextEditingController secretaryAddressController = TextEditingController();
+  TextEditingController secretaryAttendenceTimeController =
+      TextEditingController();
+  TextEditingController secretaryPhoneNumberController =
+      TextEditingController();
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -50,7 +59,7 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                         SizedBox(
                           width: 250,
                           child: defaultTextField(
-                              itemstandardquantitycontroller, context, 'الاسم',
+                              secretaryNameController, context, 'الاسم',
                               style: TextStyle(color: cyan300)),
                         ),
                         const SizedBox(
@@ -59,9 +68,7 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                         SizedBox(
                           width: 250,
                           child: defaultTextField(
-                              itemstandardquantitycontroller,
-                              context,
-                              'العنوان',
+                              secretaryAddressController, context, 'العنوان',
                               style: TextStyle(color: cyan300)),
                         ),
                         const SizedBox(
@@ -70,7 +77,7 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                         SizedBox(
                           width: 250,
                           child: defaultTextField(
-                              itemstandardquantitycontroller, context, 'الرقم',
+                              secretaryPhoneNumberController, context, 'الرقم',
                               style: TextStyle(color: cyan300)),
                         ),
                         const SizedBox(
@@ -79,9 +86,7 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                         SizedBox(
                           width: 250,
                           child: defaultTextField(
-                              itemstandardquantitycontroller,
-                              context,
-                              'الايميل',
+                              secretaryEmailController, context, 'الايميل',
                               style: TextStyle(color: cyan300)),
                         ),
                         const SizedBox(
@@ -100,7 +105,10 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      secretaryAttendenceTimeController.text =
+                                          'day';
+                                    },
                                     icon: Icon(
                                       CupertinoIcons.sun_max_fill,
                                       color: Colors.amber[200],
@@ -111,7 +119,10 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                                   color: cyan400,
                                 ),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      secretaryAttendenceTimeController.text =
+                                          'night';
+                                    },
                                     icon: Icon(
                                       CupertinoIcons.moon_stars_fill,
                                       color: cyan200,
@@ -131,33 +142,17 @@ Dialog secAddEditDialog(BuildContext context, String title) {
                       text: 'تم',
                       function: () {
                         // Navigator.of(context).pop();
+                        cubit.addsec(
+                            secretaryNameController.text,
+                            ' ',
+                            secretaryPhoneNumberController.text,
+                            secretaryEmailController.text,
+                            secretaryAttendenceTimeController.text,
+                            secretaryAddressController.text);
                       }),
                   const SizedBox(
                     height: 10,
                   ),
-                  // deleteSecButton(
-                  //   context,
-                  // ),
-
-                  // Text(
-                  //   item['address'],
-                  //   style: TextStyle(
-                  //     color: Colors.white,
-                  //     fontSize: 20.0,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text(
-                  //   item['number'],
-                  //   style: TextStyle(
-                  //     color: Colors.white,
-                  //     fontSize: 20.0,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // ),
                 ],
               ),
             ),

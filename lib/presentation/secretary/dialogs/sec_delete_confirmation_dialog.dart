@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/secretary/cubit/secretary_cubit.dart';
 
-Dialog secDeleteConfirmationDialog(BuildContext context) {
+Dialog secDeleteConfirmationDialog(BuildContext context, int id) {
+  final cubit = context.read<SecCubit>();
+
   return Dialog(
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -38,7 +42,7 @@ Dialog secDeleteConfirmationDialog(BuildContext context) {
                         redButton(
                             text: 'تأكيد الحذف',
                             function: () {
-                              Navigator.of(context).pop();
+                              cubit.delsec(id);
                             })
                       ])))));
 }
