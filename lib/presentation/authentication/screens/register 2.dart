@@ -21,14 +21,6 @@ class Register2 extends StatefulWidget {
 }
 
 class _Register2State extends State<Register2> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmpassword = TextEditingController();
-  TextEditingController firstname = TextEditingController();
-  TextEditingController lastname = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  TextEditingController address = TextEditingController();
-
   List<_WorkingHoursData> _workingHoursData = [];
   final List _subsicribe = ['ربع سنوي', 'نصف سنوي', 'سنوي'];
   final ValueNotifier<String> _subtype = ValueNotifier('سنوي');
@@ -77,7 +69,7 @@ class _Register2State extends State<Register2> {
         listener: (context, state) {
           if (state == 'registered') {
             AnimatedSnackBar.material(
-              'تم انشاءحساب بنجاح!',
+              'تم انشاء حساب بنجاح!',
               type: AnimatedSnackBarType.success,
               desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
               duration: Duration(seconds: 3),

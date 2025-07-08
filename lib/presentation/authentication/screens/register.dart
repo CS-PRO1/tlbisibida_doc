@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
+import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 // ignore: must_be_immutable
@@ -45,20 +46,18 @@ class Register extends StatelessWidget {
       body: BlocConsumer<AuthCubit, String>(
         listener: (context, state) {
           if (state == 'registered') {
-            AnimatedSnackBar.material(
-              'تم انشاءحساب بنجاح!',
-              type: AnimatedSnackBarType.success,
-              desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
-              duration: Duration(seconds: 3),
-              animationCurve: Easing.standard,
-            ).show(context);
+            // AnimatedSnackBar.material(
+            //   'تح!',
+            //   type: AnimatedSnackBarType.success,
+            //   desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
+            //   duration: Duration(seconds: 3),
+            //   animationCurve: Easing.standard,
+            // ).show(context);
             context.push(register2Route);
-
-            // locator<NavigationService>().navigateTo(clientsLogPageRoute);
           }
           if (state == 'error') {
             AnimatedSnackBar.material(
-              'لم يتم انشاء حساب ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
+              'تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
               type: AnimatedSnackBarType.error,
               desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
               duration: Duration(seconds: 3),
@@ -68,15 +67,12 @@ class Register extends StatelessWidget {
         },
         builder: (context, state) {
           final AuthCubit cubit = context.read<AuthCubit>();
-
           return Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/teeth_pattern.png',
                     ),
-
-                    // fit: BoxFit.,
                     repeat: ImageRepeat.repeat),
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -86,8 +82,6 @@ class Register extends StatelessWidget {
                       cyan50,
                       cyan100,
                       cyan100,
-                      // cyan200,
-                      // cyan200,
                       cyan100,
                       cyan100,
                       cyan50,
@@ -264,24 +258,7 @@ class Register extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       Row(
-                        //         children: [
-                        //           Checkbox(value: true, onChanged: (value) {}),
-                        //           const CustomText(
-                        //             text: "تذكّرني",
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       const CustomText(
-                        //           text: "نسيت كلمة المرور؟", color: cyan400)
-                        //     ],
-                        //   ),
-                        // ),
+
                         const SizedBox(
                           height: 10,
                         ),
@@ -296,7 +273,7 @@ class Register extends StatelessWidget {
 
                           onTap: () {
                             cubit.cookregistry(
-                              guard: 'dentist',
+                              guard: CacheHelper.get('guard'),
                               firstName: firstname.text,
                               lastName: lastname.text,
                               email: email.text,

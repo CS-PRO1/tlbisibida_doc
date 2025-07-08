@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
-import 'package:tlbisibida_doc/services/navigation/controllers.dart';
+import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  bool is_den = true;
+  // bool is_den = CacheHelper.get('guard') == 'dentist';
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -25,19 +25,17 @@ class LoginScreen extends StatelessWidget {
             AnimatedSnackBar.material(
               'تم تسجيل الدخول بنجاح!',
               type: AnimatedSnackBarType.success,
-              desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
               duration: Duration(seconds: 3),
               animationCurve: Easing.standard,
             ).show(context);
             context.go(rootRoute);
-
-            // locator<NavigationService>().navigateTo(clientsLogPageRoute);
           }
           if (state == 'error') {
             AnimatedSnackBar.material(
               'لم يتم تسجيل الدخول ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
               type: AnimatedSnackBarType.error,
-              desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
               duration: Duration(seconds: 3),
               animationCurve: Easing.standard,
             ).show(context);
@@ -101,14 +99,6 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Row(
-                  //   children: [
-                  //     CustomText(
-                  //       text: "Welcome back to the admin panel.",
-                  //       color: Colors.grey[300],
-                  //     ),
-                  //   ],
-                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -172,10 +162,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      cubit.login(email.text, password.text,
-                          is_den ? 'dentist' : 'secretary');
-
-                      // Navigator.pushNamed(context, rootRoute);
+                      cubit.login(
+                          email.text, password.text, CacheHelper.get('guard'));
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -208,7 +196,7 @@ class LoginScreen extends StatelessWidget {
                   // ]))
                   SizedBox(
                     // width: 255,
-                    child: is_den
+                    child: CacheHelper.get('guard') == 'dentist'
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

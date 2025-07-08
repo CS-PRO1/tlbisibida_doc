@@ -17,14 +17,10 @@ import 'package:tlbisibida_doc/data/models/inventory/db_show_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_items_log.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_quants_for_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_subcats.dart';
-import 'package:tlbisibida_doc/data/models/medical%20cases/db_case_details.dart';
-import 'package:tlbisibida_doc/data/models/medical%20cases/db_caseslist_from_lab.dart';
-import 'package:tlbisibida_doc/data/models/medical%20cases/db_comments.dart';
 import 'package:tlbisibida_doc/data/models/medical%20cases/db_show_labs-send%20case%20to%20lab.dart';
 import 'package:tlbisibida_doc/data/models/operating%20payments/db_op_payments.dart';
 import 'package:tlbisibida_doc/data/models/patients%20payments/db_patient_payments.dart';
 import 'package:tlbisibida_doc/data/models/patients%20payments/db_patients_payment_from_to.dart';
-import 'package:tlbisibida_doc/data/models/profile/db_dentist.dart';
 import 'package:tlbisibida_doc/data/models/secretary/db_secretaries.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_doc_gains.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_operating.dart';
@@ -37,8 +33,9 @@ import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 
 class DbDocRepo implements DocRepo {
-  DBLabDetailsResponse? dbLabDetailsResponse;
+
   @override
+  DBLabDetailsResponse? dbLabDetailsResponse;
   Future<void> getAllLabDetails(int id) async {
     return await DioHelper.getData(
             'dentist/labs/show_lab_not_injoied_details/$id',
@@ -50,8 +47,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBAllLabsResponse? dbAllLabsResponse;
   @override
+  DBAllLabsResponse? dbAllLabsResponse;
   Future<void> getAllLabs() async {
     return await DioHelper.getData(
             'dentist/labs/show_all_labs_dentist_not_injoied?page=1',
@@ -63,8 +60,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBAppointmentsResponse? dbAppointmentsResponse;
   @override
+  DBAppointmentsResponse? dbAppointmentsResponse;
   Future<void> getAppointments() async {
     return await DioHelper.getData(
             'dentist/patients/appointments/get-booked-appointments?date=2025-05-05',
@@ -76,8 +73,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
   @override
+  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
   Future<void> getAvailableSlots() async {
     return await DioHelper.getData(
             'dentist/patients/appointments/get-avilable-slots?date=2025-5-27&duration=30',
@@ -89,8 +86,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBBillDetailsResponse? dbBillDetailsResponse;
   @override
+  DBBillDetailsResponse? dbBillDetailsResponse;
   Future<void> getBillDetails(int id) async {
     return await DioHelper.getData(
             'dentist/bills/show-bill-details-with-cases/$id',
@@ -102,8 +99,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBCategoriesResponse? dbCategoriesResponse;
   @override
+  DBCategoriesResponse? dbCategoriesResponse;
   Future<void> getCats() async {
     return await DioHelper.getData('inventory/categories', token: '')
         .then((value) {
@@ -113,8 +110,8 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBDentistScheduleResponse? dbDentistScheduleResponse;
   @override
+  DBDentistScheduleResponse? dbDentistScheduleResponse;
   Future<void> getClinicTimes() async {
     return await DioHelper.getData('dentist/show-times', token: '')
         .then((value) {

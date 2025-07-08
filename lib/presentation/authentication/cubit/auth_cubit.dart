@@ -69,7 +69,6 @@ class AuthCubit extends Cubit<String> {
       'phone': phone,
       'address': address,
     };
-    register();
   }
 
   void cookregistry2({
@@ -92,7 +91,7 @@ class AuthCubit extends Cubit<String> {
       emit('error');
       print(e.toString());
     }
-    auth ? emit('regestered') : emit('error');
+    auth ? emit('registered') : emit('error');
     print(state);
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/tusk_icons.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class RoleScreen extends StatelessWidget {
@@ -88,6 +89,7 @@ class RoleScreen extends StatelessWidget {
                     onTap: () {
                       // Navigator.pushNamed(context, loginRoute);
                       context.push(loginRoute);
+                      CacheHelper.setString('guard', 'dentist');
                     },
                     child: ClipRect(
                       child: BackdropFilter(
@@ -134,8 +136,8 @@ class RoleScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      // Navigator.pushNamed(context, loginRoute);
                       context.push(loginRoute);
+                      CacheHelper.setString('guard', 'secretary');
                     },
                     child: ClipRect(
                       child: BackdropFilter(

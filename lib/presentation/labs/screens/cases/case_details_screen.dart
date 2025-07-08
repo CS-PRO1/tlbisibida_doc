@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/presentation/labs/components/case_process_timeline.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
@@ -47,17 +46,15 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
             ];
 
             final List orderdetailsinfo = [
-             cubit.caseDetails!.patientFullName,
-             cubit.caseDetails!.age,
-            cubit.caseDetails!.patientGender,
-             cubit.caseDetails!.shade,
-              DateFormat.yMd().format(DateTime(2025, 5, 3)),
-              cubit.caseDetails!.expectedDeliveryDate,
-             
-          cubit.caseDetails!.,
-          cubit.caseDetails!.,
-              
-         ];
+              cubit.medicalCase!.patientFullName,
+              cubit.medicalCase!.medicalCaseDetails!.age,
+              cubit.medicalCase!.patientGender,
+              cubit.medicalCase!.medicalCaseDetails!.shade,
+              cubit.medicalCase!.medicalCaseDetails!.createdAt,
+              cubit.medicalCase!.medicalCaseDetails!.expectedDeliveryDate,
+              cubit.medicalCase!.medicalCaseDetails!.repeat,
+              cubit.medicalCase!.medicalCaseDetails!.needTrial,
+            ];
 
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -65,14 +62,21 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
                   children: [
-                    CaseProcessTimeline(),
+                    CaseProcessTimeline(
+                      currentProcessIndex:
+                          cubit.medicalCase!.medicalCaseDetails!.status!,
+                      onProcessIndexChanged: (value) {},
+                    ),
                     Center(
-                      child: defaultButton(
-                        text: 'تأكيد الاستلام',
-                        function: () {
-                          cubit.confirmdelivery(cubit.caseDetails!.id);
-                        },
-                      ),
+                      child: cubit.medicalCase!.medicalCaseDetails!.status == 3
+                          ? defaultButton(
+                              text: 'تأكيد الاستلام',
+                              function: () {
+                                cubit.confirmdelivery(
+                                    cubit.medicalCase!.medicalCaseDetails!.id!);
+                              },
+                            )
+                          : SizedBox(),
                     ),
                     SizedBox(
                       height: 20,

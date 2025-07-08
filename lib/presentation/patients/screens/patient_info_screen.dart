@@ -254,7 +254,7 @@ class PatientInfoScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: ImageGallery(images: [
-                        'https://files.gamebanana.com/bitpit/whatsapp_image_2025-05-24_at_150510.jpg'
+                        //TODO ADD Patient IMGs Get function
                       ]),
                     )),
               ),

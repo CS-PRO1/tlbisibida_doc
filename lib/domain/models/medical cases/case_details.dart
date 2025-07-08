@@ -1,74 +1,109 @@
-// lib/domain/models/medical_cases/medical_case_domain.dart
+class MedicalCaseDetailsResponse {
+  final bool? status;
+  final int? successCode;
+  final MedicalCase? medicalCase;
+  final String? successMessage;
 
-// ignore_for_file: depend_on_referenced_packages
-
-import 'package:equatable/equatable.dart';
-
-/// Represents the comprehensive details of a medical case in the domain layer.
-/// This model is agnostic to how data is fetched or stored.
-class MedicalCaseResponse extends Equatable {
-  final int id;
-  final int patientId;
-  final String patientFullName;
-  final String patientGender;
-  final String dentistFullName;
-  final String age; // Keeping as string as per your DTO and JSON
-  final String expectedDeliveryDate;
-  final String? shade;
-  final String? notes;
-  final int status; // Business status, e.g., 0 for pending, 1 for completed
-  final int cost;
-  final List<String>
-      teethCrowns; // List of individual tooth numbers with crowns
-  final List<MedicalCaseFileDomain>
-      files; // Associated files for the medical case
-
-  const MedicalCaseResponse({
-    required this.id,
-    required this.patientId,
-    required this.patientFullName,
-    required this.patientGender,
-    required this.dentistFullName,
-    required this.age,
-    required this.expectedDeliveryDate,
-    this.shade,
-    this.notes,
-    required this.status,
-    required this.cost,
-    required this.teethCrowns,
-    required this.files,
+  MedicalCaseDetailsResponse({
+    this.status,
+    this.successCode,
+    this.medicalCase,
+    this.successMessage,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        patientId,
-        patientFullName,
-        patientGender,
-        dentistFullName,
-        age,
-        expectedDeliveryDate,
-        shade,
-        notes,
-        status,
-        cost,
-        teethCrowns,
-        files,
-      ];
 }
 
-/// Represents a file associated with a medical case in the domain layer.
-class MedicalCaseFileDomain extends Equatable {
-  final int id;
-  final String name;
-  final bool isCaseImage; // True if this file is a primary image for the case
+class MedicalCase {
+  final MedicalCaseDetails? medicalCaseDetails;
+  final String? patientFullName;
+  final String? patientGender;
+  final String? dentistFirstName;
+  final String? dentistLastName;
+  final List<MedicalCaseFile> medicalCaseFiles;
 
-  const MedicalCaseFileDomain({
-    required this.id,
-    required this.name,
-    required this.isCaseImage,
+  MedicalCase({
+    this.medicalCaseDetails,
+    this.patientFullName,
+    this.patientGender,
+    this.dentistFirstName,
+    this.dentistLastName,
+    required this.medicalCaseFiles,
   });
+}
 
-  @override
-  List<Object?> get props => [id, name, isCaseImage];
+class MedicalCaseDetails {
+  final int? id;
+  final int? dentistId;
+  final int? labManagerId;
+  final int? patientId;
+  final String? age;
+  final int? needTrial;
+  final int? repeat;
+  final String? shade;
+  final String? expectedDeliveryDate;
+  final String? notes;
+  final int? status;
+  final int? confirmDelivery;
+  final int? cost;
+  final String? teethCrown;
+  final String? teethPontic;
+  final String? teethImplant;
+  final String? teethVeneer;
+  final String? teethInlay;
+  final String? teethDenture;
+  final String? bridgesCrown;
+  final String? bridgesPontic;
+  final String? bridgesImplant;
+  final String? bridgesVeneer;
+  final String? bridgesInlay;
+  final String? bridgesDenture;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  MedicalCaseDetails({
+    this.id,
+    this.dentistId,
+    this.labManagerId,
+    this.patientId,
+    this.age,
+    this.needTrial,
+    this.repeat,
+    this.shade,
+    this.expectedDeliveryDate,
+    this.notes,
+    this.status,
+    this.confirmDelivery,
+    this.cost,
+    this.teethCrown,
+    this.teethPontic,
+    this.teethImplant,
+    this.teethVeneer,
+    this.teethInlay,
+    this.teethDenture,
+    this.bridgesCrown,
+    this.bridgesPontic,
+    this.bridgesImplant,
+    this.bridgesVeneer,
+    this.bridgesInlay,
+    this.bridgesDenture,
+    this.createdAt,
+    this.updatedAt,
+  });
+}
+
+class MedicalCaseFile {
+  final int? id;
+  final int? medicalCaseId;
+  final String? name;
+  final int? isCaseImage;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  MedicalCaseFile({
+    this.id,
+    this.medicalCaseId,
+    this.name,
+    this.isCaseImage,
+    this.createdAt,
+    this.updatedAt,
+  });
 }

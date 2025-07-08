@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:tlbisibida_doc/data/models/profile/db_dentist.dart';
 import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_profile.dart';
 import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
@@ -32,4 +34,20 @@ class DbRepoProfile implements DocRepoProfile {
       print('error in getDocGainsStatistics: ' + error.toString());
     });
   }
+
+    Future<Uint8List>? getProfilePic() async =>
+      await DioHelper.getImage('dentist/download-profile-image',
+              token: CacheHelper.get('token'))
+          .then((value) {
+        if (value != null && value.data['status']) {
+          return value.data;
+        } else {
+          print(" failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return null;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return null;
+      });
+
 }

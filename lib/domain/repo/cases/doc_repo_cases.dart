@@ -6,7 +6,7 @@ import 'package:tlbisibida_doc/data/models/medical%20cases/db_comments.dart';
 
 abstract class DocRepoCases {
   //cases
-  DBMedicalCaseResponse? dbMedicalCaseResponse;
+  DBMedicalCaseDetailsResponse? dbMedicalCaseResponse;
   DBCommentsResponse? dbCommentsResponse;
   DBMedicalCasesListResponse? dbMedicalCasesListResponse;
 
@@ -15,5 +15,5 @@ abstract class DocRepoCases {
   Future<void> getcaseList(int id);
   Future<void> getComments(int id);
   Future<bool> confirmDelivery(int id);
-  Future<Uint8List>? getimg(int id);
+  Future<Uint8List>? getCasesimage(int id);
 }

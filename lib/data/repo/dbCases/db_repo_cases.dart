@@ -12,7 +12,7 @@ class DbDocRepoCases implements DocRepoCases {
   DBCommentsResponse? dbCommentsResponse;
 
   @override
-  DBMedicalCaseResponse? dbMedicalCaseResponse;
+  DBMedicalCaseDetailsResponse? dbMedicalCaseResponse;
 
   @override
   DBMedicalCasesListResponse? dbMedicalCasesListResponse;
@@ -35,7 +35,8 @@ class DbDocRepoCases implements DocRepoCases {
             'dentist/medical-cases/get-medical-case-details/$id',
             token: CacheHelper.get('token'))
         .then((value) {
-      dbMedicalCaseResponse = DBMedicalCaseResponse.fromJson(value?.data);
+      dbMedicalCaseResponse =
+          DBMedicalCaseDetailsResponse.fromJson(value?.data);
     }).catchError((error) {
       print('error in getCaseDetails: ' + error.toString());
     });
@@ -69,7 +70,7 @@ class DbDocRepoCases implements DocRepoCases {
       });
 
   @override
-  Future<Uint8List>? getimg(int id) async =>
+  Future<Uint8List>? getCasesimage(int id) async =>
       await DioHelper.getImage('dentist/medical-cases/download-case-image/$id',
               token: CacheHelper.get('token'))
           .then((value) {

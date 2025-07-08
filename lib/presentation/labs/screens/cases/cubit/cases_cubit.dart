@@ -34,7 +34,7 @@ class CasesCubit extends Cubit<String> {
   }
 
   //get case details
-  MedicalCaseResponse? caseDetails;
+  MedicalCase? medicalCase;
 
   Future<void> getCaseDetails(int id) async {
     emit('case_details_loading');
@@ -45,13 +45,13 @@ class CasesCubit extends Cubit<String> {
       print(e.toString());
     }
 
-    caseDetails = (repo.dbMedicalCaseResponse!.medicalCase!.toDomain());
+    medicalCase = (repo.dbMedicalCaseResponse!.medicalCase!.toDomain());
 
-    if (caseDetails != null) {
+    if (medicalCase != null) {
       emit('case_details_loaded');
       print(state);
-      for (var file in caseDetails!.files) {
-        getImage(file.id);
+      for (var file in medicalCase!.medicalCaseFiles) {
+        getImage(file.id!);
       }
     }
     emit('images_loaded');
@@ -94,7 +94,7 @@ class CasesCubit extends Cubit<String> {
   //get img
   List<Uint8List> imgList = [];
   Future<void> getImage(int id) async {
-    var image = await repo.getimg(id);
+    var image = await repo.getCasesimage(id);
     image != null ? imgList.add(image) : image;
     emit('image_added');
   }

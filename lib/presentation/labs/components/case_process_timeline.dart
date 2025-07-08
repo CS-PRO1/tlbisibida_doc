@@ -2,193 +2,200 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:timelines_plus/timelines_plus.dart';
-
-import '../../../constants/constants.dart';
+import 'package:tlbisibida_doc/constants/constants.dart';
 
 const kTileHeight = 50.0;
-
-// const completeColor = Color(0xff5e6172);
-// const inProgressColor = cyan300;
-// const todoColor = Color(0xffd1d2d7);
-const completeColor = cyan600;
-const inProgressColor = cyan500;
-const todoColor = cyan300;
+const completeColor = Color(0xff5e6172);
+const inProgressColor = cyan300;
+const todoColor = Color(0xffd1d2d7);
 
 const _processes = [
-  'Ordered',
-  'Confirmed',
-  'In Progress',
-  'Ready',
-  'Delivered',
+  'الطلب',
+  'تم التأكيد',
+  'قيد الإنجاز',
+  'جاهزة',
+  'تم التسليم',
 ];
 
 class CaseProcessTimeline extends StatefulWidget {
-  const CaseProcessTimeline({super.key});
+  final int currentProcessIndex;
+  final ValueChanged<int> onProcessIndexChanged; // Callback to notify parent
+
+  const CaseProcessTimeline({
+    super.key,
+    required this.currentProcessIndex,
+    required this.onProcessIndexChanged,
+  });
 
   @override
   State<CaseProcessTimeline> createState() => _CaseProcessTimelineState();
 }
 
 class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
-  final int _processIndex = 1;
-
   Color getColor(int index) {
-    if (index == _processIndex) {
+    if (index == widget.currentProcessIndex) {
       return inProgressColor;
-    } else if (index < _processIndex) {
+    } else if (index < widget.currentProcessIndex) {
       return completeColor;
     } else {
       return todoColor;
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 10,
-          width: MediaQuery.of(context).size.width / 1.2,
-          child: Timeline.tileBuilder(
-            theme: TimelineThemeData(
-              direction: Axis.horizontal,
-              connectorTheme: ConnectorThemeData(
-                space: 5.0,
-                thickness: 5.0,
-              ),
-            ),
-            builder: TimelineTileBuilder.connected(
-              connectionDirection: ConnectionDirection.before,
-              itemExtentBuilder: (_, __) =>
-                  MediaQuery.of(context).size.width / 1.2 / _processes.length,
-              oppositeContentsBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Text(
-                    _processes[index],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                      color: getColor(index),
-                    ),
-                  ),
-                );
-              },
-              indicatorBuilder: (_, index) {
-                Color color;
-                Widget? child;
-                if (index == _processIndex) {
-                  color = inProgressColor;
-                  child = Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3.0,
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    ),
-                  );
-                } else if (index < _processIndex) {
-                  color = completeColor;
-                  child = Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 15.0,
-                  );
-                } else {
-                  color = todoColor;
-                }
+  void _nextProcess() async {
+    int newProcessIndex = widget.currentProcessIndex; // Start with current
 
-                if (index <= _processIndex) {
-                  return Stack(
-                    children: [
-                      CustomPaint(
-                        size: Size(30.0, 30.0),
-                        painter: _BezierPainter(
-                          color: color,
-                          drawStart: index > 0,
-                          drawEnd: index < _processIndex,
-                        ),
+    // Only update if the index actually changed
+    if (newProcessIndex != widget.currentProcessIndex) {
+      widget.onProcessIndexChanged(newProcessIndex); // Notify the parent
+    }
+  }
+    @override
+    Widget build(BuildContext context) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height:  MediaQuery.of(context).size.height / 10,
+            width: MediaQuery.of(context).size.width / 1.2,
+            child: Timeline.tileBuilder(
+              theme: TimelineThemeData(
+                direction: Axis.horizontal,
+                connectorTheme: const ConnectorThemeData(
+                  space: 5.0,
+                  thickness: 5.0,
+                ),
+              ),
+              builder: TimelineTileBuilder.connected(
+                connectionDirection: ConnectionDirection.before,
+                itemExtentBuilder: (_, __) =>
+                    MediaQuery.of(context).size.width / 1.2 / _processes.length,
+                oppositeContentsBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Text(
+                      _processes[index],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        color: getColor(index),
                       ),
-                      DotIndicator(
-                        size: 30.0,
-                        color: color,
-                        child: child,
-                      ),
-                    ],
+                    ),
                   );
-                } else {
-                  return Stack(
-                    children: [
-                      CustomPaint(
-                        size: Size(15.0, 15.0),
-                        painter: _BezierPainter(
-                          color: color,
-                          drawEnd: index < _processes.length - 1,
-                        ),
+                },
+                indicatorBuilder: (_, index) {
+                  var color;
+                  Widget? child;
+                  if (index == widget.currentProcessIndex) {
+                    color = inProgressColor;
+                    child = const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3.0,
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
                       ),
-                      OutlinedDotIndicator(
-                        borderWidth: 4.0,
-                        color: color,
-                      ),
-                    ],
-                  );
-                }
-              },
-              connectorBuilder: (_, index, type) {
-                if (index > 0) {
-                  if (index == _processIndex) {
-                    final prevColor = getColor(index - 1);
-                    final color = getColor(index);
-                    List<Color> gradientColors;
-                    if (type == ConnectorType.start) {
-                      gradientColors = [
-                        Color.lerp(prevColor, color, 0.5)!,
-                        color
-                      ];
-                    } else {
-                      gradientColors = [
-                        prevColor,
-                        Color.lerp(prevColor, color, 0.5)!
-                      ];
-                    }
-                    return DecoratedLineConnector(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: gradientColors,
-                        ),
-                      ),
+                    );
+                  } else if (index < widget.currentProcessIndex) {
+                    color = completeColor;
+                    child = const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 15.0,
                     );
                   } else {
-                    return SolidLineConnector(
-                      color: getColor(index),
+                    color = todoColor;
+                  }
+
+                  if (index <= widget.currentProcessIndex) {
+                    return Stack(
+                      children: [
+                        CustomPaint(
+                          size: const Size(30.0, 30.0),
+                          painter: _BezierPainter(
+                            color: color,
+                            drawStart: index > 0,
+                            drawEnd: index < widget.currentProcessIndex,
+                          ),
+                        ),
+                        DotIndicator(
+                          size: 30.0,
+                          color: color,
+                          child: child,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Stack(
+                      children: [
+                        CustomPaint(
+                          size: const Size(15.0, 15.0),
+                          painter: _BezierPainter(
+                            color: color,
+                            drawEnd: index < _processes.length - 1,
+                          ),
+                        ),
+                        OutlinedDotIndicator(
+                          borderWidth: 4.0,
+                          color: color,
+                        ),
+                      ],
                     );
                   }
-                } else {
-                  return null;
-                }
-              },
-              itemCount: _processes.length,
+                },
+                connectorBuilder: (_, index, type) {
+                  if (index > 0) {
+                    if (index == widget.currentProcessIndex) {
+                      final prevColor = getColor(index - 1);
+                      final color = getColor(index);
+                      List<Color> gradientColors;
+                      if (type == ConnectorType.start) {
+                        gradientColors = [
+                          color,
+                          Color.lerp(prevColor, color, 0.5)!,
+                        ];
+                      } else {
+                        gradientColors = [
+                          Color.lerp(prevColor, color, 0.5)!,
+                          prevColor,
+                        ];
+                      }
+                      return DecoratedLineConnector(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: gradientColors,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return SolidLineConnector(
+                        color: getColor(index),
+                      );
+                    }
+                  } else {
+                    return null;
+                  }
+                },
+                itemCount: _processes.length,
+              ),
             ),
           ),
-        ),
-        // ElevatedButton(
-        //     style:
-        //         ButtonStyle(backgroundColor: WidgetStatePropertyAll(cyan300)),
-        //     onPressed: () {
-        //       setState(() {
-        //         if (_processIndex != _processes.length - 1)
-        //           _processIndex = (_processIndex + 1) % (_processes.length + 1);
-        //       });
-        //     },
-        //     child: Icon(
-        //       Icons.navigate_next_rounded,
-        //       color: white,
-        //     )),
-      ],
-    );
+          ElevatedButton(
+            style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(cyan300)),
+            onPressed: _nextProcess,
+            child: const Icon(
+              Icons.navigate_next_rounded,
+              color: white,
+            ),
+          ),
+        ],
+      );
+    }
   }
-}
 
+
+/// hardcoded bezier painter
+/// TODO: Bezier curve into package component
 class _BezierPainter extends CustomPainter {
   const _BezierPainter({
     required this.color,
@@ -215,10 +222,11 @@ class _BezierPainter extends CustomPainter {
 
     final radius = size.width / 2;
 
-    double angle;
-    Offset offset1;
-    Offset offset2;
-    Path path;
+    var angle;
+    var offset1;
+    var offset2;
+
+    var path;
 
     if (drawStart) {
       angle = 3 * pi / 4;
@@ -226,7 +234,8 @@ class _BezierPainter extends CustomPainter {
       offset2 = _offset(radius, -angle);
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
-        ..quadraticBezierTo(0.0, size.height / 2, -radius, radius)
+        ..quadraticBezierTo(0.0, size.height / 2, -radius,
+            radius) // TODO connector start & gradient
         ..quadraticBezierTo(0.0, size.height / 2, offset2.dx, offset2.dy)
         ..close();
 
@@ -239,8 +248,8 @@ class _BezierPainter extends CustomPainter {
 
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
-        ..quadraticBezierTo(
-            size.width, size.height / 2, size.width + radius, radius)
+        ..quadraticBezierTo(size.width, size.height / 2, size.width + radius,
+            radius) // TODO connector end & gradient
         ..quadraticBezierTo(size.width, size.height / 2, offset2.dx, offset2.dy)
         ..close();
 

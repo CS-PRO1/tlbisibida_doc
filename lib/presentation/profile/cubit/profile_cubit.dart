@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/profile/dentist.dart';
 import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_profile.dart';
@@ -18,11 +20,22 @@ class ProfileCubit extends Cubit<String> {
       emit('error');
       print(e.toString());
     }
-
     profile = (repo.dbDentistProfile!.toDomain());
-
     profile != null ? emit('got profile') : emit('error');
     print(state);
+  }
+
+  //get img
+  //List<Uint8List> imgList = [];
+  Uint8List? profilePicture;
+  Future<void> getImage() async {
+    try {
+      profilePicture = await repo.getProfilePic();
+    } on Exception catch (e) {
+      emit('error');
+      print(e.toString());
+    }
+    profilePicture != null ? emit('image_loaded') : emit('error');
   }
 
   // //update  sec
