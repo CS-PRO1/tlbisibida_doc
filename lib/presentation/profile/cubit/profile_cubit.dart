@@ -10,7 +10,7 @@ class ProfileCubit extends Cubit<String> {
   ProfileCubit(this.repo) : super('');
 
   //get profile
-  DentistProfile? profile;
+  ProfileResponse? profile;
 
   Future<void> getdocprofile() async {
     emit('get profile');

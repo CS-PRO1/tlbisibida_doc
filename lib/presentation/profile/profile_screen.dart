@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/domain/models/profile/dentist.dart';
 import 'package:tlbisibida_doc/presentation/profile/cubit/profile_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
@@ -11,26 +12,27 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProfileCubit>();
+    Profile profile = cubit.profile!.profile!;
 
     List userInfo = [
       {
         'title': 'الاسم:',
-        'info': cubit.profile!.firstName! + cubit.profile!.lastName!,
+        'info': profile.profileDetails!.firstName! + profile.profileDetails!.lastName!,
         'icon': Icons.person,
       },
       {
         'title': 'البريد:',
-        'info': cubit.profile!.email!,
+        'info': profile.profileDetails!.email!,
         'icon': CupertinoIcons.mail_solid,
       },
       {
         'title': 'الهاتف:',
-        'info': cubit.profile!.phone,
+        'info': profile.profileDetails!.phone,
         'icon': CupertinoIcons.phone_circle_fill,
       },
       {
         'title': 'العنوان:',
-        'info': cubit.profile!.address,
+        'info': profile.profileDetails!.address,
         'icon': CupertinoIcons.placemark_fill,
       },
     ];

@@ -1,4 +1,4 @@
-import '../../../domain/models/medical cases/comments.dart';
+import 'package:tlbisibida_doc/domain/models/medical%20cases/comments.dart';
 
 class DBCommentsResponse {
   bool? status;

@@ -1,57 +1,53 @@
-// class DentistProfileResponse {
-//   bool? status;
-//   int? successCode;
-//   DentistProfile? profile;
-//   String? successMessage;
+class ProfileResponse {
+  final bool? status;
+  final int? successCode;
+  final Profile? profile;
+  final String? successMessage;
 
-//   DentistProfileResponse(
-//       {this.status, this.successCode, this.profile, this.successMessage});
+  ProfileResponse({
+    this.status,
+    this.successCode,
+    this.profile,
+    this.successMessage,
+  });
+}
 
-//   DentistProfileResponse.fromJson(Map<String, dynamic> json) {
-//     status = json['status'];
-//     successCode = json['success_code'];
-//     profile = json['profile'] != null
-//         ? DentistProfile.fromJson(json['profile'])
-//         : null;
-//     successMessage = json['success_message'];
-//   }
+class Profile {
+  final ProfileDetails? profileDetails;
+  final LastSubscription? lastSubscription;
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['status'] = status;
-//     data['success_code'] = successCode;
-//     if (profile != null) {
-//       data['profile'] = profile!.toJson();
-//     }
-//     data['success_message'] = successMessage;
-//     return data;
-//   }
-// }
+  Profile({
+    this.profileDetails,
+    this.lastSubscription,
+  });
+}
 
-class DentistProfile {
-  int? id;
-  String? firstName;
-  String? lastName;
-  String? email;
-  int? phone; // Assuming phone can be an int based on the example
-  String? address;
-  String? province;
-  String? emailVerifiedAt;
-  int? emailIsVerified;
-  String? verificationCode;
-  String? imagePath;
-  int? registerAccepted;
-  String? registerDate;
-  int? subscriptionIsValidNow;
+class ProfileDetails {
+  final int? id;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final int? registerSubscriptionDuration;
+  final int? phone;
+  final String? address;
+  final DateTime? emailVerifiedAt;
+  final int? emailIsVerified;
+  final String? verificationCode;
+  final String? imagePath;
+  final String? registerAccepted;
+  final String? registerDate;
+  final String? subscriptionIsValidNow;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
-  DentistProfile({
+  ProfileDetails({
     this.id,
     this.firstName,
     this.lastName,
     this.email,
+    this.registerSubscriptionDuration,
     this.phone,
     this.address,
-    this.province,
     this.emailVerifiedAt,
     this.emailIsVerified,
     this.verificationCode,
@@ -59,41 +55,31 @@ class DentistProfile {
     this.registerAccepted,
     this.registerDate,
     this.subscriptionIsValidNow,
+    this.createdAt,
+    this.updatedAt,
   });
+}
 
-  DentistProfile.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    email = json['email'];
-    phone = json['phone'];
-    address = json['address'];
-    province = json['province'];
-    emailVerifiedAt = json['email_verified_at'];
-    emailIsVerified = json['email_is_verified'];
-    verificationCode = json['verification_code'];
-    imagePath = json['image_path'];
-    registerAccepted = json['register_accepted'];
-    registerDate = json['register_date'];
-    subscriptionIsValidNow = json['subscription_is_valid_now'];
-  }
+class LastSubscription {
+  final int? id;
+  final String? subscriptionableType;
+  final int? subscriptionableId;
+  final DateTime? subscriptionFrom;
+  final DateTime? subscriptionTo;
+  final int? subscriptionIsValid;
+  final int? subscriptionValue;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['email'] = email;
-    data['phone'] = phone;
-    data['address'] = address;
-    data['province'] = province;
-    data['email_verified_at'] = emailVerifiedAt;
-    data['email_is_verified'] = emailIsVerified;
-    data['verification_code'] = verificationCode;
-    data['image_path'] = imagePath;
-    data['register_accepted'] = registerAccepted;
-    data['register_date'] = registerDate;
-    data['subscription_is_valid_now'] = subscriptionIsValidNow;
-    return data;
-  }
+  LastSubscription({
+    this.id,
+    this.subscriptionableType,
+    this.subscriptionableId,
+    this.subscriptionFrom,
+    this.subscriptionTo,
+    this.subscriptionIsValid,
+    this.subscriptionValue,
+    this.createdAt,
+    this.updatedAt,
+  });
 }

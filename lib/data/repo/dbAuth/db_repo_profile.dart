@@ -23,13 +23,13 @@ class DbRepoProfile implements DocRepoProfile {
         return false;
       });
 
-  DBDentistProfile? dbDentistProfile;
+  DBProfileResponse? dbDentistProfile;
   @override
   Future<void> getDocProfile() async {
     return await DioHelper.getData('auth/profile',
             token: CacheHelper.get('token'))
         .then((value) {
-      dbDentistProfile = DBDentistProfile.fromJson(value?.data);
+      dbDentistProfile = DBProfileResponse.fromJson(value?.data);
     }).catchError((error) {
       print('error in getDocGainsStatistics: ' + error.toString());
     });

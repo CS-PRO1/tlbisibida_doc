@@ -51,10 +51,12 @@ class CasesCubit extends Cubit<String> {
       emit('case_details_loaded');
       print(state);
       for (var file in medicalCase!.medicalCaseFiles) {
-        getImage(file.id!);
+        getCaseImages(file.id!);
       }
+    } else {
+      emit('error');
     }
-    emit('images_loaded');
+    imgList.isNotEmpty ? emit('images_loaded') : emit('error_images');
     print(state);
   }
 
@@ -93,7 +95,7 @@ class CasesCubit extends Cubit<String> {
 
   //get img
   List<Uint8List> imgList = [];
-  Future<void> getImage(int id) async {
+  Future<void> getCaseImages(int id) async {
     var image = await repo.getCasesimage(id);
     image != null ? imgList.add(image) : image;
     emit('image_added');

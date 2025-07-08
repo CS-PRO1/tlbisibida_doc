@@ -14,6 +14,6 @@ abstract class DocRepoCases {
   Future<void> getCaseDetails(int id);
   Future<void> getcaseList(int id);
   Future<void> getComments(int id);
-  Future<bool> confirmDelivery(int id);
   Future<Uint8List>? getCasesimage(int id);
+  Future<bool> confirmDelivery(int id);
 }

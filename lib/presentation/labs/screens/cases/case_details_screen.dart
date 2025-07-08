@@ -30,7 +30,11 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
         backgroundColor: cyan50,
         body: BlocConsumer<CasesCubit, String>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state == 'comments_loaded') {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => messageBoard(context));
+            }
           },
           builder: (context, state) {
             final cubit = context.read<CasesCubit>();
@@ -108,14 +112,11 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             defaultButton(
-                              text: 'التعليقات',
-                              function: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) =>
-                                        messageBoard(context));
-                              },
-                            ),
+                                text: 'التعليقات',
+                                function: () {
+                                  cubit.getcomment(cubit
+                                      .medicalCase!.medicalCaseDetails!.id!);
+                                }),
                             defaultButton(
                               text: 'الصور',
                               function: () {
@@ -123,13 +124,9 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
                                     context: context,
                                     builder: (context) {
                                       final cubit = context.read<CasesCubit>();
-
                                       return Column(
                                         children: [
                                           ImageGallery(images: cubit.imgList),
-                                          // SizedBox(
-                                          //   height: 10,
-                                          // ),
                                         ],
                                       );
                                     });
