@@ -1,9 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cases/cubit/cases_cubit.dart';
 
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
@@ -15,88 +17,98 @@ class LabCasesTable extends StatelessWidget {
   // int count = 10;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: cyan200, width: .5),
-          boxShadow: const [
-            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
-          ],
-          borderRadius: BorderRadius.circular(8),
-        ),
-        padding: const EdgeInsets.all(16),
-        // margin: const EdgeInsets.only(bottom: 30),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(
-            height: (56 * data!.length) + 40,
-            child: DataTable2(
-              columnSpacing: 12,
-              dataRowHeight: 56,
-              headingRowHeight: 40,
-              horizontalMargin: 12,
-              minWidth: 300,
-              columns: const [
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ الحالة',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'المريض',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'التفاصيل',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
+    return BlocConsumer<CasesCubit, String>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        final cubit = context.read<CasesCubit>();
+        return Center(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: cyan200, width: .5),
+              boxShadow: const [
+                BoxShadow(
+                    offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
               ],
-              rows: List<DataRow>.generate(
-                data!.length,
-                (index) => DataRow(
-                  cells: [
-                    DataCell(Center(
-                        child: CustomText(
-                      text: DateFormat.yMd().format(data![index]['date']) ??
-                          DateFormat.yMd().format(DateTime.now()),
-                      size: 14,
-                      alignment: TextAlign.center,
-                    ))),
-                    DataCell(Center(
-                        child: CustomText(
-                      text: data![index]['name'] ?? 'null التحسيني',
-                      size: 14,
-                      alignment: TextAlign.center,
-                    ))),
-                    DataCell(Center(
-                        child: IconButton(
-                      onPressed: () {
-                        // locator<NavigationService>()
-                        //     .navigateTo(caseDetailsRoute);
-                        // Navigator.pushNamed(context, caseDetailsRoute);
-                                                context.push(caseDetailsRoute);
-
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: cyan300,
-                      ),
-                    ))),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.all(16),
+            // margin: const EdgeInsets.only(bottom: 30),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              SizedBox(
+                height: (56 * data!.length) + 40,
+                child: DataTable2(
+                  columnSpacing: 12,
+                  dataRowHeight: 56,
+                  headingRowHeight: 40,
+                  horizontalMargin: 12,
+                  minWidth: 300,
+                  columns: const [
+                    DataColumn(
+                      label: Center(
+                          child: Text(
+                        'تاريخ الحالة',
+                        style: TextStyle(color: cyan300),
+                      )),
+                    ),
+                    DataColumn(
+                      label: Center(
+                          child: Text(
+                        'المريض',
+                        style: TextStyle(color: cyan300),
+                      )),
+                    ),
+                    DataColumn(
+                      label: Center(
+                          child: Text(
+                        'التفاصيل',
+                        style: TextStyle(color: cyan300),
+                      )),
+                    ),
                   ],
+                  rows: List<DataRow>.generate(
+                    data!.length,
+                    (index) {
+                      var caseitem = cubit.caselist[index];
+                      return DataRow(
+                        cells: [
+                          DataCell(Center(
+                              child: CustomText(
+                            text: caseitem.createdAt!,
+                            size: 14,
+                            alignment: TextAlign.center,
+                          ))),
+                          DataCell(Center(
+                              child: CustomText(
+                            text: caseitem.patient!.fullName!,
+                            size: 14,
+                            alignment: TextAlign.center,
+                          ))),
+                          DataCell(Center(
+                              child: IconButton(
+                            onPressed: () {
+                              // locator<NavigationService>()
+                              //     .navigateTo(caseDetailsRoute);
+                              // Navigator.pushNamed(context, caseDetailsRoute);
+                              context.push(caseDetailsRoute);
+                            },
+                            icon: const Icon(
+                              Icons.arrow_circle_left_outlined,
+                              color: cyan300,
+                            ),
+                          ))),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
+            ]),
           ),
-        ]),
-      ),
+        );
+      },
     );
   }
 }

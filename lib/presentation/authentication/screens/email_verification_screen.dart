@@ -12,15 +12,36 @@ import 'package:tlbisibida_doc/services/navigation/routes.dart';
 // ignore: must_be_immutable
 class EmailVerificationScreen extends StatelessWidget {
   EmailVerificationScreen({super.key});
+  String email = 'abc@example.com';
+  TextEditingController code1 = TextEditingController();
+  TextEditingController code2 = TextEditingController();
+  TextEditingController code3 = TextEditingController();
+  TextEditingController code4 = TextEditingController();
+  TextEditingController code5 = TextEditingController();
+  TextEditingController code6 = TextEditingController();
 
-  final TextEditingController codecontroller = TextEditingController();
-  // String email = Get.arguments;
-  String email = 'abnc@exmaple.com';
+  FocusNode f1 = FocusNode();
+  FocusNode f2 = FocusNode();
+  FocusNode f3 = FocusNode();
+  FocusNode f4 = FocusNode();
+  FocusNode f5 = FocusNode();
+  FocusNode f6 = FocusNode();
+
+  String concatinateCode(List<TextEditingController> controllers) {
+    String code = '';
+    for (var controller in controllers) {
+      code += controller.text;
+    }
+    return code;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<EmailsCubit, String>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state == '') {}
+        },
         builder: (context, state) {
           return Container(
             decoration: BoxDecoration(
@@ -108,27 +129,42 @@ class EmailVerificationScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     NumInput(context,
-                                        controller: codecontroller),
-                                    SizedBox(
+                                        controller: code1,
+                                        focusNode: f1,
+                                        nextFocus: f2),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    NumInput(context),
-                                    SizedBox(
+                                    NumInput(context,
+                                        controller: code2,
+                                        focusNode: f2,
+                                        nextFocus: f3),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    NumInput(context),
-                                    SizedBox(
+                                    NumInput(context,
+                                        controller: code3,
+                                        focusNode: f3,
+                                        nextFocus: f4),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    NumInput(context),
-                                    SizedBox(
+                                    NumInput(context,
+                                        controller: code4,
+                                        focusNode: f4,
+                                        nextFocus: f5),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    NumInput(context),
-                                    SizedBox(
+                                    NumInput(context,
+                                        controller: code5,
+                                        focusNode: f5,
+                                        nextFocus: f6),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    NumInput(context),
+                                    NumInput(context,
+                                        controller: code6, focusNode: f6),
                                   ],
                                 ),
                               ),

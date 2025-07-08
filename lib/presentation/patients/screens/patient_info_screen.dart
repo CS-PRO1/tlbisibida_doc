@@ -253,7 +253,7 @@ class PatientInfoScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 2,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: ImageGallery(imageUrls: [
+                      child: ImageGallery(images: [
                         'https://files.gamebanana.com/bitpit/whatsapp_image_2025-05-24_at_150510.jpg'
                       ]),
                     )),

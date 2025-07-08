@@ -1,12 +1,10 @@
 // medical_case_response.dart
-// import 'dart:convert'; // For json.decode and json.encode if you're testing this standalone
-
-import '../../../domain/models/medical cases/case_details.dart';
+import 'package:tlbisibida_doc/domain/models/medical%20cases/case_details.dart';
 
 class DBMedicalCaseResponse {
   bool? status;
   int? successCode;
-  DBMedicalCase? medicalCase; // Note the direct object, not a list
+  DBMedicalCase? medicalCase; // Note: this is an object, not a list
   String? successMessage;
 
   DBMedicalCaseResponse({
@@ -16,13 +14,15 @@ class DBMedicalCaseResponse {
     this.successMessage,
   });
 
-  DBMedicalCaseResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    medicalCase = json['medical_case'] != null
-        ? DBMedicalCase.fromJson(json['medical_case'])
-        : null;
-    successMessage = json['success_message'];
+  factory DBMedicalCaseResponse.fromJson(Map<String, dynamic> json) {
+    return DBMedicalCaseResponse(
+      status: json['status'],
+      successCode: json['success_code'],
+      medicalCase: json['medical_case'] != null
+          ? DBMedicalCase.fromJson(json['medical_case'])
+          : null,
+      successMessage: json['success_message'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -35,35 +35,47 @@ class DBMedicalCaseResponse {
     data['success_message'] = successMessage;
     return data;
   }
+
+  // --- TO DOMAIN FUNCTION FOR THE RESPONSE ITSELF ---
+  // This maps the overall response DTO to the top-level domain object.
+  MedicalCaseResponse? toDomain() {
+    if (medicalCase == null) return null;
+    // The top-level response directly maps to the MedicalCaseResponse domain
+    // by delegating the conversion to the nested DBMedicalCase.
+    return medicalCase!.toDomain();
+  }
 }
 
 class DBMedicalCase {
   DBMedicalCaseDetails? medicalCaseDetails;
-  List<DBPatientDetails>? patientDetails;
+  String? patientFullName;
+  String? patientGender;
+  String? dentistFirstName;
+  String? dentistLastName;
   List<DBMedicalCaseFile>? medicalCaseFiles;
 
   DBMedicalCase({
     this.medicalCaseDetails,
-    this.patientDetails,
+    this.patientFullName,
+    this.patientGender,
+    this.dentistFirstName,
+    this.dentistLastName,
     this.medicalCaseFiles,
   });
 
-  DBMedicalCase.fromJson(Map<String, dynamic> json) {
-    medicalCaseDetails = json['medical_case_details'] != null
-        ? DBMedicalCaseDetails.fromJson(json['medical_case_details'])
-        : null;
-    if (json['patient_details'] != null) {
-      patientDetails = <DBPatientDetails>[];
-      json['patient_details'].forEach((v) {
-        patientDetails!.add(DBPatientDetails.fromJson(v));
-      });
-    }
-    if (json['medical_case_files'] != null) {
-      medicalCaseFiles = <DBMedicalCaseFile>[];
-      json['medical_case_files'].forEach((v) {
-        medicalCaseFiles!.add(DBMedicalCaseFile.fromJson(v));
-      });
-    }
+  factory DBMedicalCase.fromJson(Map<String, dynamic> json) {
+    return DBMedicalCase(
+      medicalCaseDetails: json['medical_case_details'] != null
+          ? DBMedicalCaseDetails.fromJson(json['medical_case_details'])
+          : null,
+      patientFullName: json['patient_full_name'],
+      patientGender: json['patient_gender'],
+      dentistFirstName: json['dentist_first_name'],
+      dentistLastName: json['dentist_last_name'],
+      medicalCaseFiles: (json['medical_case_files'] as List?)
+          ?.map((e) => DBMedicalCaseFile.fromJson(e))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -71,36 +83,60 @@ class DBMedicalCase {
     if (medicalCaseDetails != null) {
       data['medical_case_details'] = medicalCaseDetails!.toJson();
     }
-    if (patientDetails != null) {
-      data['patient_details'] = patientDetails!.map((v) => v.toJson()).toList();
-    }
+    data['patient_full_name'] = patientFullName;
+    data['patient_gender'] = patientGender;
+    data['dentist_first_name'] = dentistFirstName;
+    data['dentist_last_name'] = dentistLastName;
     if (medicalCaseFiles != null) {
       data['medical_case_files'] =
-          medicalCaseFiles!.map((v) => v.toJson()).toList();
+          medicalCaseFiles!.map((e) => e.toJson()).toList();
     }
     return data;
-  } // --- TO DOMAIN FUNCTION ---
+  }
 
-  MedicalCase toDomain() {
-    return MedicalCase(
-      medicalCaseDetails: medicalCaseDetails?.toDomain(),
-      patientDetails: patientDetails?.map((e) => e.toDomain()).toList(),
-      medicalCaseFiles: medicalCaseFiles?.map((e) => e.toDomain()).toList(),
+  // --- TO DOMAIN FUNCTION ---
+  // This maps the DBMedicalCase DTO to the MedicalCaseResponse domain model.
+  MedicalCaseResponse toDomain() {
+    final String dentistFullName =
+        '${dentistFirstName ?? ''} ${dentistLastName ?? ''}'.trim();
+    return MedicalCaseResponse(
+      id: medicalCaseDetails?.id ?? 0,
+      patientId: medicalCaseDetails?.patientId ?? 0,
+      patientFullName: patientFullName ?? '',
+      patientGender: patientGender ?? '',
+      dentistFullName: dentistFullName,
+      age: medicalCaseDetails?.age ?? '',
+      expectedDeliveryDate: medicalCaseDetails?.expectedDeliveryDate ?? '',
+      shade: medicalCaseDetails?.shade,
+      notes: medicalCaseDetails?.notes,
+      status: medicalCaseDetails?.status ?? 0,
+      cost: medicalCaseDetails?.cost ?? 0,
+      // Split teethCrown only if it's not null, otherwise provide an empty list
+      teethCrowns: medicalCaseDetails?.teethCrown?.split(',') ?? [],
+      files: medicalCaseFiles?.map((e) => e.toDomain()).toList() ?? [],
     );
   }
 
   // --- FROM DOMAIN FUNCTION ---
-  static DBMedicalCase fromDomain(MedicalCase domain) {
+  static DBMedicalCase fromDomain(MedicalCaseResponse domain) {
+    // Note: Reconstructing dentistFirstName and dentistLastName from a single dentistFullName
+    // in the domain model can be ambiguous if the format isn't strictly "FirstName LastName".
+    // For simplicity, we'll assign the whole name to dentistFirstName.
+    final List<String> dentistNameParts = domain.dentistFullName.split(' ');
+    final String? firstName =
+        dentistNameParts.isNotEmpty ? dentistNameParts.first : null;
+    final String? lastName = dentistNameParts.length > 1
+        ? dentistNameParts.sublist(1).join(' ')
+        : null;
+
     return DBMedicalCase(
-      medicalCaseDetails: domain.medicalCaseDetails != null
-          ? DBMedicalCaseDetails.fromDomain(domain.medicalCaseDetails!)
-          : null,
-      patientDetails: domain.patientDetails
-          ?.map((e) => DBPatientDetails.fromDomain(e))
-          .toList(),
-      medicalCaseFiles: domain.medicalCaseFiles
-          ?.map((e) => DBMedicalCaseFile.fromDomain(e))
-          .toList(),
+      medicalCaseDetails: DBMedicalCaseDetails.fromDomain(domain),
+      patientFullName: domain.patientFullName,
+      patientGender: domain.patientGender,
+      dentistFirstName: firstName,
+      dentistLastName: lastName,
+      medicalCaseFiles:
+          domain.files.map((e) => DBMedicalCaseFile.fromDomain(e)).toList(),
     );
   }
 }
@@ -110,16 +146,16 @@ class DBMedicalCaseDetails {
   int? dentistId;
   int? labManagerId;
   int? patientId;
-  String? age; // Note: "22" is a string in JSON, so mapping to String
-  int? needTrial;
-  int? repeat;
+  String? age;
+  int? needTrial; // Mapped to int for 0/1 boolean
+  int? repeat; // Mapped to int for 0/1 boolean
   String? shade;
   String? expectedDeliveryDate;
   String? notes;
   int? status;
-  int? confirmDelivery;
+  int? confirmDelivery; // Mapped to int for 0/1 boolean
   int? cost;
-  String? teethCrown; // These can be null, so String?
+  String? teethCrown; // Comma-separated string
   String? teethPontic;
   String? teethImplant;
   String? teethVeneer;
@@ -131,8 +167,8 @@ class DBMedicalCaseDetails {
   String? bridgesVeneer;
   String? bridgesInlay;
   String? bridgesDenture;
-  String? createdAt; // Can be null
-  String? updatedAt; // Can be null
+  String? createdAt;
+  String? updatedAt;
 
   DBMedicalCaseDetails({
     this.id,
@@ -164,34 +200,36 @@ class DBMedicalCaseDetails {
     this.updatedAt,
   });
 
-  DBMedicalCaseDetails.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dentistId = json['dentist_id'];
-    labManagerId = json['lab_manager_id'];
-    patientId = json['patient_id'];
-    age = json['age'];
-    needTrial = json['need_trial'];
-    repeat = json['repeat'];
-    shade = json['shade'];
-    expectedDeliveryDate = json['expected_delivery_date'];
-    notes = json['notes'];
-    status = json['status'];
-    confirmDelivery = json['confirm_delivery'];
-    cost = json['cost'];
-    teethCrown = json['teeth_crown'];
-    teethPontic = json['teeth_pontic'];
-    teethImplant = json['teeth_implant'];
-    teethVeneer = json['teeth_veneer'];
-    teethInlay = json['teeth_inlay'];
-    teethDenture = json['teeth_denture'];
-    bridgesCrown = json['bridges_crown'];
-    bridgesPontic = json['bridges_pontic'];
-    bridgesImplant = json['bridges_implant'];
-    bridgesVeneer = json['bridges_veneer'];
-    bridgesInlay = json['bridges_inlay'];
-    bridgesDenture = json['bridges_denture'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory DBMedicalCaseDetails.fromJson(Map<String, dynamic> json) {
+    return DBMedicalCaseDetails(
+      id: json['id'],
+      dentistId: json['dentist_id'],
+      labManagerId: json['lab_manager_id'],
+      patientId: json['patient_id'],
+      age: json['age'],
+      needTrial: json['need_trial'],
+      repeat: json['repeat'],
+      shade: json['shade'],
+      expectedDeliveryDate: json['expected_delivery_date'],
+      notes: json['notes'],
+      status: json['status'],
+      confirmDelivery: json['confirm_delivery'],
+      cost: json['cost'],
+      teethCrown: json['teeth_crown'],
+      teethPontic: json['teeth_pontic'],
+      teethImplant: json['teeth_implant'],
+      teethVeneer: json['teeth_veneer'],
+      teethInlay: json['teeth_inlay'],
+      teethDenture: json['teeth_denture'],
+      bridgesCrown: json['bridges_crown'],
+      bridgesPontic: json['bridges_pontic'],
+      bridgesImplant: json['bridges_implant'],
+      bridgesVeneer: json['bridges_veneer'],
+      bridgesInlay: json['bridges_inlay'],
+      bridgesDenture: json['bridges_denture'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -227,161 +265,29 @@ class DBMedicalCaseDetails {
   }
 
   // --- TO DOMAIN FUNCTION ---
-  MedicalCaseDetails toDomain() {
-    return MedicalCaseDetails(
-      id: id,
-      dentistId: dentistId,
-      labManagerId: labManagerId,
-      patientId: patientId,
-      age: age,
-      needTrial: needTrial == 1, // Convert int to bool
-      repeat: repeat == 1, // Convert int to bool
-      shade: shade,
-      expectedDeliveryDate: expectedDeliveryDate, // Convert String to DateTime
-      notes: notes,
-      status: status,
-      confirmDelivery: confirmDelivery == 1, // Convert int to bool
-      cost: cost,
-      teethCrown: teethCrown,
-      teethPontic: teethPontic,
-      teethImplant: teethImplant,
-      teethVeneer: teethVeneer,
-      teethInlay: teethInlay,
-      teethDenture: teethDenture,
-      bridgesCrown: bridgesCrown,
-      bridgesPontic: bridgesPontic,
-      bridgesImplant: bridgesImplant,
-      bridgesVeneer: bridgesVeneer,
-      bridgesInlay: bridgesInlay,
-      bridgesDenture: bridgesDenture,
-      createdAt: createdAt, // Convert String to DateTime
-      updatedAt: updatedAt, // Convert String to DateTime
-    );
-  }
+  // This DTO directly contributes to the MedicalCaseResponse domain model,
+  // but it doesn't map to a standalone domain object of its own in the provided
+  // domain model structure. Its fields are picked up by DBMedicalCase.toDomain.
+  // Therefore, a direct 'toDomain' function for DBMedicalCaseDetails returning
+  // a specific domain object is not strictly necessary based on your current
+  // MedicalCaseResponse structure.
 
   // --- FROM DOMAIN FUNCTION ---
-  static DBMedicalCaseDetails fromDomain(MedicalCaseDetails domain) {
+  static DBMedicalCaseDetails fromDomain(MedicalCaseResponse domain) {
     return DBMedicalCaseDetails(
       id: domain.id,
-      dentistId: domain.dentistId,
-      labManagerId: domain.labManagerId,
       patientId: domain.patientId,
       age: domain.age,
-      needTrial: domain.needTrial == true ? 1 : 0, // Convert bool to int
-      repeat: domain.repeat == true ? 1 : 0, // Convert bool to int
+      expectedDeliveryDate: domain.expectedDeliveryDate,
       shade: domain.shade,
-      expectedDeliveryDate:
-          domain.expectedDeliveryDate, // Convert DateTime to String
       notes: domain.notes,
       status: domain.status,
-      confirmDelivery:
-          domain.confirmDelivery == true ? 1 : 0, // Convert bool to int
       cost: domain.cost,
-      teethCrown: domain.teethCrown,
-      teethPontic: domain.teethPontic,
-      teethImplant: domain.teethImplant,
-      teethVeneer: domain.teethVeneer,
-      teethInlay: domain.teethInlay,
-      teethDenture: domain.teethDenture,
-      bridgesCrown: domain.bridgesCrown,
-      bridgesPontic: domain.bridgesPontic,
-      bridgesImplant: domain.bridgesImplant,
-      bridgesVeneer: domain.bridgesVeneer,
-      bridgesInlay: domain.bridgesInlay,
-      bridgesDenture: domain.bridgesDenture,
-      createdAt: domain.createdAt, // Convert DateTime to String
-      updatedAt: domain.updatedAt, // Convert DateTime to String
-    );
-  }
-}
-
-class DBPatientDetails {
-  int? id;
-  int? dentistId;
-  String? fullName;
-  String? address;
-  String? phone; // Note: "0980000854" is a string in JSON
-  String? birthday;
-  int? currentBalance;
-  int? isSmoker;
-  String? gender;
-  String? createdAt;
-  String? updatedAt;
-
-  DBPatientDetails({
-    this.id,
-    this.dentistId,
-    this.fullName,
-    this.address,
-    this.phone,
-    this.birthday,
-    this.currentBalance,
-    this.isSmoker,
-    this.gender,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  DBPatientDetails.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dentistId = json['dentist_id'];
-    fullName = json['full_name'];
-    address = json['address'];
-    phone = json['phone'];
-    birthday = json['birthday'];
-    currentBalance = json['current_balance'];
-    isSmoker = json['is_smoker'];
-    gender = json['gender'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['dentist_id'] = dentistId;
-    data['full_name'] = fullName;
-    data['address'] = address;
-    data['phone'] = phone;
-    data['birthday'] = birthday;
-    data['current_balance'] = currentBalance;
-    data['is_smoker'] = isSmoker;
-    data['gender'] = gender;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
-  } // --- TO DOMAIN FUNCTION ---
-
-  PatientDetails toDomain() {
-    return PatientDetails(
-        id: id,
-        dentistId: dentistId,
-        fullName: fullName,
-        address: address,
-        phone: phone,
-        birthday: birthday, // Convert String to DateTime
-        currentBalance: currentBalance,
-        isSmoker: isSmoker == 1, // Convert int to bool
-        gender: gender,
-        createdAt: createdAt, // Convert String to DateTime
-        updatedAt: updatedAt // Convert String to DateTime
-        );
-  }
-
-  // --- FROM DOMAIN FUNCTION ---
-  static DBPatientDetails fromDomain(PatientDetails domain) {
-    return DBPatientDetails(
-      id: domain.id,
-      dentistId: domain.dentistId,
-      fullName: domain.fullName,
-      address: domain.address,
-      phone: domain.phone,
-      birthday: domain.birthday, // Convert DateTime to String
-      currentBalance: domain.currentBalance,
-      isSmoker: domain.isSmoker == true ? 1 : 0, // Convert bool to int
-      gender: domain.gender,
-      createdAt: domain.createdAt, // Convert DateTime to String
-      updatedAt: domain.updatedAt, // Convert DateTime to String
+      teethCrown: domain.teethCrowns.join(','),
+      // Other fields like dentistId, labManagerId, needTrial, repeat, confirmDelivery,
+      // and other teeth types are not present in the MedicalCaseResponse domain model.
+      // If these need to be recreated for a 'fromDomain' scenario, they would either
+      // need to be added to the domain model or be passed as parameters here.
     );
   }
 }
@@ -390,7 +296,7 @@ class DBMedicalCaseFile {
   int? id;
   int? medicalCaseId;
   String? name;
-  int? isCaseImage;
+  int? isCaseImage; // Mapped to int for 0/1 boolean
   String? createdAt;
   String? updatedAt;
 
@@ -403,13 +309,15 @@ class DBMedicalCaseFile {
     this.updatedAt,
   });
 
-  DBMedicalCaseFile.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    medicalCaseId = json['medical_case_id'];
-    name = json['name'];
-    isCaseImage = json['is_case_image'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory DBMedicalCaseFile.fromJson(Map<String, dynamic> json) {
+    return DBMedicalCaseFile(
+      id: json['id'],
+      medicalCaseId: json['medical_case_id'],
+      name: json['name'],
+      isCaseImage: json['is_case_image'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -421,28 +329,24 @@ class DBMedicalCaseFile {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
-  } // --- TO DOMAIN FUNCTION ---
+  }
 
-  MedicalCaseFile toDomain() {
-    return MedicalCaseFile(
-        id: id,
-        medicalCaseId: medicalCaseId,
-        name: name,
-        isCaseImage: isCaseImage == 1, // Convert int to bool
-        createdAt: createdAt, // Convert String to DateTime
-        updatedAt: updatedAt // Convert String to DateTime
-        );
+  // --- TO DOMAIN FUNCTION ---
+  // This maps the DBMedicalCaseFile DTO to its corresponding domain model.
+  MedicalCaseFileDomain toDomain() {
+    return MedicalCaseFileDomain(
+      id: id ?? 0,
+      name: name ?? '',
+      isCaseImage: isCaseImage == 1, // Convert int (0/1) to boolean
+    );
   }
 
   // --- FROM DOMAIN FUNCTION ---
-  static DBMedicalCaseFile fromDomain(MedicalCaseFile domain) {
+  static DBMedicalCaseFile fromDomain(MedicalCaseFileDomain domain) {
     return DBMedicalCaseFile(
       id: domain.id,
-      medicalCaseId: domain.medicalCaseId,
       name: domain.name,
-      isCaseImage: domain.isCaseImage == true ? 1 : 0, // Convert bool to int
-      createdAt: domain.createdAt, // Convert DateTime to String
-      updatedAt: domain.updatedAt, // Convert DateTime to String
+      isCaseImage: domain.isCaseImage ? 1 : 0, // Convert boolean to int (1/0)
     );
   }
 }

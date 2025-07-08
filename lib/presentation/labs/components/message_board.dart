@@ -1,9 +1,13 @@
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/labs/components/message_bubbles.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cases/cubit/cases_cubit.dart';
 
 Widget messageBoard(BuildContext context) {
+  final cubit = context.read<CasesCubit>();
+
   return Column(
     children: [
       SizedBox(
@@ -29,7 +33,7 @@ Widget messageBoard(BuildContext context) {
       Expanded(
         child: ListView.builder(
           padding: EdgeInsets.zero, // Ensure no extra padding
-          itemCount: messages.length,
+          itemCount: cubit.comments.length,
           itemBuilder: (context, index) => chatBubbleBuilder(context, index),
         ),
       ),

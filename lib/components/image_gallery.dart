@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 
 class ImageGallery extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<Uint8List> images;
   final double mainImageHeight;
   final double thumbnailSize;
   final double thumbnailSpacing;
@@ -10,7 +12,7 @@ class ImageGallery extends StatefulWidget {
 
   const ImageGallery({
     super.key,
-    required this.imageUrls,
+    required this.images,
     this.mainImageHeight = 300,
     this.thumbnailSize = 60,
     this.thumbnailSpacing = 8,
@@ -64,26 +66,26 @@ class ImageGalleryState extends State<ImageGallery> {
                 _selectedIndex = index;
               });
             },
-            itemCount: widget.imageUrls.length,
+            itemCount: widget.images.length,
             itemBuilder: (context, index) {
               return Container(
                 clipBehavior: Clip.antiAlias,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: Image.network(
-                  widget.imageUrls[index],
+                child: Image.memory(
+                  widget.images[index],
                   fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },
+                  // loadingBuilder: (context, child, loadingProgress) {
+                  //   if (loadingProgress == null) return child;
+                  //   return Center(
+                  //     child: CircularProgressIndicator(
+                  //       value: loadingProgress.expectedTotalBytes != null
+                  //           ? loadingProgress.cumulativeBytesLoaded /
+                  //               loadingProgress.expectedTotalBytes!
+                  //           : null,
+                  //     ),
+                  //   );
+                  // },
                   errorBuilder: (context, error, stackTrace) =>
                       const Icon(Icons.error),
                 ),
@@ -97,7 +99,7 @@ class ImageGalleryState extends State<ImageGallery> {
           height: widget.thumbnailSize + 8, // Extra space for border
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: widget.imageUrls.length,
+            itemCount: widget.images.length,
             separatorBuilder: (context, index) =>
                 SizedBox(width: widget.thumbnailSpacing),
             itemBuilder: (context, index) {
@@ -119,15 +121,15 @@ class ImageGalleryState extends State<ImageGallery> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(2),
-                    child: Image.network(
-                      widget.imageUrls[index],
+                    child: Image.memory(
+                      widget.images[index],
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
+                      // loadingBuilder: (context, child, loadingProgress) {
+                      //   if (loadingProgress == null) return child;
+                      //   return const Center(
+                      //     child: CircularProgressIndicator(),
+                      //   );
+                      // },
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.error),
                     ),

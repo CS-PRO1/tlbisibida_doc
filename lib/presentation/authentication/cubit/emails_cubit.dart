@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tlbisibida_doc/domain/repo/doc_repo_emails.dart';
+import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_emails.dart';
 
 class EmailsCubit extends Cubit<String> {
   final DocRepoEmails repo;

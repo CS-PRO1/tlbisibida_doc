@@ -30,36 +30,51 @@ import 'package:tlbisibida_doc/data/models/statistics/db_subcat.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_treatments.dart';
 
 abstract class DocRepo {
+  //secretary
   DBSecretariesResponse? dbSecretariesResponse;
+
+  //labs
   DBLabDetailsResponse? dbLabDetailsResponse;
   DBAllLabsResponse? dbAllLabsResponse;
-  DBAppointmentsResponse? dbAppointmentsResponse;
-  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
-  DBBillDetailsResponse? dbBillDetailsResponse;
-  DBMedicalCaseResponse? dbMedicalCaseResponse;
-  DBCategoriesResponse? dbCategoriesResponse;
-  DBDentistScheduleResponse? dbDentistScheduleResponse;
-  DBCommentsResponse? dbCommentsResponse;
-  DBDoctorGainsStatisticsResponse? dbDoctorGainsStatisticsResponse;
-  DBItemsResponse? dbItemsResponse;
-  DBRepeatedItemsResponse? dbRepeatedItemsResponse;
-  DBLabBillsResponse? dbLabBillsResponse;
   DBLabsResponse? dbLabsResponse;
   DBLabsJoinedResponse? dbLabsJoinedResponse;
-  DBOperatingPaymentsResponse? dbOperatingPaymentsResponse;
+
+  //appointment
+  DBAppointmentsResponse? dbAppointmentsResponse;
+  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
+
+  //bills
+  DBBillDetailsResponse? dbBillDetailsResponse;
+  DBLabBillsResponse? dbLabBillsResponse;
+
+  //inventory
+  DBCategoriesResponse? dbCategoriesResponse;
+  DBItemsResponse? dbItemsResponse;
+  DBRepeatedItemsResponse? dbRepeatedItemsResponse;
+  DBItemQuantityHistoryResponse? dbItemQuantityHistoryResponse;
+  DBSubCategoryRepositoriesResponse? dbSubCategoryRepositoriesResponse;
+
+  //dent timing
+  DBDentistScheduleResponse? dbDentistScheduleResponse;
+
+  //statictics
+  DBDoctorGainsStatisticsResponse? dbDoctorGainsStatisticsResponse;
   DBOperatingPaymentsStatisticsResponse? dbOperatingPaymentsStatisticsResponse;
+  DBPatientStatisticsResponse? dbPatientStatisticsResponse;
+  DBSubcategoryStatisticsResponse? dbSubcategoryStatisticsResponse;
+  DBTreatmentsStatisticsResponse? dbTreatmentsStatisticsResponse;
+
+//financce
+  DBOperatingPaymentsResponse? dbOperatingPaymentsResponse;
+  DBNonRepeatedItemsResponse? dbNonRepeatedItemsResponse;
+
+//patients
   DBPatientDetailsResponse? dbPatientDetailsResponse;
+  DBTreatmentDetailsResponse? dbTreatmentDetailsResponse;
+
   DBPatientPaymentsResponse? dbPatientPaymentsResponse;
   DBPatientsPaymentsFromToResponse? dbPatientsPaymentsFromToResponse;
   DBPatientTreatmentsResponse? dbPatientTreatmentsResponse;
-  DBPatientStatisticsResponse? dbPatientStatisticsResponse;
-  DBItemQuantityHistoryResponse? dbItemQuantityHistoryResponse;
-  DBNonRepeatedItemsResponse? dbNonRepeatedItemsResponse;
-  DBSubcategoryStatisticsResponse? dbSubcategoryStatisticsResponse;
-  DBSubCategoryRepositoriesResponse? dbSubCategoryRepositoriesResponse;
-  DBTreatmentDetailsResponse? dbTreatmentDetailsResponse;
-  DBTreatmentsStatisticsResponse? dbTreatmentsStatisticsResponse;
-  DBMedicalCasesListResponse? dbMedicalCasesListResponse;
 
   // Future<void> renew(int month, int id);
   // // Future<void> renewclinics(int month, int id);
@@ -93,9 +108,6 @@ abstract class DocRepo {
   Future<void> getAllLabDetails(int id);
   Future<void> getPatientTreatment(int id);
   Future<void> getTreatmentDetails(int id);
-  Future<void> getCaseDetails(int id);
-  Future<void> getcaseList(int id);
-  Future<void> getComments(int id);
   // Future<BillDetailsResponse> getBillDetail();
   // Future<LabBillsResponse> getLabBill();
 

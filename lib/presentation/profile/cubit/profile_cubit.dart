@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/profile/dentist.dart';
-import 'package:tlbisibida_doc/domain/repo/doc_repo_profile.dart';
+import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_profile.dart';
 
 class ProfileCubit extends Cubit<String> {
   final DocRepoProfile repo;
@@ -8,7 +8,6 @@ class ProfileCubit extends Cubit<String> {
   ProfileCubit(this.repo) : super('');
 
   //get profile
-  bool auth = false;
   DentistProfile? profile;
 
   Future<void> getdocprofile() async {
@@ -22,7 +21,7 @@ class ProfileCubit extends Cubit<String> {
 
     profile = (repo.dbDentistProfile!.toDomain());
 
-    auth ? emit('got profile') : emit('error');
+    profile != null ? emit('got profile') : emit('error');
     print(state);
   }
 

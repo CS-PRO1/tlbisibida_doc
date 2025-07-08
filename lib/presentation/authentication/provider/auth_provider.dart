@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/data/repo/dbAuth/db_repo_auth.dart';
-import 'package:tlbisibida_doc/domain/repo/doc_repo_auth.dart';
+import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_auth.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
 import 'package:tlbisibida_doc/presentation/authentication/screens/login.dart';
 import 'package:tlbisibida_doc/presentation/authentication/screens/register%202.dart';

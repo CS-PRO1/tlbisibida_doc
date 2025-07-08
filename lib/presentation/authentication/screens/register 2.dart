@@ -339,7 +339,47 @@ class _Register2State extends State<Register2> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-cubit.cookregistry2(workingHours: workingHours, subscriptionDuration: subscriptionDuration)                          cubit.register();
+                          {
+                            Map<String, String> workingHoursData = {};
+                            for (int i = 0; i < _workingHoursData.length; i++) {
+                              _WorkingHoursData data = _workingHoursData[i];
+
+                              String startTime =
+                                  '${data.startTime.hour.toString().padLeft(2, '0')}:${data.startTime.minute.toString().padLeft(2, '0')}';
+                              String endTime =
+                                  '${data.endTime.hour.toString().padLeft(2, '0')}:${data.endTime.minute.toString().padLeft(2, '0')}';
+
+                              List<String> selectedDaysStrings = [];
+                              data.selectedDays.forEach((day, isSelected) {
+                                if (isSelected) {
+                                  selectedDaysStrings
+                                      .add(day.toString().split('.').last);
+                                }
+                              });
+                              workingHoursData['block_$i'] =
+                                  '${selectedDaysStrings.join(',')}|$startTime-$endTime';
+                            }
+
+                            int subscriptionDurationInt;
+                            switch (_subtype.value) {
+                              case 'ربع سنوي':
+                                subscriptionDurationInt = 3;
+                                break;
+                              case 'نصف سنوي':
+                                subscriptionDurationInt = 6;
+                                break;
+                              case 'سنوي':
+                              default:
+                                subscriptionDurationInt = 12;
+                                break;
+                            }
+
+                            // 3. Call the cubit method
+                            cubit.cookregistry2(
+                              workingHours: workingHoursData,
+                              subscriptionDuration: subscriptionDurationInt,
+                            );
+                          }
                         },
                         child: Container(
                           height: 40,

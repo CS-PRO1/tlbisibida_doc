@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:tlbisibida_doc/domain/repo/doc_repo_auth.dart';
+import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_auth.dart';
 import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 

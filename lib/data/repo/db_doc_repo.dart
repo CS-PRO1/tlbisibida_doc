@@ -102,19 +102,6 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBMedicalCaseResponse? dbMedicalCaseResponse;
-  @override
-  Future<void> getCaseDetails(int id) async {
-    return await DioHelper.getData(
-            'dentist/medical-cases/get-medical-case-details/$id',
-            token: '')
-        .then((value) {
-      dbMedicalCaseResponse = DBMedicalCaseResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getCaseDetails: ' + error.toString());
-    });
-  }
-
   DBCategoriesResponse? dbCategoriesResponse;
   @override
   Future<void> getCats() async {
@@ -135,18 +122,6 @@ class DbDocRepo implements DocRepo {
           DBDentistScheduleResponse.fromJson(value?.data);
     }).catchError((error) {
       print('error in getClinicTimes: ' + error.toString());
-    });
-  }
-
-  DBCommentsResponse? dbCommentsResponse;
-  @override
-  Future<void> getComments(int id) async {
-    return await DioHelper.getData('dentist/medical-cases/show-comments/$id',
-            token: '')
-        .then((value) {
-      dbCommentsResponse = DBCommentsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getComments: ' + error.toString());
     });
   }
 
@@ -401,20 +376,6 @@ class DbDocRepo implements DocRepo {
           DBTreatmentsStatisticsResponse.fromJson(value?.data);
     }).catchError((error) {
       print('error in getTreatmentStatistics: ' + error.toString());
-    });
-  }
-
-  DBMedicalCasesListResponse? dbMedicalCasesListResponse;
-  @override
-  Future<void> getcaseList(int id) async {
-    return await DioHelper.getData(
-            'dentist/medical-cases/show-lab-medical-cases/$id',
-            token: '')
-        .then((value) {
-      dbMedicalCasesListResponse =
-          DBMedicalCasesListResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getcaseList: ' + error.toString());
     });
   }
 

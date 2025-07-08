@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/presentation/labs/components/case_process_timeline.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/labs/components/message_board.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cases/cubit/cases_cubit.dart';
 
 class CaseDetailsScreen extends StatefulWidget {
   const CaseDetailsScreen({super.key});
@@ -14,29 +16,6 @@ class CaseDetailsScreen extends StatefulWidget {
 }
 
 class CaseDetailsScreenState extends State<CaseDetailsScreen> {
-  final orderdetailstitles = [
-    'المريض',
-    'العمر',
-    'الجنس',
-    'لون الأسنان',
-    'تاريخ الحالة',
-    'تاريخ التسليم',
-    'حالة إعادة؟',
-    'بحاجة تجربة؟',
-  ];
-
-  final List orderdetailsinfo = [
-    'تحسين التحسيني',
-    '45',
-    'ذكر',
-    'D3',
-    DateFormat.yMd().format(DateTime.now()),
-    DateFormat.yMd().format(DateTime(2025, 5, 3)),
-    'نعم',
-    'لا',
-    'المريض م'
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -50,84 +29,117 @@ class CaseDetailsScreenState extends State<CaseDetailsScreen> {
       maintainBottomViewPadding: true,
       child: Scaffold(
         backgroundColor: cyan50,
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              children: [
-                CaseProcessTimeline(),
-                Center(
-                  child: defaultButton(
-                    text: 'تأكيد الاستلام',
-                    function: () {},
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        body: BlocConsumer<CasesCubit, String>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            final cubit = context.read<CasesCubit>();
+            final orderdetailstitles = [
+              'المريض',
+              'العمر',
+              'الجنس',
+              'لون الأسنان',
+              'تاريخ الحالة',
+              'تاريخ التسليم',
+              'حالة إعادة؟',
+              'بحاجة تجربة؟',
+            ];
+
+            final List orderdetailsinfo = [
+             cubit.caseDetails!.patientFullName,
+             cubit.caseDetails!.age,
+            cubit.caseDetails!.patientGender,
+             cubit.caseDetails!.shade,
+              DateFormat.yMd().format(DateTime(2025, 5, 3)),
+              cubit.caseDetails!.expectedDeliveryDate,
+             
+          cubit.caseDetails!.,
+          cubit.caseDetails!.,
+              
+         ];
+
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
                   children: [
-                    GridView.count(
-                      padding: EdgeInsets.zero,
-                      childAspectRatio: 1.2,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 1,
-                      mainAxisSpacing: 1,
-                      children: List.generate(
-                        orderdetailstitles.length,
-                        (index) => orderdetailsCard(
-                          padding: EdgeInsets.all(12.0),
-                          title: orderdetailstitles[index],
-                          description: orderdetailsinfo[index],
-                        ),
+                    CaseProcessTimeline(),
+                    Center(
+                      child: defaultButton(
+                        text: 'تأكيد الاستلام',
+                        function: () {
+                          cubit.confirmdelivery(cubit.caseDetails!.id);
+                        },
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        defaultButton(
-                          text: 'التعليقات',
-                          function: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => messageBoard(context));
-                          },
+                        GridView.count(
+                          padding: EdgeInsets.zero,
+                          childAspectRatio: 1.2,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 1,
+                          mainAxisSpacing: 1,
+                          children: List.generate(
+                            orderdetailstitles.length,
+                            (index) => orderdetailsCard(
+                              padding: EdgeInsets.all(12.0),
+                              title: orderdetailstitles[index],
+                              description: orderdetailsinfo[index],
+                            ),
+                          ),
                         ),
-                        defaultButton(
-                          text: 'الصور',
-                          function: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => Column(
-                                      children: [
-                                        ImageGallery(
-                                          imageUrls: [
-                                            'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
-                                            'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
-                                            'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
-                                          ],
-                                        ),
-                                        // SizedBox(
-                                        //   height: 10,
-                                        // ),
-                                      ],
-                                    ));
-                          },
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            defaultButton(
+                              text: 'التعليقات',
+                              function: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) =>
+                                        messageBoard(context));
+                              },
+                            ),
+                            defaultButton(
+                              text: 'الصور',
+                              function: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      final cubit = context.read<CasesCubit>();
+
+                                      return Column(
+                                        children: [
+                                          ImageGallery(images: cubit.imgList),
+                                          // SizedBox(
+                                          //   height: 10,
+                                          // ),
+                                        ],
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

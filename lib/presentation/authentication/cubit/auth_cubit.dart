@@ -13,7 +13,7 @@
 // };
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tlbisibida_doc/domain/repo/doc_repo_auth.dart';
+import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_auth.dart';
 
 class AuthCubit extends Cubit<String> {
   final DocRepoAuth repo;
