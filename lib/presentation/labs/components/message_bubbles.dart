@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
-import 'package:tlbisibida_doc/presentation/labs/screens/cases/cubit/cases_cubit.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/cubit/cases_cubit.dart';
 
 Widget chatBubbleBuilder(
   BuildContext context,

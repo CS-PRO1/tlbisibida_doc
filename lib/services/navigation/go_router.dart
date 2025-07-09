@@ -15,13 +15,13 @@ import 'package:tlbisibida_doc/presentation/authentication/screens/email_verific
 import 'package:tlbisibida_doc/presentation/authentication/screens/role.dart';
 import 'package:tlbisibida_doc/presentation/finance/finance_center_screen.dart';
 import 'package:tlbisibida_doc/presentation/inventory/screens/inventory_screen.dart';
-import 'package:tlbisibida_doc/presentation/labs/screens/cases/case_details_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/case_details_screen.dart';
 import 'package:tlbisibida_doc/presentation/labs/screens/lab_info_screen.dart';
 import 'package:tlbisibida_doc/presentation/labs/screens/mylabs_screen.dart';
 import 'package:tlbisibida_doc/presentation/labs/screens/new_labs_list_screen.dart';
 import 'package:tlbisibida_doc/presentation/patients/screens/patient_info_screen.dart';
 import 'package:tlbisibida_doc/presentation/patients/screens/patients_list_screen.dart';
-import 'package:tlbisibida_doc/presentation/labs/screens/cases/send_case_to_lab_screen.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/send_case_to_lab_screen.dart';
 import 'package:tlbisibida_doc/presentation/profile/profile_edit_screen.dart';
 import 'package:tlbisibida_doc/presentation/profile/profile_screen.dart';
 import 'package:tlbisibida_doc/presentation/secretary/secretary_screen.dart';

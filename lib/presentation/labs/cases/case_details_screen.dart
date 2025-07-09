@@ -5,7 +5,7 @@ import 'package:tlbisibida_doc/presentation/labs/components/case_process_timelin
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/labs/components/message_board.dart';
-import 'package:tlbisibida_doc/presentation/labs/screens/cases/cubit/cases_cubit.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/cubit/cases_cubit.dart';
 
 class CaseDetailsScreen extends StatefulWidget {
   const CaseDetailsScreen({super.key});
