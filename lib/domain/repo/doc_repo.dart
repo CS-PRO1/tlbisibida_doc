@@ -2,8 +2,6 @@ import 'package:tlbisibida_doc/data/models/secretary/db_secretaries.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_book_an_appointment.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_booked_appointment.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_patient_details_withimg.dart';
-import 'package:tlbisibida_doc/data/models/bills/db_show_bill_details.dart';
-import 'package:tlbisibida_doc/data/models/bills/db_show_lab_bills.dart';
 import 'package:tlbisibida_doc/data/models/clinic%20scheduals/db_show_clinic_times.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_patient_treatments.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_treatment_details.dart';
@@ -52,12 +50,10 @@ abstract class DocRepo {
   DBNonRepeatedItemsResponse? dbNonRepeatedItemsResponse;
 
 //patients
-  DBPatientDetailsResponse? dbPatientDetailsResponse;
-  DBTreatmentDetailsResponse? dbTreatmentDetailsResponse;
+
 
   DBPatientPaymentsResponse? dbPatientPaymentsResponse;
   DBPatientsPaymentsFromToResponse? dbPatientsPaymentsFromToResponse;
-  DBPatientTreatmentsResponse? dbPatientTreatmentsResponse;
 
   // Future<void> renew(int month, int id);
   // // Future<void> renewclinics(int month, int id);
@@ -80,18 +76,15 @@ abstract class DocRepo {
   Future<void> getAvailableSlots();
   Future<void> getAppointments();
 
-  Future<void> getPatientDetails(int id);
-
   Future<void> getClinicTimes();
 
-  Future<void> getPatientTreatment(int id);
-  Future<void> getTreatmentDetails(int id);
+  Future<void> getPatientDetails(int id);
+
+
 
   Future<void> getOpPayments();
 
-  Future<void> getPatientPayments(int id);
 
-  Future<void> getPatientPaymentsFromTo();
 
 //secretary
   Future<void> getSecretaries();
