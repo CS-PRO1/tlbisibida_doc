@@ -4,7 +4,7 @@ import 'package:tlbisibida_doc/domain/models/bills/show_bill_details.dart';
 class DBBillDetailsResponse {
   bool? status;
   int? successCode;
-  BillDetailsData? billDetails;
+  DBBillDetailsData? billDetails;
   String? successMessage;
 
   DBBillDetailsResponse({
@@ -18,7 +18,7 @@ class DBBillDetailsResponse {
     status = json['status'];
     successCode = json['success_code'];
     billDetails = json['bill_details'] != null
-        ? BillDetailsData.fromJson(json['bill_details'])
+        ? DBBillDetailsData.fromJson(json['bill_details'])
         : null;
     successMessage = json['success_message'];
   }
@@ -35,13 +35,13 @@ class DBBillDetailsResponse {
   }
 }
 
-class BillDetailsData {
+class DBBillDetailsData {
   DBBill? bill;
   List<DBBillCase>? billCases;
 
-  BillDetailsData({this.bill, this.billCases});
+  DBBillDetailsData({this.bill, this.billCases});
 
-  BillDetailsData.fromJson(Map<String, dynamic> json) {
+  DBBillDetailsData.fromJson(Map<String, dynamic> json) {
     bill = json['bill'] != null ? DBBill.fromJson(json['bill']) : null;
     if (json['bill_cases'] != null) {
       billCases = <DBBillCase>[];
@@ -60,6 +60,14 @@ class BillDetailsData {
       data['bill_cases'] = billCases!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  BillDetailsData toDomain() {
+    List<BillCase> cases = [];
+    for (var billcase in billCases!) {
+      cases.add(billcase.toDomain());
+    }
+    return BillDetailsData(bill: bill!.toDomain(), billCases: cases);
   }
 }
 

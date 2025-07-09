@@ -37,16 +37,16 @@ class DBLabBillsResponse {
 
 class DBLabBillsData {
   DBLabInfo? lab;
-  List<DBBillDetails>? bills;
+  List<DBBillItem>? bills;
 
   DBLabBillsData({this.lab, this.bills});
 
   DBLabBillsData.fromJson(Map<String, dynamic> json) {
     lab = json['lab'] != null ? DBLabInfo.fromJson(json['lab']) : null;
     if (json['bills'] != null) {
-      bills = <DBBillDetails>[];
+      bills = <DBBillItem>[];
       json['bills'].forEach((v) {
-        bills!.add(DBBillDetails.fromJson(v));
+        bills!.add(DBBillItem.fromJson(v));
       });
     }
   }
@@ -96,14 +96,14 @@ class DBLabInfo {
   }
 }
 
-class DBBillDetails {
+class DBBillItem {
   int? id;
   int? totalCost;
   String? dateFrom; // Can be parsed to DateTime if needed
   String? dateTo; // Can be parsed to DateTime if needed
   String? createdAt; // Can be parsed to DateTime if needed
 
-  DBBillDetails({
+  DBBillItem({
     this.id,
     this.totalCost,
     this.dateFrom,
@@ -111,7 +111,7 @@ class DBBillDetails {
     this.createdAt,
   });
 
-  DBBillDetails.fromJson(Map<String, dynamic> json) {
+  DBBillItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     totalCost = json['total_cost'];
     dateFrom = json['date_from'];
@@ -129,8 +129,8 @@ class DBBillDetails {
     return data;
   }
 
-  BillDetails toDomain() {
-    return BillDetails(
+  BillItem toDomain() {
+    return BillItem(
       id: id,
       totalCost: totalCost,
       dateFrom: dateFrom,
@@ -139,8 +139,8 @@ class DBBillDetails {
     );
   }
 
-  static DBBillDetails fromDomain(BillDetails domain) {
-    return DBBillDetails(
+  static DBBillItem fromDomain(BillItem domain) {
+    return DBBillItem(
       id: domain.id,
       totalCost: domain.totalCost,
       dateFrom: domain.dateFrom,

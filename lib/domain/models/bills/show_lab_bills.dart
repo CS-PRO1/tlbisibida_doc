@@ -34,16 +34,16 @@
 
 class LabBillsData {
   LabInfo? lab;
-  List<BillDetails>? bills;
+  List<BillItem>? bills;
 
   LabBillsData({this.lab, this.bills});
 
   LabBillsData.fromJson(Map<String, dynamic> json) {
     lab = json['lab'] != null ? LabInfo.fromJson(json['lab']) : null;
     if (json['bills'] != null) {
-      bills = <BillDetails>[];
+      bills = <BillItem>[];
       json['bills'].forEach((v) {
-        bills!.add(BillDetails.fromJson(v));
+        bills!.add(BillItem.fromJson(v));
       });
     }
   }
@@ -79,14 +79,14 @@ class LabInfo {
   }
 }
 
-class BillDetails {
+class BillItem {
   int? id;
   int? totalCost;
   String? dateFrom; // Can be parsed to DateTime if needed
   String? dateTo; // Can be parsed to DateTime if needed
   String? createdAt; // Can be parsed to DateTime if needed
 
-  BillDetails({
+  BillItem({
     this.id,
     this.totalCost,
     this.dateFrom,
@@ -94,7 +94,7 @@ class BillDetails {
     this.createdAt,
   });
 
-  BillDetails.fromJson(Map<String, dynamic> json) {
+  BillItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     totalCost = json['total_cost'];
     dateFrom = json['date_from'];
