@@ -2,22 +2,27 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart'; // Import go_router
+import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/presentation/patients/components/dialogs/add_patient_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tlbisibida_doc/presentation/appointments/cubits/appointments_cubit.dart';
+import 'package:tlbisibida_doc/presentation/appointments/cubits/appointments_states.dart';
+import 'package:tlbisibida_doc/domain/models/appoinments & patients/show_booked_appointment.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'dart:ui' as ui;
 
 import '../../services/navigation/routes.dart';
 
 ui.TextDirection direction = ui.TextDirection.ltr;
 
-class Appointment {
+class CalendarAppointment {
   final String patientName;
   final DateTime startTime;
   final DateTime endTime;
   final String phoneNumber;
   final Color color;
 
-  Appointment({
+  CalendarAppointment({
     required this.patientName,
     required this.startTime,
     required this.endTime,
@@ -26,44 +31,77 @@ class Appointment {
   });
 }
 
-class AppointmentsCalendarScreen extends StatelessWidget {
-  AppointmentsCalendarScreen({super.key});
+class AppointmentsCalendarScreen extends StatefulWidget {
+  const AppointmentsCalendarScreen({super.key});
 
+  @override
+  State<AppointmentsCalendarScreen> createState() =>
+      _AppointmentsCalendarScreenState();
+}
+
+class _AppointmentsCalendarScreenState
+    extends State<AppointmentsCalendarScreen> {
   final EventController _eventController = EventController();
-
-  final List<Appointment> _sampleAppointments = [
-    Appointment(
-      patientName: 'تحسين التحسيني',
-      phoneNumber: '0987654321',
-      startTime: DateTime.now().copyWith(
-          hour: 13, minute: 30, second: 0, millisecond: 0, microsecond: 0),
-      endTime: DateTime.now().copyWith(
-          hour: 14, minute: 30, second: 0, millisecond: 0, microsecond: 0),
-      color: const Color.fromARGB(170, 76, 175, 79),
-    ),
-    Appointment(
-      patientName: 'محمد حسام محمد السيد خليل',
-      phoneNumber: '0987654321',
-      startTime: DateTime.now().copyWith(
-          hour: 17, minute: 30, second: 0, millisecond: 0, microsecond: 0),
-      endTime: DateTime.now().copyWith(
-          hour: 18, minute: 00, second: 0, millisecond: 0, microsecond: 0),
-      color: const Color.fromARGB(170, 244, 67, 54),
-    ),
-    Appointment(
-      patientName: 'محمد سمبل',
-      phoneNumber: '0987654321',
-      startTime: DateTime.now().copyWith(
-          hour: 15, minute: 0, second: 0, millisecond: 0, microsecond: 0),
-      endTime: DateTime.now().copyWith(
-          hour: 16, minute: 0, second: 0, millisecond: 0, microsecond: 0),
-      color: const Color.fromARGB(170, 255, 153, 0),
-    ),
+  DateTime _selectedDate = DateTime.now();
+  final List<Color> _appointmentColors = [
+    const Color.fromARGB(170, 76, 175, 79),
+    const Color.fromARGB(170, 244, 67, 54),
+    const Color.fromARGB(170, 255, 153, 0),
+    const Color.fromARGB(170, 156, 39, 176),
+    const Color.fromARGB(170, 33, 150, 243),
   ];
 
-  void _addAppointmentsToController() {
+  @override
+  void initState() {
+    super.initState();
+    _loadAppointmentsForDate(_selectedDate);
+  }
+
+  void _loadAppointmentsForDate(DateTime date) {
+    final dateString = DateFormat('yyyy-MM-dd').format(date);
+    context.read<AppointmentsCubit>().getAppointmentsForDate(dateString);
+  }
+
+  List<CalendarAppointment> _convertToCalendarAppointments(
+      List<Appointment> appointments) {
+    return appointments.asMap().entries.map((entry) {
+      final appointment = entry.value;
+      final colorIndex = entry.key % _appointmentColors.length;
+
+      // Parse time strings to DateTime
+      final date = DateTime.parse(appointment.date!);
+      final timeFrom = appointment.timeFrom!.split(':');
+      final timeTo = appointment.timeTo!.split(':');
+
+      final startTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        int.parse(timeFrom[0]),
+        int.parse(timeFrom[1]),
+      );
+
+      final endTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        int.parse(timeTo[0]),
+        int.parse(timeTo[1]),
+      );
+
+      return CalendarAppointment(
+        patientName: appointment.patientName ?? 'غير محدد',
+        startTime: startTime,
+        endTime: endTime,
+        phoneNumber: appointment.patientPhone ?? 'غير محدد',
+        color: _appointmentColors[colorIndex],
+      );
+    }).toList();
+  }
+
+  void _addAppointmentsToController(List<CalendarAppointment> appointments) {
     _eventController.removeWhere((event) => true);
-    for (var appointment in _sampleAppointments) {
+    for (var appointment in appointments) {
       _eventController.add(CalendarEventData(
         date: appointment.startTime,
         startTime: appointment.startTime,
@@ -86,7 +124,7 @@ class AppointmentsCalendarScreen extends StatelessWidget {
     }
 
     final CalendarEventData event = events.first;
-    final Appointment appointment = event.event as Appointment;
+    final CalendarAppointment appointment = event.event as CalendarAppointment;
 
     return Builder(builder: (context) {
       return Stack(
@@ -166,8 +204,6 @@ class AppointmentsCalendarScreen extends StatelessWidget {
                   iconSize: 15,
                   splashColor: Colors.transparent,
                   style: ButtonStyle(elevation: WidgetStatePropertyAll(2)),
-                  // splashRadius: 0,
-
                   icon: Icon(
                     shadows: [],
                     color: white,
@@ -184,93 +220,142 @@ class AppointmentsCalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _addAppointmentsToController();
+    return BlocConsumer<AppointmentsCubit, AppointmentsState>(
+      listener: (context, state) {
+        if (state is AppointmentsError) {
+          AnimatedSnackBar.material(
+            state.message,
+            type: AnimatedSnackBarType.error,
+            duration: const Duration(seconds: 3),
+          ).show(context);
+        }
+      },
+      builder: (context, state) {
+        if (state is AppointmentsLoading) {
+          return Scaffold(
+            backgroundColor: cyan50,
+            body: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
 
-    final DateTime initialDay = DateTime.now();
+        List<CalendarAppointment> calendarAppointments = [];
+        if (state is AppointmentsLoaded) {
+          calendarAppointments =
+              _convertToCalendarAppointments(state.appointments);
+        }
 
-    return CalendarControllerProvider(
-      controller: _eventController,
-      child: Scaffold(
-        backgroundColor: cyan50,
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                DateFormat.E('ar').format(initialDay) +
-                    '، ' +
-                    DateFormat.d('en').format(initialDay) +
-                    ' ' +
-                    DateFormat.MMM('ar').format(initialDay),
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold, color: cyan500),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: .5,
-                width: 200,
-                color: cyan400,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Directionality(
-                textDirection: direction,
-                child: Expanded(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: DayView(
-                      controller: _eventController,
-                      showVerticalLine: true,
-                      startHour: 8,
-                      endHour: 20,
-                      heightPerMinute: 2.5,
-                      showHalfHours: true,
-                      headerStyle: const HeaderStyle(
-                          decoration: BoxDecoration(
-                              color: cyan200,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(10)))),
-                      initialDay: initialDay,
-                      hourIndicatorSettings: HourIndicatorSettings(
-                        color: cyan300,
+        _addAppointmentsToController(calendarAppointments);
+
+        return CalendarControllerProvider(
+          controller: _eventController,
+          child: Scaffold(
+            backgroundColor: cyan50,
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedDate =
+                                _selectedDate.subtract(const Duration(days: 1));
+                          });
+                          _loadAppointmentsForDate(_selectedDate);
+                        },
+                        icon: const Icon(Icons.chevron_left, color: cyan500),
                       ),
-                      halfHourIndicatorSettings: HourIndicatorSettings(
-                        dashWidth: 9,
-                        dashSpaceWidth: 3,
-                        color: cyan100,
-                        lineStyle: LineStyle.dashed,
+                      Text(
+                        DateFormat.E('ar').format(_selectedDate) +
+                            '، ' +
+                            DateFormat.d('en').format(_selectedDate) +
+                            ' ' +
+                            DateFormat.MMM('ar').format(_selectedDate),
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: cyan500),
+                        textAlign: TextAlign.center,
                       ),
-                      eventTileBuilder: _buildAppointmentTile,
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedDate =
+                                _selectedDate.add(const Duration(days: 1));
+                          });
+                          _loadAppointmentsForDate(_selectedDate);
+                        },
+                        icon: const Icon(Icons.chevron_right, color: cyan500),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: .5,
+                    width: 200,
+                    color: cyan400,
+                  ),
+                  const SizedBox(height: 15),
+                  Directionality(
+                    textDirection: direction,
+                    child: Expanded(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: DayView(
+                          controller: _eventController,
+                          showVerticalLine: true,
+                          startHour: 8,
+                          endHour: 20,
+                          heightPerMinute: 2.5,
+                          showHalfHours: true,
+                          headerStyle: const HeaderStyle(
+                              decoration: BoxDecoration(
+                                  color: cyan200,
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(10)))),
+                          initialDay: _selectedDate,
+                          hourIndicatorSettings: HourIndicatorSettings(
+                            color: cyan300,
+                          ),
+                          halfHourIndicatorSettings: HourIndicatorSettings(
+                            dashWidth: 9,
+                            dashSpaceWidth: 3,
+                            color: cyan100,
+                            lineStyle: LineStyle.dashed,
+                          ),
+                          eventTileBuilder: _buildAppointmentTile,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                context.push(addAppointmentRoute);
+              },
+              mini: true,
+              backgroundColor: cyan400,
+              foregroundColor: white,
+              shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: cyan600, width: 1.5),
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Icon(
+                Icons.add,
+                size: 28,
+              ),
+            ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Changed to use the absolute path constant for clarity and robustness.
-            context.push(addAppointmentRoute);
-          },
-          mini: true,
-          backgroundColor: cyan400,
-          foregroundColor: white,
-          shape: RoundedRectangleBorder(
-              side: const BorderSide(color: cyan600, width: 1.5),
-              borderRadius: BorderRadius.circular(10)),
-          child: const Icon(
-            Icons.add,
-            size: 28,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

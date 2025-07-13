@@ -1,6 +1,4 @@
 import 'package:tlbisibida_doc/data/models/secretary/db_secretaries.dart';
-import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_book_an_appointment.dart';
-import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_booked_appointment.dart';
 import 'package:tlbisibida_doc/data/models/clinic%20scheduals/db_show_clinic_times.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_rare_n_repeated_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_cats.dart';
@@ -19,9 +17,7 @@ abstract class DocRepo {
   //secretary
   DBSecretariesResponse? dbSecretariesResponse;
 
-  //appointment
-  DBAppointmentsResponse? dbAppointmentsResponse;
-  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
+  //appointment - moved to separate repository
 
   //inventory
   DBCategoriesResponse? dbCategoriesResponse;
@@ -44,7 +40,6 @@ abstract class DocRepo {
   DBOperatingPaymentsResponse? dbOperatingPaymentsResponse;
   DBNonRepeatedItemsResponse? dbNonRepeatedItemsResponse;
 
-
   // Future<void> renew(int month, int id);
   // // Future<void> renewclinics(int month, int id);
   // Future<void> confirmlabs(int id);
@@ -63,17 +58,11 @@ abstract class DocRepo {
   ///
   ///
   ////////////////////////////////////////////////** */
-  Future<void> getAvailableSlots();
-  Future<void> getAppointments();
+  // Appointments methods moved to separate repository
 
   Future<void> getClinicTimes();
 
-
-
-
   Future<void> getOpPayments();
-
-
 
 //secretary
   Future<void> getSecretaries();
