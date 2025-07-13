@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/domain/models/profile/dentist.dart';
 import 'package:tlbisibida_doc/presentation/profile/cubit/profile_cubit.dart';
+import 'package:tlbisibida_doc/presentation/profile/cubit/profile_states.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -11,37 +13,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ProfileCubit>();
-    Profile profile = cubit.profile!.profile!;
-
-    List userInfo = [
-      {
-        'title': 'الاسم:',
-        'info': profile.profileDetails!.firstName! + profile.profileDetails!.lastName!,
-        'icon': Icons.person,
-      },
-      {
-        'title': 'البريد:',
-        'info': profile.profileDetails!.email!,
-        'icon': CupertinoIcons.mail_solid,
-      },
-      {
-        'title': 'الهاتف:',
-        'info': profile.profileDetails!.phone,
-        'icon': CupertinoIcons.phone_circle_fill,
-      },
-      {
-        'title': 'العنوان:',
-        'info': profile.profileDetails!.address,
-        'icon': CupertinoIcons.placemark_fill,
-      },
-    ];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.of(context).push(MaterialPageRoute(
-          //   builder: (context) => ProfileEditScreen(),
-          // ));
           Navigator.pushNamed(context, profileEditRoute);
         },
         mini: true,
@@ -55,43 +29,89 @@ class ProfileScreen extends StatelessWidget {
           size: 20,
         ),
       ),
-      body: BlocConsumer<ProfileCubit, String>(
+      body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is ProfileError) {
+            AnimatedSnackBar.material(
+              state.message.isNotEmpty
+                  ? state.message
+                  : 'حدث خطأ ما، يرجى المحاولة لاحقاً',
+              type: AnimatedSnackBarType.error,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+              duration: Duration(seconds: 3),
+              animationCurve: Easing.standard,
+            ).show(context);
+          }
         },
         builder: (context, state) {
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 100,
-                  backgroundImage: MemoryImage(cubit.profilePicture!),
-                  // 'https://media.istockphoto.com/id/1371009338/photo/portrait-of-confident-a-young-dentist-working-in-his-consulting-room.jpg?s=612x612&w=0&k=20&c=I212vN7lPpAOwGKRoEY9kYWunJaMj9vH2g-8YBGc2MI='),
-                  onBackgroundImageError: (exception, stackTrace) =>
-                      Image.asset(
-                    'assets/images/fallback/user_default.jpg',
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileError) {
+            return Center(child: Text('حدث خطأ أثناء تحميل الملف الشخصي'));
+          } else if (state is ProfileLoaded) {
+            final profile = state.profile.profile!;
+            final cubit = context.read<ProfileCubit>();
+            List userInfo = [
+              {
+                'title': 'الاسم:',
+                'info': profile.profileDetails!.firstName! +
+                    profile.profileDetails!.lastName!,
+                'icon': Icons.person,
+              },
+              {
+                'title': 'البريد:',
+                'info': profile.profileDetails!.email!,
+                'icon': CupertinoIcons.mail_solid,
+              },
+              {
+                'title': 'الهاتف:',
+                'info': profile.profileDetails!.phone,
+                'icon': CupertinoIcons.phone_circle_fill,
+              },
+              {
+                'title': 'العنوان:',
+                'info': profile.profileDetails!.address,
+                'icon': CupertinoIcons.placemark_fill,
+              },
+            ];
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage: cubit.profilePicture != null
+                        ? MemoryImage(cubit.profilePicture!)
+                        : null,
+                    onBackgroundImageError: (exception, stackTrace) =>
+                        Image.asset(
+                      'assets/images/fallback/user_default.jpg',
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) =>
-                        itemBuilder(userInfo[index]),
-                    separatorBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                          child: Container(
-                            height: 1,
-                            color: cyan300,
-                            width: 150,
+                  SizedBox(height: 20),
+                  ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) =>
+                          itemBuilder(userInfo[index]),
+                      separatorBuilder: (context, index) => Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 60.0),
+                            child: Container(
+                              height: 1,
+                              color: cyan300,
+                              width: 150,
+                            ),
                           ),
-                        ),
-                    itemCount: userInfo.length),
-              ],
-            ),
-          );
+                      itemCount: userInfo.length),
+                ],
+              ),
+            );
+          } else {
+            // Initial or other states
+            return const Center(child: Text('لا توجد بيانات للعرض'));
+          }
         },
       ),
     );

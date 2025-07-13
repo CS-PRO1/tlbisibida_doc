@@ -7,7 +7,9 @@ import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/num_input.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/emails_cubit.dart';
+import 'package:tlbisibida_doc/presentation/authentication/cubit/emails_state.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 // ignore: must_be_immutable
 class EmailVerificationScreen extends StatelessWidget {
@@ -38,9 +40,27 @@ class EmailVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<EmailsCubit, String>(
+      body: BlocConsumer<EmailsCubit, EmailsState>(
         listener: (context, state) {
-          if (state == '') {}
+          if (state is EmailsChecked) {
+            AnimatedSnackBar.material(
+              'تم التحقق بنجاح!',
+              type: AnimatedSnackBarType.success,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+              duration: Duration(seconds: 3),
+              animationCurve: Easing.standard,
+            ).show(context);
+            context.go(rootRoute);
+          }
+          if (state is EmailsError) {
+            AnimatedSnackBar.material(
+              state.message,
+              type: AnimatedSnackBarType.error,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+              duration: Duration(seconds: 3),
+              animationCurve: Easing.standard,
+            ).show(context);
+          }
         },
         builder: (context, state) {
           return Container(

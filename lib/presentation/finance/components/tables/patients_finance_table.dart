@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
-import 'package:tlbisibida_doc/presentation/patients/screens/patient_info_screen.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable

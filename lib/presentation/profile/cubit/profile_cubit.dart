@@ -3,82 +3,42 @@ import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/profile/dentist.dart';
 import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_profile.dart';
+import 'package:tlbisibida_doc/presentation/profile/cubit/profile_states.dart';
 
-class ProfileCubit extends Cubit<String> {
+class ProfileCubit extends Cubit<ProfileState> {
   final DocRepoProfile repo;
 
-  ProfileCubit(this.repo) : super('');
+  ProfileCubit(this.repo) : super(ProfileInitial());
 
-  //get profile
   ProfileResponse? profile;
 
   Future<void> getdocprofile() async {
-    emit('get profile');
+    emit(ProfileLoading());
     try {
       await repo.getDocProfile();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      profile = repo.dbDentistProfile!.toDomain();
+      if (profile != null) {
+        emit(ProfileLoaded(profile!));
+      } else {
+        emit(ProfileError('لم يتم العثور على بيانات الملف الشخصي.'));
+      }
+    } catch (e, stack) {
+      emit(ProfileError(e.toString(), stackTrace: stack));
     }
-    profile = (repo.dbDentistProfile!.toDomain());
-    profile != null ? emit('got profile') : emit('error');
-    print(state);
   }
 
-  //get img
-  //List<Uint8List> imgList = [];
   Uint8List? profilePicture;
   Future<void> getImage() async {
+    emit(ProfileImageLoading());
     try {
       profilePicture = await repo.getProfilePic();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (profilePicture != null) {
+        emit(ProfileImageLoaded(profilePicture!));
+      } else {
+        emit(ProfileImageError('لم يتم العثور على صورة الملف الشخصي.'));
+      }
+    } catch (e, stack) {
+      emit(ProfileImageError(e.toString(), stackTrace: stack));
     }
-    profilePicture != null ? emit('image_loaded') : emit('error');
   }
-
-  // //update  sec
-
-  // Future<void> updatesec(int id, String firstName, String lastName,
-  //     String phone, String email, String attendenceTime, String address) async {
-  //   emit('updating');
-  //   try {
-  //     auth = await repo.updateSecretary(
-  //         id, firstName, lastName, phone, email, attendenceTime, address);
-  //   } on Exception catch (e) {
-  //     emit('error');
-  //     print(e.toString());
-  //   }
-  //   auth ? emit('updated') : emit('error');
-  //   print(state);
-  // }
-  // //add  sec
-
-  // Future<void> addsec(String firstName, String lastName, String phone,
-  //     String email, String attendenceTime, String address) async {
-  //   emit('adding');
-  //   try {
-  //     auth = await repo.postAddSecretary(
-  //         firstName, lastName, phone, email, attendenceTime, address);
-  //   } on Exception catch (e) {
-  //     emit('error');
-  //     print(e.toString());
-  //   }
-  //   auth ? emit('added') : emit('error');
-  //   print(state);
-  // }
-  // //delete  sec
-
-  // Future<void> delsec(int id) async {
-  //   emit('deleting');
-  //   try {
-  //     auth = await repo.delSecretary(id);
-  //   } on Exception catch (e) {
-  //     emit('error');
-  //     print(e.toString());
-  //   }
-  //   auth ? emit('deleted') : emit('error');
-  //   print(state);
-  // }
 }

@@ -11,6 +11,7 @@ import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/components/image_picker.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
+import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_state.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class Register2 extends StatefulWidget {
@@ -65,7 +66,7 @@ class _Register2State extends State<Register2> {
     List<Uint8List> images = [];
 
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state == 'registered') {
             AnimatedSnackBar.material(

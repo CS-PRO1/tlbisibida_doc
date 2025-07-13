@@ -3,267 +3,105 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tlbisibida_doc/components/default_textfield.dart';
+
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/presentation/patients/components/bottom_action_buttons_patients.dart';
 import 'package:tlbisibida_doc/presentation/patients/components/dialogs/add_patient_dialog.dart';
 import 'package:tlbisibida_doc/presentation/patients/components/dialogs/patient_info_button.dart';
 import 'package:intl/intl.dart';
-
-List<Map> mockPatients = [
-  {
-    'name': 'اسماعيل احمد كنباوي',
-    'age': '2010',
-    'number': '0995996997',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 5, 15),
-    'added_date': DateTime(2022, 1, 10),
-    'credits': -520000
-  },
-  {
-    'name': 'عثمان عبد الجليل ششه',
-    'age': '2001',
-    'number': '0995886887',
-    'is_smoker': true,
-    'last_appointment': DateTime(2023, 6, 20),
-    'added_date': DateTime(2021, 11, 5),
-    'credits': -1000000
-  },
-  {
-    'name': 'أحمد محمد علي',
-    'age': '1995',
-    'number': '0995111222',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 4, 10),
-    'added_date': DateTime(2023, 2, 15),
-    'credits': 52000
-  },
-  {
-    'name': 'زينب حسن خالد',
-    'age': '1988',
-    'number': '0995333444',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 7, 1),
-    'added_date': DateTime(2022, 8, 20),
-    'credits': -100000
-  },
-  {
-    'name': 'سارة عبد الرحمن',
-    'age': '1992',
-    'number': '0995666777',
-    'is_smoker': true,
-    'last_appointment': DateTime(2023, 3, 5),
-    'added_date': DateTime(2022, 5, 12),
-    'credits': -75000
-  },
-  {
-    'name': 'خالد مصطفى عمر',
-    'age': '1975',
-    'number': '0995888999',
-    'is_smoker': true,
-    'last_appointment': DateTime(2023, 8, 12),
-    'added_date': DateTime(2021, 9, 3),
-    'credits': 25000
-  },
-  {
-    'name': 'نورا صلاح الدين',
-    'age': '2005',
-    'number': '0995123123',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 2, 28),
-    'added_date': DateTime(2023, 1, 7),
-    'credits': -98765
-  },
-  {
-    'name': 'يوسف أحمد إبراهيم',
-    'age': '1980',
-    'number': '0995456456',
-    'is_smoker': true,
-    'last_appointment': DateTime(2023, 9, 5),
-    'added_date': DateTime(2022, 3, 18),
-    'credits': -65000
-  },
-  {
-    'name': 'هديل سعيد محمد',
-    'age': '1998',
-    'number': '0995789789',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 1, 15),
-    'added_date': DateTime(2022, 11, 30),
-    'credits': -23500
-  },
-  {
-    'name': 'عمر فاروق ناصر',
-    'age': '2003',
-    'number': '0995012012',
-    'is_smoker': false,
-    'last_appointment': DateTime(2023, 7, 25),
-    'added_date': DateTime(2023, 4, 5),
-    'credits': -480000
-  },
-];
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patients_cubit.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patient_states.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:tlbisibida_doc/domain/models/appoinments & patients/all_patients.dart';
+import 'package:tlbisibida_doc/utils/date_utils.dart' as custom_date_utils;
 
 enum SortOption {
   nameAsc,
   nameDesc,
-  lastAppointmentAsc,
-  lastAppointmentDesc,
-  addedDateAsc,
-  addedDateDesc,
-  creditsAsc,
+  createdAsc,
+  createdDesc,
+  balanceAsc,
+  balanceDesc,
 }
 
-class PatientsListScreen extends StatefulWidget {
+class PatientsListScreen extends StatelessWidget {
   const PatientsListScreen({super.key});
 
   @override
-  State<PatientsListScreen> createState() => _PatientsListScreenState();
-}
+  Widget build(BuildContext context) {
+    return BlocConsumer<PatientsCubit, PatientsState>(
+      listener: (context, state) {
+        if (state is PatientsError ||
+            state is PatientDetailsError ||
+            state is PatientTreatmentsError ||
+            state is PatientPaymentsError ||
+            state is PatientsPaymentsFromToError) {
+          final message = (state as dynamic).message;
+          AnimatedSnackBar.material(
+            message,
+            type: AnimatedSnackBarType.error,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+            duration: Duration(seconds: 3),
+            animationCurve: Easing.standard,
+          ).show(context);
+        }
+      },
+      builder: (context, state) {
+        if (state is PatientsInitial) {
+          // Load initial data
+          context.read<PatientsCubit>().getAllPatients();
+          return const Center(child: CircularProgressIndicator());
+        }
 
-class _PatientsListScreenState extends State<PatientsListScreen> {
-  late List<Map> filteredInfo;
-  TextEditingController searchController = TextEditingController();
-  SortOption currentSortOption = SortOption.nameAsc;
-  final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+        if (state is PatientsLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-  @override
-  void initState() {
-    super.initState();
-    filteredInfo = List.from(mockPatients);
-    searchController.addListener(_filterPatients);
-    _sortPatients();
-  }
+        if (state is PatientsLoaded) {
+          return _PatientsListContent(
+              patients: state.patients, pagination: state.pagination);
+        }
 
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
-
-  void _filterPatients() {
-    final query = searchController.text.toLowerCase();
-    setState(() {
-      filteredInfo = mockPatients.where((patient) {
-        final name = patient['name'].toString().toLowerCase();
-        return name.contains(query);
-      }).toList();
-      _sortPatients();
-    });
-  }
-
-  void _sortPatients() {
-    setState(() {
-      switch (currentSortOption) {
-        case SortOption.nameAsc:
-          filteredInfo.sort((a, b) => a['name'].compareTo(b['name']));
-          break;
-        case SortOption.nameDesc:
-          filteredInfo.sort((a, b) => b['name'].compareTo(a['name']));
-          break;
-        case SortOption.lastAppointmentAsc:
-          filteredInfo.sort(
-              (a, b) => a['last_appointment'].compareTo(b['last_appointment']));
-          break;
-        case SortOption.lastAppointmentDesc:
-          filteredInfo.sort(
-              (a, b) => b['last_appointment'].compareTo(a['last_appointment']));
-          break;
-        case SortOption.addedDateAsc:
-          filteredInfo
-              .sort((a, b) => a['added_date'].compareTo(b['added_date']));
-          break;
-        case SortOption.addedDateDesc:
-          filteredInfo
-              .sort((a, b) => b['added_date'].compareTo(a['added_date']));
-          break;
-        case SortOption.creditsAsc:
-          filteredInfo.sort((a, b) => a['credits'].compareTo(b['credits']));
-          break;
-      }
-    });
-  }
-
-  void _showSortDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'ترتيب المرضى',
-            style: TextStyle(color: cyan500),
-            textAlign: TextAlign.center,
-          ),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: ListView(
-              shrinkWrap: true,
+        if (state is PatientsError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildSortOptionTile(
-                  context,
-                  'الاسم من أ إلى ي',
-                  SortOption.nameAsc,
+                Icon(Icons.error_outline, size: 64, color: redmain),
+                SizedBox(height: 16),
+                Text(
+                  state.message,
+                  style: TextStyle(color: redmain, fontSize: 16),
+                  textAlign: TextAlign.center,
                 ),
-                _buildSortOptionTile(
-                  context,
-                  'الاسم من ي إلى أ',
-                  SortOption.nameDesc,
-                ),
-                const Divider(),
-                _buildSortOptionTile(
-                  context,
-                  'آخر موعد (الأقدم أولاً)',
-                  SortOption.lastAppointmentAsc,
-                ),
-                _buildSortOptionTile(
-                  context,
-                  'آخر موعد (الأحدث أولاً)',
-                  SortOption.lastAppointmentDesc,
-                ),
-                const Divider(),
-                _buildSortOptionTile(
-                  context,
-                  'تاريخ الإضافة (الأقدم أولاً)',
-                  SortOption.addedDateAsc,
-                ),
-                _buildSortOptionTile(
-                  context,
-                  'تاريخ الإضافة (الأحدث أولاً)',
-                  SortOption.addedDateDesc,
-                ),
-                const Divider(),
-                _buildSortOptionTile(
-                  context,
-                  'الرصيد (الأقل أولاً)',
-                  SortOption.creditsAsc,
+                SizedBox(height: 16),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: cyan400),
+                  onPressed: () =>
+                      context.read<PatientsCubit>().getAllPatients(),
+                  child: Text('إعادة المحاولة'),
                 ),
               ],
             ),
-          ),
-        );
-      },
-    );
-  }
+          );
+        }
 
-  ListTile _buildSortOptionTile(
-      BuildContext context, String title, SortOption option) {
-    return ListTile(
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-      ),
-      trailing: currentSortOption == option
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
-      onTap: () {
-        setState(() {
-          currentSortOption = option;
-          _sortPatients();
-        });
-        Navigator.of(context).pop();
+        return const Center(child: Text('لا يوجد بيانات'));
       },
     );
   }
+}
+
+class _PatientsListContent extends StatelessWidget {
+  final List<PatientData> patients;
+  final PaginatedPatients pagination;
+
+  const _PatientsListContent({
+    required this.patients,
+    required this.pagination,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -274,68 +112,14 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
         child: Column(
           children: [
             // Search and Sort Row
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10.0, bottom: 15, left: 20.0, right: 10),
-                    child: defaultTextField(
-                      searchController,
-                      context,
-                      'ابحث عن مريض...',
-                      style: TextStyle(color: cyan500),
-                      prefixIcon: Icon(Icons.search, color: cyan400),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    CupertinoIcons.sort_down,
-                    color: cyan400,
-                  ),
-                  onPressed: () => _showSortDialog(context),
-                  tooltip: 'ترتيب',
-                  iconSize: 28,
-                ),
-              ],
-            ),
-            // Current sort indicator
-            Text(
-              _getCurrentSortDescription(),
-              style: TextStyle(color: cyan500, fontSize: 14),
-            ),
+            _SearchAndSortRow(),
             const SizedBox(height: 15),
             // GridView wrapped in Expanded
             Expanded(
               child: SizedBox(
                 width: 600,
-                child: GridView.count(
-                  childAspectRatio: .9,
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 7,
-                  mainAxisSpacing: 7,
-                  children: List.generate(
-                    filteredInfo.length,
-                    (index) =>
-                        itemcard(context, filteredInfo, index, onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => PatientsListScreen(),
-                      //   ),
-                      // );
-                      context.push(patientListRoute);
-                    }),
-                  )
-                      .animate(interval: const Duration(milliseconds: 50))
-                      .slide(duration: const Duration(milliseconds: 300))
-                      .fadeIn(
-                          curve: Curves.easeInOut,
-                          duration: const Duration(milliseconds: 250))
-                      .flip(duration: const Duration(milliseconds: 200)),
-                ),
+                child:
+                    _PatientsGrid(patients: patients, pagination: pagination),
               ),
             )
           ],
@@ -365,28 +149,161 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
       ),
     );
   }
+}
 
-  String _getCurrentSortDescription() {
-    switch (currentSortOption) {
-      case SortOption.nameAsc:
-        return 'مرتب حسب: الاسم من أ إلى ي';
-      case SortOption.nameDesc:
-        return 'مرتب حسب: الاسم من ي إلى أ';
-      case SortOption.lastAppointmentAsc:
-        return 'مرتب حسب: آخر موعد (الأقدم أولاً)';
-      case SortOption.lastAppointmentDesc:
-        return 'مرتب حسب: آخر موعد (الأحدث أولاً)';
-      case SortOption.addedDateAsc:
-        return 'مرتب حسب: تاريخ الإضافة (الأقدم أولاً)';
-      case SortOption.addedDateDesc:
-        return 'مرتب حسب: تاريخ الإضافة (الأحدث أولاً)';
-      case SortOption.creditsAsc:
-        return 'مرتب حسب الرصيد (الأقل أولاً)';
-    }
+class _SearchAndSortRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, bottom: 15, left: 20.0, right: 10),
+            child: TextField(
+              controller: TextEditingController(),
+              decoration: InputDecoration(
+                label: Text(
+                  'ابحث عن مريض...',
+                  style: TextStyle(color: cyan500),
+                ),
+                prefixIcon: Icon(Icons.search, color: cyan400),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: cyan300, width: .5),
+                  borderRadius: standardBorderRadius,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor, width: 2.0),
+                  borderRadius: standardBorderRadius,
+                ),
+              ),
+              onChanged: (value) {
+                context.read<PatientsCubit>().searchPatients(value);
+              },
+            ),
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            CupertinoIcons.sort_down,
+            color: cyan400,
+          ),
+          onPressed: () => _showSortDialog(context),
+          tooltip: 'ترتيب',
+          iconSize: 28,
+        ),
+      ],
+    );
+  }
+
+  void _showSortDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'ترتيب المرضى',
+            style: TextStyle(color: cyan500),
+            textAlign: TextAlign.center,
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                _buildSortOptionTile(context, 'الاسم من أ إلى ي', 'name_asc'),
+                _buildSortOptionTile(context, 'الاسم من ي إلى أ', 'name_desc'),
+                const Divider(),
+                _buildSortOptionTile(
+                    context, 'تاريخ الإضافة (الأقدم أولاً)', 'created_asc'),
+                _buildSortOptionTile(
+                    context, 'تاريخ الإضافة (الأحدث أولاً)', 'created_desc'),
+                const Divider(),
+                _buildSortOptionTile(
+                    context, 'الرصيد (الأقل أولاً)', 'balance_asc'),
+                _buildSortOptionTile(
+                    context, 'الرصيد (الأكثر أولاً)', 'balance_desc'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  ListTile _buildSortOptionTile(
+      BuildContext context, String title, String sortBy) {
+    return ListTile(
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
+      onTap: () {
+        context.read<PatientsCubit>().sortPatients(sortBy);
+        Navigator.of(context).pop();
+      },
+    );
   }
 }
 
-Widget itemcard(BuildContext context, List info, int index,
+class _PatientsGrid extends StatelessWidget {
+  final List<PatientData> patients;
+  final PaginatedPatients pagination;
+
+  const _PatientsGrid({
+    required this.patients,
+    required this.pagination,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
+
+    // Add scroll listener for pagination
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 200) {
+        if (pagination.nextPageUrl != null) {
+          context.read<PatientsCubit>().loadMorePatients();
+        }
+      }
+    });
+
+    return GridView.builder(
+      controller: scrollController,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: .9,
+        crossAxisSpacing: 7,
+        mainAxisSpacing: 7,
+      ),
+      itemCount: patients.length + (pagination.nextPageUrl != null ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index == patients.length) {
+          // Show loading indicator for pagination
+          return Center(
+            child: CircularProgressIndicator(color: cyan400),
+          );
+        }
+
+        final patient = patients[index];
+        return itemcard(context, patient, onTap: () {
+          // Navigate to patient details
+          context.push('$patientListRoute/${patient.id}');
+        })
+            .animate()
+            .slide(duration: const Duration(milliseconds: 300))
+            .fadeIn(
+                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 250))
+            .flip(duration: const Duration(milliseconds: 200));
+      },
+    );
+  }
+}
+
+Widget itemcard(BuildContext context, PatientData patient,
     {VoidCallback? onTap}) {
   return FlipCard(
     fill: Fill.fillBack,
@@ -400,7 +317,7 @@ Widget itemcard(BuildContext context, List info, int index,
         children: [
           const SizedBox(height: 5),
           Text(
-            info[index]['name'],
+            patient.fullName ?? 'غير محدد',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: cyan400,
@@ -425,7 +342,7 @@ Widget itemcard(BuildContext context, List info, int index,
               ),
               SizedBox(width: 7),
               Text(
-                info[index]['number'],
+                patient.phone ?? 'غير محدد',
                 style: const TextStyle(color: cyan400, fontSize: 14),
               ),
             ],
@@ -444,19 +361,30 @@ Widget itemcard(BuildContext context, List info, int index,
           Column(
             children: [
               Text(
-                'العمر: ${info[index]['age']}',
+                'العمر: ${custom_date_utils.DateUtils.calculateAge(patient.birthday)}',
                 style: const TextStyle(color: cyan400, fontSize: 16),
               ),
               const SizedBox(height: 8),
               Text(
-                'آخر موعد: ${DateFormat('yyyy-MM-dd').format(info[index]['last_appointment'])}',
+                'الجنس: ${patient.gender ?? 'غير محدد'}',
                 style: const TextStyle(color: cyan400, fontSize: 14),
               ),
               const SizedBox(height: 8),
               Text(
-                'تاريخ الإضافة: ${DateFormat('yyyy-MM-dd').format(info[index]['added_date'])}',
-                style: const TextStyle(color: cyan400, fontSize: 14),
+                'الرصيد: ${patient.currentBalance?.toString() ?? '0'} ل.س',
+                style: TextStyle(
+                  color: (patient.currentBalance ?? 0) < 0 ? redmain : cyan400,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              if (patient.createdAt != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'تاريخ الإضافة: ${DateFormat('yyyy-MM-dd').format(patient.createdAt!)}',
+                  style: const TextStyle(color: cyan400, fontSize: 14),
+                ),
+              ],
             ],
           ),
           const SizedBox(height: 5),
@@ -466,11 +394,11 @@ Widget itemcard(BuildContext context, List info, int index,
             color: cyan600,
           ),
           const SizedBox(height: 5),
-          info[index]['is_smoker']
+          patient.isSmoker == 1
               ? Icon(Icons.smoking_rooms_rounded, color: redmain)
               : Icon(Icons.smoke_free_rounded, color: cyan300),
           const SizedBox(height: 5),
-          patientInfoButton(context),
+          patientInfoButton(context, patient.id ?? 0),
         ],
       ),
     ),

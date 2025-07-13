@@ -40,7 +40,7 @@ class PatientDetails {
   String? phone;
   String? birthday; // Consider parsing to DateTime
   int? currentBalance;
-  int? isSmoker; // Consider using bool?
+  bool? isSmoker; // Consider using bool?
   String? gender;
   String? medicineName; // Can be null
   String? illnessName; // Can be null

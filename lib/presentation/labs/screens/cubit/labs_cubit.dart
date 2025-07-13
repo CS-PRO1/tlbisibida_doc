@@ -1,102 +1,93 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/bills/show_bill_details.dart';
 import 'package:tlbisibida_doc/domain/models/bills/show_lab_bills.dart';
-import 'package:tlbisibida_doc/domain/models/dentist%20labs/show_mylabs.dart';
-import 'package:tlbisibida_doc/domain/models/medical%20cases/show_labs-send%20case%20to%20lab.dart';
+import 'package:tlbisibida_doc/domain/models/dentist labs/show_mylabs.dart';
 import 'package:tlbisibida_doc/domain/repo/labs/doc_repo_labs.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_states.dart';
 
-class LabsCubit extends Cubit<String> {
+class LabsCubit extends Cubit<LabsState> {
   final DocRepoLabs repo;
 
-  LabsCubit(this.repo) : super('');
+  LabsCubit(this.repo) : super(LabsInitial());
 
-  //get MY LABS list
   List<JoinedLab> mylabslist = [];
   Future<void> getmylabslist() async {
-    emit('case_mylabslist_loading');
+    emit(LabsLoading());
+    mylabslist.clear();
     try {
       await repo.getMyLabs();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var caseitem in repo.dbLabsJoinedResponse!.labsIamJoind!) {
+        mylabslist.add(caseitem.toDomain());
+      }
+      emit(MyLabsLoaded(mylabslist));
+    } catch (e, stack) {
+      emit(
+          LabsError('حدث خطأ أثناء تحميل قائمة المخابر.', stackTrace: stack));
     }
-
-    for (var caseitem in repo.dbLabsJoinedResponse!.labsIamJoind!) {
-      mylabslist.add(caseitem.toDomain());
-    }
-
-    mylabslist.isNotEmpty ? emit('case_mylabslist_loaded') : emit('error');
-    print(state);
   }
 
-  //get  LAB BILLS  list
   List<BillItem> labbillslist = [];
   Future<void> getLabBills(int id) async {
-    emit('case_lab_bills_list_loading');
+    emit(LabsLoading());
+    labbillslist.clear();
     try {
       await repo.getLabBills(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var bill in repo.dbLabBillsResponse!.labBills!.bills!) {
+        labbillslist.add(bill.toDomain());
+      }
+      emit(LabBillsLoaded(labbillslist));
+    } catch (e, stack) {
+      emit(LabsError('حدث خطأ أثناء تحميل الفواتير.', stackTrace: stack));
     }
-
-    for (var bill in repo.dbLabBillsResponse!.labBills!.bills!) {
-      labbillslist.add(bill.toDomain());
-    }
-
-    labbillslist.isNotEmpty ? emit('case_lab_bills_loaded') : emit('error');
-    print(state);
   }
 
-  //get credit for one lab
   int? currentaccount;
   Future<void> getDentistCredit(int id) async {
-    emit('case_dentistcredit_loading');
+    emit(LabsLoading());
     try {
       await repo.getlatestacc(id);
       currentaccount = repo
           .dbLatestLabAccountResponse!.latestAccountOfThisLab!.currentAccount;
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (currentaccount != null) {
+        emit(DentistCreditLoaded(currentaccount!));
+      } else {
+        emit(LabsError('لم يتم العثور على رصيد الطبيب.'));
+      }
+    } catch (e, stack) {
+      emit(LabsError('حدث خطأ أثناء تحميل رصيد الطبيب.', stackTrace: stack));
     }
-
-    currentaccount != null ? emit('case_dentistcredit_loaded') : emit('error');
-    print(state);
   }
 
-  //get bill details
   BillDetailsData? currentbill;
   Future<void> getBillDetails(int id) async {
-    emit('case_billdetails_loading');
+    emit(LabsLoading());
     try {
       await repo.getBillDetails(id);
       currentbill = repo.dbBillDetailsResponse!.billDetails!.toDomain();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (currentbill != null) {
+        emit(BillDetailsLoaded(currentbill!));
+      } else {
+        emit(LabsError('لم يتم العثور على تفاصيل الفاتورة.'));
+      }
+    } catch (e, stack) {
+      emit(
+          LabsError('حدث خطأ أثناء تحميل تفاصيل الفاتورة.', stackTrace: stack));
     }
-
-    currentbill != null ? emit('case_billdetails_loaded') : emit('error');
-    print(state);
   }
 
-  //get lab list from choice
-  List<LabNameItem> labslistfromcchoice = [];
+  List<JoinedLab> labslistfromcchoice = [];
   Future<void> getlablistfromchoice() async {
-    emit('case_mylabslist_loading');
+    emit(LabsLoading());
+    labslistfromcchoice.clear();
     try {
       await repo.getMyLabs();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var caseitem in repo.dbLabsJoinedResponse!.labsIamJoind!) {
+        labslistfromcchoice.add(caseitem.toDomain());
+      }
+      emit(LabListFromChoiceLoaded(labslistfromcchoice));
+    } catch (e, stack) {
+      emit(
+          LabsError('حدث خطأ أثناء تحميل قائمة المخابر.', stackTrace: stack));
     }
-
-    for (var caseitem in repo.dbLabsJoinedResponse!.labsIamJoind!) {
-      mylabslist.add(caseitem.toDomain());
-    }
-
-    mylabslist.isNotEmpty ? emit('case_mylabslist_loaded') : emit('error');
-    print(state);
   }
 }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
+import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_state.dart';
 import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
@@ -19,9 +20,9 @@ class LoginScreen extends StatelessWidget {
     final cubit = context.read<AuthCubit>();
 
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state == 'logged_in') {
+          if (state is AuthLoggedIn) {
             AnimatedSnackBar.material(
               'تم تسجيل الدخول بنجاح!',
               type: AnimatedSnackBarType.success,
@@ -31,9 +32,9 @@ class LoginScreen extends StatelessWidget {
             ).show(context);
             context.go(rootRoute);
           }
-          if (state == 'error') {
+          if (state is AuthError) {
             AnimatedSnackBar.material(
-              'لم يتم تسجيل الدخول ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
+              state.message,
               type: AnimatedSnackBarType.error,
               mobileSnackBarPosition: MobileSnackBarPosition.bottom,
               duration: Duration(seconds: 3),

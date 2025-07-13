@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_cubit.dart';
+import 'package:tlbisibida_doc/presentation/authentication/cubit/auth_state.dart';
 import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
@@ -43,21 +44,14 @@ class Register extends StatelessWidget {
 
     String selectedProvince = 'دمشق';
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state == 'registered') {
-            // AnimatedSnackBar.material(
-            //   'تح!',
-            //   type: AnimatedSnackBarType.success,
-            //   desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
-            //   duration: Duration(seconds: 3),
-            //   animationCurve: Easing.standard,
-            // ).show(context);
+          if (state is AuthRegistered) {
             context.push(register2Route);
           }
-          if (state == 'error') {
+          if (state is AuthError) {
             AnimatedSnackBar.material(
-              'تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
+              state.message,
               type: AnimatedSnackBarType.error,
               desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
               duration: Duration(seconds: 3),

@@ -120,7 +120,7 @@ class DBPatientDetails {
       fullName: fullName,
       gender: gender,
       id: id,
-      isSmoker: isSmoker,
+      isSmoker: isSmoker == 1 ? true : false,
       phone: phone,
       updatedAt: updatedAt,
     );
@@ -136,7 +136,7 @@ class DBPatientDetails {
       ..fullName = pd.fullName
       ..gender = pd.gender
       ..id = pd.id
-      ..isSmoker = pd.isSmoker
+      ..isSmoker = pd.isSmoker == true ? 1 : 0
       ..phone = pd.phone
       ..updatedAt = pd.updatedAt;
   }

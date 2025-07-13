@@ -2,10 +2,7 @@
 
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_book_an_appointment.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_booked_appointment.dart';
-import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_patient_details_withimg.dart';
 import 'package:tlbisibida_doc/data/models/clinic%20scheduals/db_show_clinic_times.dart';
-import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_patient_treatments.dart';
-import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_treatment_details.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_rare_n_repeated_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_cats.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_items.dart';
@@ -13,8 +10,6 @@ import 'package:tlbisibida_doc/data/models/inventory/db_show_items_log.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_quants_for_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_subcats.dart';
 import 'package:tlbisibida_doc/data/models/operating%20payments/db_op_payments.dart';
-import 'package:tlbisibida_doc/data/models/patients%20payments/db_patient_payments.dart';
-import 'package:tlbisibida_doc/data/models/patients%20payments/db_patients_payment_from_to.dart';
 import 'package:tlbisibida_doc/data/models/secretary/db_secretaries.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_doc_gains.dart';
 import 'package:tlbisibida_doc/data/models/statistics/db_operating.dart';
@@ -32,7 +27,7 @@ class DbDocRepo implements DocRepo {
   Future<void> getAppointments() async {
     return await DioHelper.getData(
             'dentist/patients/appointments/get-booked-appointments?date=2025-05-05',
-            token: '')
+            token: CacheHelper.get('token'))
         .then((value) {
       dbAppointmentsResponse = DBAppointmentsResponse.fromJson(value?.data);
     }).catchError((error) {
@@ -138,57 +133,7 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBPatientDetailsResponse? dbPatientDetailsResponse;
-  @override
-  Future<void> getPatientDetails(int id) async {
-    return await DioHelper.getData('dentist/patients/show-patient/$id',
-            token: '')
-        .then((value) {
-      dbPatientDetailsResponse = DBPatientDetailsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getPatientDetails: ' + error.toString());
-    });
-  }
 
-  DBPatientPaymentsResponse? dbPatientPaymentsResponse;
-  @override
-  Future<void> getPatientPayments(int id) async {
-    return await DioHelper.getData('dentist/patients-payments/get-history/$id',
-            token: '')
-        .then((value) {
-      dbPatientPaymentsResponse =
-          DBPatientPaymentsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getPatientPayments: ' + error.toString());
-    });
-  }
-
-  DBPatientsPaymentsFromToResponse? dbPatientsPaymentsFromToResponse;
-  @override
-  Future<void> getPatientPaymentsFromTo() async {
-    return await DioHelper.getData('dentist/patients-payments/get-all-ordered',
-            token: '')
-        .then((value) {
-      dbPatientsPaymentsFromToResponse =
-          DBPatientsPaymentsFromToResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getPatientPaymentsFromTo: ' + error.toString());
-    });
-  }
-
-  DBPatientTreatmentsResponse? dbPatientTreatmentsResponse;
-  @override
-  Future<void> getPatientTreatment(int id) async {
-    return await DioHelper.getData(
-            'dentist/treatments/show-patient-treatments/$id',
-            token: '')
-        .then((value) {
-      dbPatientTreatmentsResponse =
-          DBPatientTreatmentsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getPatientTreatment: ' + error.toString());
-    });
-  }
 
   DBPatientStatisticsResponse? dbPatientStatisticsResponse;
   @override
@@ -265,19 +210,7 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-  DBTreatmentDetailsResponse? dbTreatmentDetailsResponse;
-  @override
-  Future<void> getTreatmentDetails(int id) async {
-    return await DioHelper.getData(
-            'dentist/treatments/show-treatment-details/$id',
-            token: '')
-        .then((value) {
-      dbTreatmentDetailsResponse =
-          DBTreatmentDetailsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getTreatmentDetails: ' + error.toString());
-    });
-  }
+
 
   DBTreatmentsStatisticsResponse? dbTreatmentsStatisticsResponse;
   @override

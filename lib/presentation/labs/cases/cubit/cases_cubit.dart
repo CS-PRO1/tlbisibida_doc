@@ -1,103 +1,94 @@
 import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tlbisibida_doc/domain/models/medical%20cases/case_details.dart';
-import 'package:tlbisibida_doc/domain/models/medical%20cases/caselist_from_lab.dart';
-import 'package:tlbisibida_doc/domain/models/medical%20cases/comments.dart';
+import 'package:tlbisibida_doc/domain/models/medical cases/case_details.dart';
+import 'package:tlbisibida_doc/domain/models/medical cases/caselist_from_lab.dart';
+import 'package:tlbisibida_doc/domain/models/medical cases/comments.dart';
 import 'package:tlbisibida_doc/domain/repo/cases/doc_repo_cases.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/cubit/cases_states.dart';
 
-class CasesCubit extends Cubit<String> {
+class CasesCubit extends Cubit<CasesState> {
   final DocRepoCases repo;
 
-  CasesCubit(this.repo) : super('');
-
-  //get case list
+  CasesCubit(this.repo) : super(CasesInitial());
 
   List<MedicalCaseItem> caselist = [];
   List<Comment> comments = [];
 
   Future<void> getcaselist(int id) async {
-    emit('case_list_loading');
+    emit(CasesLoading());
+    caselist.clear();
     try {
       await repo.getcaseList(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var caseitem in repo.dbMedicalCasesListResponse!.medicalCases!) {
+        caselist.add(caseitem.toDomain());
+      }
+      emit(CaseListLoaded(caselist));
+    } catch (e, stack) {
+      emit(CasesError('حدث خطأ أثناء تحميل قائمة الحالات.', stackTrace: stack));
     }
-
-    for (var caseitem in repo.dbMedicalCasesListResponse!.medicalCases!) {
-      caselist.add(caseitem.toDomain());
-    }
-
-    caselist.isNotEmpty ? emit('case_list_loaded') : emit('error');
-    print(state);
   }
 
-  //get case details
   MedicalCase? medicalCase;
-
+  List<Uint8List> imgList = [];
   Future<void> getCaseDetails(int id) async {
-    emit('case_details_loading');
+    emit(CasesLoading());
+    imgList.clear();
     try {
       await repo.getCaseDetails(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
-    }
-
-    medicalCase = (repo.dbMedicalCaseResponse!.medicalCase!.toDomain());
-
-    if (medicalCase != null) {
-      emit('case_details_loaded');
-      print(state);
-      for (var file in medicalCase!.medicalCaseFiles) {
-        getCaseImages(file.id!);
+      medicalCase = (repo.dbMedicalCaseResponse!.medicalCase!.toDomain());
+      if (medicalCase != null) {
+        emit(CaseDetailsLoaded(medicalCase!));
+        for (var file in medicalCase!.medicalCaseFiles) {
+          await getCaseImages(file.id!);
+        }
+      } else {
+        emit(CasesError('لم يتم العثور على تفاصيل الحالة.'));
       }
-    } else {
-      emit('error');
+      if (imgList.isNotEmpty) {
+        emit(ImagesLoaded(imgList));
+      }
+    } catch (e, stack) {
+      emit(CasesError('حدث خطأ أثناء تحميل تفاصيل الحالة.', stackTrace: stack));
     }
-    imgList.isNotEmpty ? emit('images_loaded') : emit('error_images');
-    print(state);
   }
-
-  //get comments
 
   Future<void> getcomment(int id) async {
-    emit('comments_loading');
+    emit(CasesLoading());
+    comments.clear();
     try {
       await repo.getComments(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var comment in repo.dbCommentsResponse!.comments!) {
+        comments.add(comment.toDomain());
+      }
+      emit(CommentsLoaded(comments));
+    } catch (e, stack) {
+      emit(CasesError('حدث خطأ أثناء تحميل التعليقات.', stackTrace: stack));
     }
-
-    for (var comment in repo.dbCommentsResponse!.comments!) {
-      comments.add(comment.toDomain());
-    }
-    comments.isNotEmpty ? emit('comments_loaded') : emit('error');
-    print(state);
   }
-  //get confirm delivery
 
   Future<void> confirmdelivery(int id) async {
-    bool succsess = false;
-    emit('confirming');
+    emit(ConfirmingDelivery());
     try {
-      succsess = await repo.confirmDelivery(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      final success = await repo.confirmDelivery(id);
+      if (success) {
+        emit(DeliveryConfirmed());
+      } else {
+        emit(CasesError('فشل تأكيد التسليم.'));
+      }
+    } catch (e, stack) {
+      emit(CasesError('حدث خطأ أثناء تأكيد التسليم.', stackTrace: stack));
     }
-
-    succsess ? emit('confirmed') : emit('error');
-    print(state);
   }
 
-  //get img
-  List<Uint8List> imgList = [];
   Future<void> getCaseImages(int id) async {
-    var image = await repo.getCasesimage(id);
-    image != null ? imgList.add(image) : image;
-    emit('image_added');
+    try {
+      var image = await repo.getCasesimage(id);
+      if (image != null) {
+        imgList.add(image);
+      }
+    } catch (e, stack) {
+      emit(CasesError('حدث خطأ أثناء تحميل الصور.', stackTrace: stack));
+    }
   }
 }

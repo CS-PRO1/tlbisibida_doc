@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
 import 'package:tlbisibida_doc/presentation/finance/components/dialogs/add_inf_dialog.dart';
-import 'package:tlbisibida_doc/presentation/finance/components/dialogs/add_op_dialog.dart';
 
 Widget addInFButton(BuildContext context) {
   return InkWell(

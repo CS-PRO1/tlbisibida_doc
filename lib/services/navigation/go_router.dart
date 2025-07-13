@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/bottom_nav.dart'; // Re-use your bottom nav
 import 'package:tlbisibida_doc/components/top_nav.dart'; // Re-use your top nav
-import 'package:tlbisibida_doc/constants/constants.dart'; // For route names and display names
 import 'package:tlbisibida_doc/presentation/authentication/provider/auth_provider.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 import 'package:tlbisibida_doc/presentation/Sessions/screens/add_session_details_screen%20.dart';
@@ -27,6 +26,14 @@ import 'package:tlbisibida_doc/presentation/profile/profile_screen.dart';
 import 'package:tlbisibida_doc/presentation/secretary/secretary_screen.dart';
 import 'package:tlbisibida_doc/presentation/statistics/statistics_screen.dart';
 import 'package:tlbisibida_doc/presentation/inventory/screens/item_list_screen.dart'; // Ensure this is imported
+import 'package:tlbisibida_doc/presentation/patients/providers/patients_provider.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/provider/labs_provider.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/provider/case_details_provider.dart';
+import 'package:tlbisibida_doc/presentation/profile/provider/profile_provider.dart';
+import 'package:tlbisibida_doc/presentation/secretary/provider/secretary_provider.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/login.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/register.dart';
+import 'package:tlbisibida_doc/presentation/authentication/screens/register 2.dart';
 
 // Define a map to easily get display names from route paths
 final Map<String, String> routeDisplayNames = {
@@ -73,15 +80,15 @@ class AppRouter {
       // Top-level routes that should NOT have any app bar (e.g., authentication)
       GoRoute(
         path: loginRoute,
-        builder: (context, state) => LoginProvider(),
+        builder: (context, state) => LoginProvider(child: LoginScreen()),
       ),
       GoRoute(
         path: registerRoute,
-        builder: (context, state) => RegisterProvider(),
+        builder: (context, state) => RegisterProvider(child: Register()),
       ),
       GoRoute(
         path: register2Route,
-        builder: (context, state) => Register2Provider(),
+        builder: (context, state) => Register2Provider(child: Register2()),
       ),
       GoRoute(
         path: roleRoute,
@@ -110,7 +117,7 @@ class AppRouter {
             title: routeDisplayNames[caseDetailsRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: CaseDetailsScreen(),
+          body: CaseDetailsProvider(child: CaseDetailsScreen()),
         ),
       ),
       GoRoute(
@@ -120,7 +127,7 @@ class AppRouter {
             title: routeDisplayNames[labInfoRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: LabInfoScreen(),
+          body: LabsProvider(child: LabInfoScreen()),
         ),
       ),
       GoRoute(
@@ -135,13 +142,19 @@ class AppRouter {
       ),
       GoRoute(
         path: patientInfoRoute,
-        builder: (context, state) => Scaffold(
-          appBar: TopNavigationBar(
-            title: routeDisplayNames[patientInfoRoute]!,
-            showBackButton: context.canPop(),
-          ),
-          body: PatientInfoScreen(),
-        ),
+        builder: (context, state) {
+          final patientId = state.extra as int? ?? 0;
+          return Scaffold(
+            appBar: TopNavigationBar(
+              title: routeDisplayNames[patientInfoRoute]!,
+              showBackButton: context.canPop(),
+            ),
+            body: PatientsProvider(
+                child: PatientsProvider(
+              child: PatientInfoScreen(patientId: patientId),
+            )),
+          );
+        },
       ),
       GoRoute(
         path: profileEditRoute,
@@ -150,7 +163,7 @@ class AppRouter {
             title: routeDisplayNames[profileEditRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: ProfileEditScreen(),
+          body: ProfileProvider(child: ProfileEditScreen()),
         ),
       ),
       GoRoute(
@@ -231,7 +244,7 @@ class AppRouter {
             title: routeDisplayNames[secretaryRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: SecretaryScreen(),
+          body: HistoryProvider(child: SecretaryScreen()),
         ),
       ),
 
@@ -291,7 +304,8 @@ class AppRouter {
           ),
           GoRoute(
             path: patientListRoute, // /patient_list
-            builder: (context, state) => PatientsListScreen(),
+            builder: (context, state) =>
+                PatientsProvider(child: PatientsListScreen()),
           ),
           GoRoute(
             path: myLabsListRoute, // /my_labs_list

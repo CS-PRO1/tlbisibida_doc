@@ -6,13 +6,14 @@ import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/controllers.dart';
 
 class LabsProvider extends StatelessWidget {
-  LabsProvider({super.key});
+  final Widget child;
+  LabsProvider({super.key, required this.child});
   final DocRepoLabs repo = locator<DbRepoLabs>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LabsCubit(repo),
-      // child: CaseDetailsScreen(),
+      child: child,
     );
   }
 }

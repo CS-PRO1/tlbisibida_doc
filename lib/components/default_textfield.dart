@@ -12,7 +12,8 @@ Widget defaultTextField(
     bool obscureText = false,
     String? Function(String?)? validator,
     TextInputType? keyboardType,
-    bool autofocus = false}) {
+    bool autofocus = false,
+    ValueChanged<String>? onChanged}) {
   return TextFormField(
     autofocus: autofocus,
     minLines: height,
@@ -21,6 +22,7 @@ Widget defaultTextField(
     validator: validator,
     keyboardType: keyboardType,
     obscureText: obscureText,
+    onChanged: onChanged,
     decoration: InputDecoration(
       label: Text(
         label,

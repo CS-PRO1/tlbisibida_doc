@@ -1,71 +1,75 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/secretary/secretaries.dart';
 import 'package:tlbisibida_doc/domain/repo/doc_repo.dart';
+import 'package:tlbisibida_doc/presentation/secretary/cubit/secretary_states.dart';
 
-class SecCubit extends Cubit<String> {
+class SecCubit extends Cubit<SecretaryState> {
   final DocRepo repo;
 
-  SecCubit(this.repo) : super('');
+  SecCubit(this.repo) : super(SecretaryInitial());
 
-  //get sec
-  bool auth = false;
   List<Secretary> sec = [];
+
   Future<void> getsec() async {
-    emit('get sec');
+    emit(SecretaryLoading());
+    sec.clear();
     try {
       await repo.getSecretaries();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      for (var secretary in repo.dbSecretariesResponse!.secretaries!) {
+        sec.add(secretary.toDomain());
+      }
+      emit(SecretaryLoaded(sec));
+    } catch (e, stack) {
+      emit(SecretaryError(e.toString(), stackTrace: stack));
     }
-    for (var secretary in repo.dbSecretariesResponse!.secretaries!) {
-      sec.add(secretary.toDomain());
-    }
-    auth ? emit('got sec') : emit('error');
-    print(state);
   }
-
-  //update  sec
 
   Future<void> updatesec(int id, String firstName, String lastName,
       String phone, String email, String attendenceTime, String address) async {
-    emit('updating');
+    emit(SecretaryUpdating());
     try {
-      auth = await repo.updateSecretary(
+      final auth = await repo.updateSecretary(
           id, firstName, lastName, phone, email, attendenceTime, address);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (auth) {
+        emit(SecretaryUpdated());
+        await getsec();
+      } else {
+        emit(SecretaryError('Failed to update secretary.'));
+      }
+    } catch (e, stack) {
+      emit(SecretaryError(e.toString(), stackTrace: stack));
     }
-    auth ? emit('updated') : emit('error');
-    print(state);
   }
-  //add  sec
 
   Future<void> addsec(String firstName, String lastName, String phone,
       String email, String attendenceTime, String address) async {
-    emit('adding');
+    emit(SecretaryAdding());
     try {
-      auth = await repo.postAddSecretary(
+      final auth = await repo.postAddSecretary(
           firstName, lastName, phone, email, attendenceTime, address);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (auth) {
+        emit(SecretaryAdded());
+        await getsec();
+      } else {
+        emit(SecretaryError('Failed to add secretary.'));
+      }
+    } catch (e, stack) {
+      emit(SecretaryError(e.toString(), stackTrace: stack));
     }
-    auth ? emit('added') : emit('error');
-    print(state);
   }
-  //delete  sec
 
   Future<void> delsec(int id) async {
-    emit('deleting');
+    emit(SecretaryDeleting());
     try {
-      auth = await repo.delSecretary(id);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      final auth = await repo.delSecretary(id);
+      if (auth) {
+        emit(SecretaryDeleted());
+        await getsec();
+      } else {
+        emit(SecretaryError('Failed to delete secretary.'));
+      }
+    } catch (e, stack) {
+      emit(SecretaryError(e.toString(), stackTrace: stack));
     }
-    auth ? emit('deleted') : emit('error');
-    print(state);
   }
 }

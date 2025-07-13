@@ -14,37 +14,43 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/repo/auth/doc_repo_auth.dart';
+import 'auth_state.dart';
 
-class AuthCubit extends Cubit<String> {
+class AuthCubit extends Cubit<AuthState> {
   final DocRepoAuth repo;
 
-  AuthCubit(this.repo) : super('');
+  AuthCubit(this.repo) : super(AuthInitial());
 
   //Login
   bool auth = false;
   Future<void> login(String email, String password, String guard) async {
-    emit('logging_in');
+    emit(AuthLoading());
     try {
       auth = await repo.postlogin(email, password, guard);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (auth) {
+        emit(AuthLoggedIn());
+      } else {
+        emit(const AuthError(
+            'لم يتم تسجيل الدخول ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى'));
+      }
+    } catch (e, stack) {
+      emit(AuthError('حدث خطأ أثناء تسجيل الدخول', stackTrace: stack));
     }
-    auth ? emit('logged_in') : emit('error');
-    print(state);
   }
 
   //Logout
   Future<void> logout() async {
-    emit('logging_out');
+    emit(AuthLoading());
     try {
       auth = await repo.postlogout();
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (auth) {
+        emit(AuthLoggedOut());
+      } else {
+        emit(const AuthError('حدث خطأ أثناء تسجيل الخروج'));
+      }
+    } catch (e, stack) {
+      emit(AuthError('حدث خطأ أثناء تسجيل الخروج', stackTrace: stack));
     }
-    auth ? emit('logged_out') : emit('error');
-    print(state);
   }
 
   Map<String, dynamic> registrydata = {};
@@ -84,14 +90,16 @@ class AuthCubit extends Cubit<String> {
 
   //Register
   Future<void> register() async {
-    emit('registering');
+    emit(AuthLoading());
     try {
       auth = await repo.postregister(registrydata);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (auth) {
+        emit(AuthRegistered());
+      } else {
+        emit(const AuthError('تأكد من المعلومات المدخلة ثم حاول مرة أخرى'));
+      }
+    } catch (e, stack) {
+      emit(AuthError('حدث خطأ أثناء إنشاء الحساب', stackTrace: stack));
     }
-    auth ? emit('registered') : emit('error');
-    print(state);
   }
 }
