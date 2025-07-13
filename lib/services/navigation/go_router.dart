@@ -309,7 +309,7 @@ class AppRouter {
           ),
           GoRoute(
             path: myLabsListRoute, // /my_labs_list
-            builder: (context, state) => MylabsScreen(),
+            builder: (context, state) => LabsProvider(child: MylabsScreen()),
           ),
           GoRoute(
             path: profileRoute, // /doc_profile
