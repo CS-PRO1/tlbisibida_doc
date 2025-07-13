@@ -1,5 +1,5 @@
 import 'package:tlbisibida_doc/domain/models/profile/lab_manager.dart';
-import 'package:tlbisibida_doc/services/lapphone_chat.dart';
+import 'package:tlbisibida_doc/utils/lab_phone_convert.dart';
 
 class DBLabLabProfileResponse {
   bool? status;

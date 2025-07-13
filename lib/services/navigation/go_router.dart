@@ -31,6 +31,7 @@ import 'package:tlbisibida_doc/presentation/labs/screens/provider/labs_provider.
 import 'package:tlbisibida_doc/presentation/labs/cases/provider/case_details_provider.dart';
 import 'package:tlbisibida_doc/presentation/profile/provider/profile_provider.dart';
 import 'package:tlbisibida_doc/presentation/secretary/provider/secretary_provider.dart';
+import 'package:tlbisibida_doc/presentation/appointments/provider/appointments_provider.dart';
 import 'package:tlbisibida_doc/presentation/authentication/screens/login.dart';
 import 'package:tlbisibida_doc/presentation/authentication/screens/register.dart';
 import 'package:tlbisibida_doc/presentation/authentication/screens/register 2.dart';
@@ -292,7 +293,8 @@ class AppRouter {
           // These are the main tab routes (direct children of ShellRoute)
           GoRoute(
             path: rootRoute, // /
-            builder: (context, state) => AppointmentsCalendarScreen(),
+            builder: (context, state) =>
+                AppointmentsProvider(child: AppointmentsCalendarScreen()),
           ),
           GoRoute(
             path: financeRoute, // /finance

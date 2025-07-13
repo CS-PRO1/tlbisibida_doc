@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_book_an_appointment.dart';
-import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_booked_appointment.dart';
 import 'package:tlbisibida_doc/data/models/clinic%20scheduals/db_show_clinic_times.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_rare_n_repeated_items.dart';
 import 'package:tlbisibida_doc/data/models/inventory/db_show_cats.dart';
@@ -22,32 +20,6 @@ import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
 import 'package:tlbisibida_doc/services/dio/dio.dart';
 
 class DbDocRepo implements DocRepo {
-  @override
-  DBAppointmentsResponse? dbAppointmentsResponse;
-  Future<void> getAppointments() async {
-    return await DioHelper.getData(
-            'dentist/patients/appointments/get-booked-appointments?date=2025-05-05',
-            token: CacheHelper.get('token'))
-        .then((value) {
-      dbAppointmentsResponse = DBAppointmentsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getAppointments: ' + error.toString());
-    });
-  }
-
-  @override
-  DBAvailableSlotsResponse? dbAvailableSlotsResponse;
-  Future<void> getAvailableSlots() async {
-    return await DioHelper.getData(
-            'dentist/patients/appointments/get-avilable-slots?date=2025-5-27&duration=30',
-            token: '')
-        .then((value) {
-      dbAvailableSlotsResponse = DBAvailableSlotsResponse.fromJson(value?.data);
-    }).catchError((error) {
-      print('error in getAvailableSlots: ' + error.toString());
-    });
-  }
-
   @override
   DBCategoriesResponse? dbCategoriesResponse;
   Future<void> getCats() async {
@@ -133,8 +105,6 @@ class DbDocRepo implements DocRepo {
     });
   }
 
-
-
   DBPatientStatisticsResponse? dbPatientStatisticsResponse;
   @override
   Future<void> getPatientsStatistics() async {
@@ -209,8 +179,6 @@ class DbDocRepo implements DocRepo {
       print('error in getSubCats: ' + error.toString());
     });
   }
-
-
 
   DBTreatmentsStatisticsResponse? dbTreatmentsStatisticsResponse;
   @override
