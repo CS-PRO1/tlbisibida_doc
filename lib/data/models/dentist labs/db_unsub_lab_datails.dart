@@ -37,6 +37,7 @@ class DBLabDetailsResponse {
 }
 
 class DBLabDetails {
+  int? id;
   String? fullName;
   String? labFromHour; // Consider parsing to TimeOfDay or DateTime
   String? labToHour; // Consider parsing to TimeOfDay or DateTime
@@ -48,6 +49,7 @@ class DBLabDetails {
   String? labType;
 
   DBLabDetails({
+    this.id,
     this.fullName,
     this.labFromHour,
     this.labToHour,
@@ -60,6 +62,7 @@ class DBLabDetails {
 
   factory DBLabDetails.fromJson(Map<String, dynamic> json) {
     return DBLabDetails(
+      id: json['id'] as int?,
       fullName: json['full_name'] as String?,
       labFromHour: json['lab_from_hour'] as String?,
       labToHour: json['lab_to_hour'] as String?,
@@ -74,6 +77,7 @@ class DBLabDetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['full_name'] = fullName;
     data['lab_from_hour'] = labFromHour;
     data['lab_to_hour'] = labToHour;
@@ -87,6 +91,7 @@ class DBLabDetails {
 
   LabDetails toDomain() {
     return LabDetails(
+      id: id,
       fullName: fullName,
       labFromHour: labFromHour,
       labToHour: labToHour,
@@ -104,6 +109,7 @@ class DBLabDetails {
   // --- FROM DOMAIN FUNCTION ---
   static DBLabDetails fromDomain(LabDetails domain) {
     return DBLabDetails(
+      id: domain.id,
       fullName: domain.fullName,
       labFromHour: domain.labFromHour,
       labToHour: domain.labToHour,

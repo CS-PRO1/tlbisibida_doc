@@ -1,10 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
-import 'package:tlbisibida_doc/presentation/labs/cases/cubit/cases_cubit.dart';
 import 'package:tlbisibida_doc/presentation/labs/dialogs/bill_details_dialog.dart';
 import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 

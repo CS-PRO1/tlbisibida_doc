@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patients_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 /// Example without datasource
@@ -12,6 +14,7 @@ class PatientsFinanceTable extends StatelessWidget {
   int count = 10;
   @override
   Widget build(BuildContext context) {
+    final patientsCubit = context.read<PatientsCubit>();
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -59,15 +62,16 @@ class PatientsFinanceTable extends StatelessWidget {
                 count,
                 (index) => DataRow(
                   cells: [
-                    const DataCell(Center(
+                    DataCell(Center(
                         child: CustomText(
-                      text: 'تحسين التحسيني',
+                      text: patientsCubit.patients[index].fullName!,
                       alignment: TextAlign.center,
                       size: 14,
                     ))),
                     DataCell(Center(
                         child: CustomText(
-                      text: '-350000',
+                      text: patientsCubit.patients[index].currentBalance
+                          .toString(),
                       textDirection: TextDirection.ltr,
                       alignment: TextAlign.center,
                       size: 14,

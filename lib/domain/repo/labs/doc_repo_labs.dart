@@ -5,6 +5,7 @@ import 'package:tlbisibida_doc/data/models/dentist%20labs/db_show_mylabs.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_show_unsub_labs.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_unsub_lab_datails.dart';
 import 'package:tlbisibida_doc/data/models/medical%20cases/db_show_labs-send%20case%20to%20lab.dart';
+import 'package:tlbisibida_doc/data/models/dentist labs/db_account_record.dart';
 
 abstract class DocRepoLabs {
   //labs
@@ -19,12 +20,15 @@ abstract class DocRepoLabs {
 
   //credit
   DBLatestLabAccountResponse? dbLatestLabAccountResponse;
+  DBAccountRecordsResponse? dbAccountRecordsResponse;
 
   Future<void> getLabBills(int id);
   Future<void> getBillDetails(int id);
   Future<void> getMyLabs();
   Future<void> getAllLabs();
   Future<void> getAllLabDetails(int id);
-  Future<void> getLabsListForChoice();
+  Future<void> getLabsListForChoice({int page = 1});
   Future<void> getlatestacc(int id);
+  Future<void> getAccountRecordsOfLab(int labId);
+  Future<void> submitJoinRequestToLab(int labId);
 }

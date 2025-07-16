@@ -10,10 +10,10 @@ import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 // ignore: must_be_immutable
 class LabPaymentsTable extends StatelessWidget {
   LabPaymentsTable({super.key});
-  int count = 10;
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LabsCubit>();
+    int count = 10;
 
     return Center(
       child: Container(

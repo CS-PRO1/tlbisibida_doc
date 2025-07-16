@@ -1,6 +1,9 @@
 import 'package:tlbisibida_doc/domain/models/bills/show_bill_details.dart';
 import 'package:tlbisibida_doc/domain/models/bills/show_lab_bills.dart';
 import 'package:tlbisibida_doc/domain/models/dentist labs/show_mylabs.dart';
+import 'package:tlbisibida_doc/domain/models/dentist labs/account_record.dart';
+import 'package:tlbisibida_doc/domain/models/dentist labs/show_unsub_labs.dart';
+import 'package:tlbisibida_doc/domain/models/dentist labs/unsub_lab_datails.dart';
 
 abstract class LabsState {
   const LabsState();
@@ -17,9 +20,14 @@ class LabsError extends LabsState {
   const LabsError(this.message, {this.errorCode, this.stackTrace});
 }
 
+class LabsSuccess extends LabsState {
+  final String message;
+  const LabsSuccess(this.message);
+}
+
 // My Labs
 class MyLabsLoaded extends LabsState {
-  final List<JoinedLab> myLabs;
+  final LabsIamJoind myLabs;
   const MyLabsLoaded(this.myLabs);
 }
 
@@ -43,6 +51,24 @@ class BillDetailsLoaded extends LabsState {
 
 // Lab List from Choice
 class LabListFromChoiceLoaded extends LabsState {
-  final List<JoinedLab> labsList;
+  final List<JoinedLabWithAccount> labsList;
   const LabListFromChoiceLoaded(this.labsList);
+}
+
+// Account Records
+class LabsAccountRecordsLoaded extends LabsState {
+  final List<AccountRecord> accountRecords;
+  const LabsAccountRecordsLoaded(this.accountRecords);
+}
+
+// Unsubscribed Labs
+class LabsUnsubscribedLabsLoaded extends LabsState {
+  final AllLabsPaginationData labsData;
+  const LabsUnsubscribedLabsLoaded(this.labsData);
+}
+
+// Unsubscribed Lab Details
+class LabsUnsubscribedLabDetailsLoaded extends LabsState {
+  final LabDetails labDetails;
+  const LabsUnsubscribedLabDetailsLoaded(this.labDetails);
 }

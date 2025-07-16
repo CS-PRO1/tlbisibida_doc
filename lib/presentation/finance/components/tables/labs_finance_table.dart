@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class LabsFinanceTable extends StatelessWidget {
@@ -10,6 +12,7 @@ class LabsFinanceTable extends StatelessWidget {
   int count = 10;
   @override
   Widget build(BuildContext context) {
+    final labsCubit = context.read<LabsCubit>();
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -57,16 +60,19 @@ class LabsFinanceTable extends StatelessWidget {
                 count,
                 (index) => DataRow(
                   cells: [
-                    const DataCell(Center(
+                    DataCell(Center(
                         child: CustomText(
-                      text: 'مخبر الحموي',
+                      text: labsCubit
+                          .myLabsIamJoind!.labsWithAccounts![index].labName!,
                       size: 14,
                       alignment: TextAlign.center,
                     ))),
                     DataCell(Center(
                         child: CustomText(
                       textDirection: TextDirection.ltr,
-                      text: '-1,150,000',
+                      text: labsCubit.myLabsIamJoind!.labsWithAccounts![index]
+                          .currentAccount
+                          .toString(),
                       size: 14,
                       alignment: TextAlign.center,
                     ))),
@@ -75,7 +81,9 @@ class LabsFinanceTable extends StatelessWidget {
                       onPressed: () {
                         // locator<NavigationService>().navigateTo(labInfoRoute);
                         // Navigator.pushNamed(context, labInfoRoute);
-                        context.push(labInfoRoute);
+                        context.push(labInfoRoute,
+                            extra: labsCubit.myLabsIamJoind!
+                                .labsWithAccounts![index].labId);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,

@@ -6,6 +6,7 @@ import 'package:tlbisibida_doc/data/models/dentist%20labs/db_latest_acc.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_show_mylabs.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_show_unsub_labs.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20labs/db_unsub_lab_datails.dart';
+import 'package:tlbisibida_doc/data/models/dentist labs/db_account_record.dart';
 import 'package:tlbisibida_doc/data/models/medical%20cases/db_show_labs-send%20case%20to%20lab.dart';
 import 'package:tlbisibida_doc/domain/repo/labs/doc_repo_labs.dart';
 import 'package:tlbisibida_doc/services/Cache/cache_helper.dart';
@@ -79,9 +80,9 @@ class DbRepoLabs implements DocRepoLabs {
   }
 
   @override
-  Future<void> getLabsListForChoice() async {
+  Future<void> getLabsListForChoice({int page = 1}) async {
     return await DioHelper.getData(
-            'dentist/labs/show_all_labs_dentist_not_injoied?page=1',
+            'dentist/labs/show_all_labs_dentist_not_injoied?page=$page',
             token: CacheHelper.get('token'))
         .then((value) {
       dbLabsResponse = DBLabsResponse.fromJson(value?.data);
@@ -114,6 +115,33 @@ class DbRepoLabs implements DocRepoLabs {
           DBLatestLabAccountResponse.fromJson(value?.data);
     }).catchError((error) {
       print('error in getAppointments: ' + error.toString());
+    });
+  }
+
+  @override
+  DBAccountRecordsResponse? dbAccountRecordsResponse;
+
+  @override
+  Future<void> getAccountRecordsOfLab(int labId) async {
+    return await DioHelper.getData(
+      'dentist/labs/Account_records_of_lab/$labId',
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      dbAccountRecordsResponse = DBAccountRecordsResponse.fromJson(value?.data);
+    }).catchError((error) {
+      print('error in getAccountRecordsOfLab: ' + error.toString());
+    });
+  }
+
+  @override
+  Future<void> submitJoinRequestToLab(int labId) async {
+    return await DioHelper.getData(
+      'dentist/labs/submit_join_request_to_lab/$labId',
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      // Optionally handle response or store a message
+    }).catchError((error) {
+      print('error in submitJoinRequestToLab: ' + error.toString());
     });
   }
 }

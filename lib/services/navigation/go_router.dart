@@ -121,15 +121,30 @@ class AppRouter {
           body: CaseDetailsProvider(child: CaseDetailsScreen()),
         ),
       ),
+      // GoRoute(
+      //   path: labInfoRoute,
+      //   builder: (context, state) => Scaffold(
+      //     appBar: TopNavigationBar(
+      //       title: routeDisplayNames[labInfoRoute]!,
+      //       showBackButton: context.canPop(),
+      //     ),
+      //     body: LabsProvider(child: LabInfoScreen()),
+      //   ),
+      // ),
       GoRoute(
         path: labInfoRoute,
-        builder: (context, state) => Scaffold(
-          appBar: TopNavigationBar(
-            title: routeDisplayNames[labInfoRoute]!,
-            showBackButton: context.canPop(),
-          ),
-          body: LabsProvider(child: LabInfoScreen()),
-        ),
+        builder: (context, state) {
+          final labid = state.extra as int? ?? 0;
+          return Scaffold(
+            appBar: TopNavigationBar(
+              title: routeDisplayNames[labInfoRoute]!,
+              showBackButton: context.canPop(),
+            ),
+            body: LabsProvider(
+              child: LabInfoScreen(labId: labid),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: sendCaseToLabRoute,
@@ -224,7 +239,9 @@ class AppRouter {
             title: routeDisplayNames[labsListRoute]!,
             showBackButton: context.canPop(),
           ),
-          body: const LabsListScreen(),
+          body: LabsProvider(
+            child: LabsListScreen(),
+          ),
         ),
       ),
       GoRoute(
