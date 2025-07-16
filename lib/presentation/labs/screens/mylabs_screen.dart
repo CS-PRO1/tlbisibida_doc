@@ -10,109 +10,108 @@ import 'package:tlbisibida_doc/presentation/labs/tables/lab_cases_table.dart';
 import 'package:tlbisibida_doc/presentation/labs/tables/lab_payments_table.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
-import 'package:tlbisibida_doc/components/tusk_icons.dart'; // Assuming this contains TuskIcons.lab_icon
 
 // Define the list of labs for the carousel
-final List<Map> imgList = [
-  {
-    'name': 'مخبر الحموي',
-    'icon': Icon(
-      TuskIcons.lab_icon, // Using the icon from your components
-      size: 100,
-      color: cyan500, // Using colors from your constants
-    ),
-    'credit': 5000000,
-    'cases': [
-      {
-        'id': 1,
-        'name': 'تحسين التحسيني',
-        'date': DateTime(2025, 5, 5),
-      },
-      {
-        'id': 2,
-        'name': 'تحسين التحسيني',
-        'date': DateTime(2025, 5, 5),
-      },
-      {
-        'id': 3,
-        'name': 'تحسين التحسيني',
-        'date': DateTime(2025, 5, 5),
-      },
-      {
-        'id': 4,
-        'name': 'تحسين التحسيني',
-        'date': DateTime(2025, 5, 5),
-      }
-    ],
-  },
-  {
-    'name': 'مخبر الحموي 2', // Added a second lab for demonstration
-    'icon': Icon(
-      TuskIcons.lab_icon,
-      size: 100,
-      color: cyan500,
-    ),
-    'credit': -5000000,
-    'cases': [
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-      {
-        'id': 1,
-        'name': 'حسان التحسيني',
-        'date': DateTime(2025, 4, 22),
-      },
-    ],
-  },
-  {
-    'name': 'مخبر الحموي 3', // Added a third lab for demonstration
-    'icon': Icon(
-      TuskIcons.lab_icon,
-      size: 100,
-      color: cyan500,
-    ),
-    'credit': 1000000,
-    'cases': [
-      {
-        'id': 1,
-        'name': 'محسن التحسيني',
-        'date': DateTime(2025, 12, 9),
-      },
-      {
-        'id': 1,
-        'name': 'محسن التحسيني',
-        'date': DateTime(2025, 12, 9),
-      },
-      {
-        'id': 1,
-        'name': 'محسن التحسيني',
-        'date': DateTime(2025, 12, 9),
-      },
-    ],
-  },
-];
+// final List<Map> imgList = [
+//   {
+//     'name': 'مخبر الحموي',
+//     'icon': Icon(
+//       TuskIcons.lab_icon, // Using the icon from your components
+//       size: 100,
+//       color: cyan500, // Using colors from your constants
+//     ),
+//     'credit': 5000000,
+//     'cases': [
+//       {
+//         'id': 1,
+//         'name': 'تحسين التحسيني',
+//         'date': DateTime(2025, 5, 5),
+//       },
+//       {
+//         'id': 2,
+//         'name': 'تحسين التحسيني',
+//         'date': DateTime(2025, 5, 5),
+//       },
+//       {
+//         'id': 3,
+//         'name': 'تحسين التحسيني',
+//         'date': DateTime(2025, 5, 5),
+//       },
+//       {
+//         'id': 4,
+//         'name': 'تحسين التحسيني',
+//         'date': DateTime(2025, 5, 5),
+//       }
+//     ],
+//   },
+//   {
+//     'name': 'مخبر الحموي 2', // Added a second lab for demonstration
+//     'icon': Icon(
+//       TuskIcons.lab_icon,
+//       size: 100,
+//       color: cyan500,
+//     ),
+//     'credit': -5000000,
+//     'cases': [
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'حسان التحسيني',
+//         'date': DateTime(2025, 4, 22),
+//       },
+//     ],
+//   },
+//   {
+//     'name': 'مخبر الحموي 3', // Added a third lab for demonstration
+//     'icon': Icon(
+//       TuskIcons.lab_icon,
+//       size: 100,
+//       color: cyan500,
+//     ),
+//     'credit': 1000000,
+//     'cases': [
+//       {
+//         'id': 1,
+//         'name': 'محسن التحسيني',
+//         'date': DateTime(2025, 12, 9),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'محسن التحسيني',
+//         'date': DateTime(2025, 12, 9),
+//       },
+//       {
+//         'id': 1,
+//         'name': 'محسن التحسيني',
+//         'date': DateTime(2025, 12, 9),
+//       },
+//     ],
+//   },
+// ];
 
 // List of colors for the container, matching the number of carousel items
 // You can customize these colors based on your design

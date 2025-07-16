@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -11,6 +13,8 @@ class LabPaymentsTable extends StatelessWidget {
   int count = 10;
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<LabsCubit>();
+
     return Center(
       child: Container(
         decoration: BoxDecoration(

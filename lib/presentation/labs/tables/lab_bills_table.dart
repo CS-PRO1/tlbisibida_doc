@@ -1,9 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/labs/cases/cubit/cases_cubit.dart';
 import 'package:tlbisibida_doc/presentation/labs/dialogs/bill_details_dialog.dart';
+import 'package:tlbisibida_doc/presentation/labs/screens/cubit/labs_cubit.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -12,6 +15,8 @@ class LabBillsTable extends StatelessWidget {
   int count = 10;
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<LabsCubit>();
+
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -72,7 +77,7 @@ class LabBillsTable extends StatelessWidget {
                               style: TextStyle(color: cyan500),
                             ),
                             CustomText(
-                              text: DateFormat.yMd().format(DateTime.now()),
+                              text: cubit.labbillslist[index].dateFrom!,
                               size: 14,
                               alignment: TextAlign.center,
                             ),
@@ -86,7 +91,7 @@ class LabBillsTable extends StatelessWidget {
                               style: TextStyle(color: cyan500),
                             ),
                             CustomText(
-                              text: DateFormat.yMd().format(DateTime.now()),
+                              text: cubit.labbillslist[index].dateTo!,
                               size: 14,
                               alignment: TextAlign.center,
                             ),
@@ -96,7 +101,7 @@ class LabBillsTable extends StatelessWidget {
                     ))),
                     DataCell(Center(
                         child: CustomText(
-                      text: '3,500,000',
+                      text: cubit.labbillslist[index].totalCost.toString(),
                       size: 14,
                       alignment: TextAlign.center,
                     ))),
