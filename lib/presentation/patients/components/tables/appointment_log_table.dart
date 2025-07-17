@@ -1,17 +1,24 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patients_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
 class AppointmentLogTable extends StatelessWidget {
-  AppointmentLogTable({super.key});
-  int count = 10;
+  const AppointmentLogTable({super.key});
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<PatientsCubit>();
+    final items = cubit.patientTreatments;
+
+    if (items.isEmpty) {
+      return const Center(child: Text('لا توجد بيانات للعرض'));
+    }
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -25,7 +32,7 @@ class AppointmentLogTable extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: (56 * count) + 40,
+            height: (56 * items.length) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,
@@ -33,13 +40,6 @@ class AppointmentLogTable extends StatelessWidget {
               horizontalMargin: 12,
               minWidth: 300,
               columns: const [
-                // DataColumn(
-                //   label: Center(
-                //       child: Text(
-                //     'رقم الفاتورة',
-                //     style: TextStyle(color: cyan300),
-                //   )),
-                // ),
                 DataColumn(
                   label: Center(
                       child: Text(
@@ -63,24 +63,17 @@ class AppointmentLogTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                count,
+                items.length,
                 (index) => DataRow(
                   cells: [
-                    // const DataCell(Center(
-                    //     child: CustomText(
-                    //   text: '001',
-                    // ))),
-                    const DataCell(Center(child: CustomText(text: 'قلع ضرس'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
+                    DataCell(Center(
+                        child: CustomText(text: items[index].type ?? ''))),
+                    DataCell(Center(
+                        child: CustomText(text: items[index].date ?? ''))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        // locator<NavigationService>()
-                        //     .navigateTo(sessionDetailsRoute);
-                        // Navigator.pushNamed(context, sessionDetailsRoute);
-                                                context.push(sessionDetailsRoute);
-
+                        context.push(sessionDetailsRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
@@ -96,4 +89,10 @@ class AppointmentLogTable extends StatelessWidget {
       ),
     );
   }
+}
+
+class AppointmentLogItem {
+  final String sessionName;
+  final String sessionDate;
+  AppointmentLogItem({required this.sessionName, required this.sessionDate});
 }

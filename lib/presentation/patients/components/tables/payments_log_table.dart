@@ -1,15 +1,20 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/components/custom_text.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patients_cubit.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
 class PaymentsLogTable extends StatelessWidget {
-  PaymentsLogTable({super.key});
-  int count = 10;
+  const PaymentsLogTable({super.key});
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<PatientsCubit>();
+    if (cubit.patientPayments.isEmpty) {
+      return const Center(child: Text('لا توجد بيانات للعرض'));
+    }
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -24,7 +29,7 @@ class PaymentsLogTable extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
             width: 230,
-            height: (56 * count) + 40,
+            height: (56 * cubit.patientPayments.length) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,
@@ -48,15 +53,18 @@ class PaymentsLogTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                count,
-                (index) => const DataRow(
+                cubit.patientPayments.length,
+                (index) => DataRow(
                   cells: [
                     DataCell(Center(
                         child: CustomText(
-                      text: '200,000',
+                      text: cubit.patientPayments[index].value.toString(),
                       textDirection: TextDirection.ltr,
                     ))),
-                    DataCell(Center(child: CustomText(text: '5/11/2024'))),
+                    DataCell(Center(
+                        child: CustomText(
+                            text: cubit.patientPayments[index].paymentDate ??
+                                ''))),
                   ],
                 ),
               ),

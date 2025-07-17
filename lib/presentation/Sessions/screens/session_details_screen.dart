@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tlbisibida_doc/components/default_button.dart';
 import 'package:tlbisibida_doc/components/image_gallery.dart';
 import 'package:tlbisibida_doc/constants/constants.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patient_states.dart';
+import 'package:tlbisibida_doc/presentation/patients/cubits/patients_cubit.dart';
 import 'package:tlbisibida_doc/services/navigation/routes.dart';
 
 class SessionDetailsScreen extends StatelessWidget {
@@ -11,34 +14,176 @@ class SessionDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: cyan100, borderRadius: BorderRadius.circular(30)),
-                height: MediaQuery.of(context).size.height / 2.9,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 15,
+      body: BlocConsumer<PatientsCubit, PatientsState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          final cubit = context.read<PatientsCubit>();
+          cubit.getPatientSessionImages(cubit.treatmentDetails?.id ?? 0);
+          return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: cyan100,
+                          borderRadius: BorderRadius.circular(30)),
+                      height: MediaQuery.of(context).size.height / 2.9,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'اسم المريض',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    cubit.patientDetails?.fullName ?? '',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: cyan600,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                color: cyan400,
+                                height: .5,
+                                width: 250,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'تاريخ المعالجة',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        cubit.treatmentDetails?.createdAt ?? '',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: cyan600,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  Container(
+                                    color: cyan400,
+                                    width: .5,
+                                    height: 50,
+                                  ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'نوع المعالجة',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        cubit.treatmentDetails?.type ?? '',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: cyan600,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                color: cyan400,
+                                height: .5,
+                                width: 250,
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'الوصف',
+                                      style: TextStyle(
+                                          fontSize: 16, color: cyan600),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        cubit.treatmentDetails?.details ?? '',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: cyan100,
+                          borderRadius: BorderRadius.circular(30)),
+                      // height: MediaQuery.of(context).size.height / 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              'اسم المريض',
+                              'حساب الجلسة',
                               style: TextStyle(fontSize: 16),
                             ),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text(
-                              'اسماعيل احمد كنباوي',
+                              cubit.treatmentDetails?.cost.toString() ?? '',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: cyan600,
@@ -46,172 +191,36 @@ class SessionDetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          color: cyan400,
-                          height: .5,
-                          width: 250,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  'تاريخ المعالجة',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  '22/4/2025',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: cyan600,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 50,
-                            ),
-                            Container(
-                              color: cyan400,
-                              width: .5,
-                              height: 50,
-                            ),
-                            const SizedBox(
-                              width: 50,
-                            ),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  'نوع المعالجة',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'سحب عصب',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: cyan600,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          color: cyan400,
-                          height: .5,
-                          width: 250,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SingleChildScrollView(
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'الوصف',
-                                style: TextStyle(fontSize: 16, color: cyan600),
-                              ),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  'سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي سحب عصب مع تخدير موضعي',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: cyan100, borderRadius: BorderRadius.circular(30)),
-                // height: MediaQuery.of(context).size.height / 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'حساب الجلسة',
-                        style: TextStyle(fontSize: 16),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: cyan100,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageGallery(images: cubit.imgList),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '1,150,000',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: cyan600,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    defaultButton(
+                        text: 'إرسال الحالة إلى مخبر',
+                        function: () =>
+                            // locator<NavigationService>().navigateTo(sendCaseToLabRoute),
+                            // Navigator.pushNamed(context, sendCaseToLabRoute))
+                            context.push(sendCaseToLabRoute)),
+                    SizedBox(
+                      height: 30,
+                    )
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: cyan100, borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ImageGallery(
-                    images: [
-                      //TODO ADD IMG DOWNLOAD
-                      // 'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
-                      // 'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
-                      // 'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              defaultButton(
-                  text: 'إرسال الحالة إلى مخبر',
-                  function: () =>
-                      // locator<NavigationService>().navigateTo(sendCaseToLabRoute),
-                      // Navigator.pushNamed(context, sendCaseToLabRoute))
-                      context.push(sendCaseToLabRoute)),
-              SizedBox(
-                height: 30,
-              )
-            ],
-          ),
-        ),
+              ));
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(

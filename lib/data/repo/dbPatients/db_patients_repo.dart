@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_patient_details_withimg.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_all_patients.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_patient_treatments.dart';
@@ -101,4 +103,20 @@ class DbPatientsRepo extends DocRepoPatients {
       print('error in getAllPatients: ' + error.toString());
     });
   }
+
+  Future<Uint8List>? getPatientSessionPix(int id) async =>
+      await DioHelper.getImage(
+              'dentist/treatments/download-treatment-image/$id',
+              token: CacheHelper.get('token'))
+          .then((value) {
+        if (value != null && value.data['status']) {
+          return value.data;
+        } else {
+          print(" failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return null;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return null;
+      });
 }

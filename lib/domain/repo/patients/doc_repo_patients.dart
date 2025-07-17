@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_show_patient_details_withimg.dart';
 import 'package:tlbisibida_doc/data/models/appointments%20&%20patients/db_all_patients.dart';
 import 'package:tlbisibida_doc/data/models/dentist%20sessions/db_show_patient_treatments.dart';
@@ -13,10 +15,11 @@ abstract class DocRepoPatients {
   DBPatientsPaymentsFromToResponse? dbPatientsPaymentsFromToResponse;
   DBPatientsResponse? dbAllPatientsResponse;
 
-  Future<void> getPatientTreatment(int id);
-  Future<void> getPatientDetails(int id);
-  Future<void> getTreatmentDetails(int id);
   Future<void> getPatientPayments(int id);
   Future<void> getPatientPaymentsFromTo();
   Future<void> getAllPatients({String? fullName, String? sortBy, int? page});
+  Future<void> getPatientTreatment(int patientId);
+  Future<void> getTreatmentDetails(int treatmentId);
+  Future<void> getPatientDetails(int id);
+  Future<Uint8List>? getPatientSessionPix(int id);
 }

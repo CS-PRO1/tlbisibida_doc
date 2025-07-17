@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:tlbisibida_doc/domain/models/appoinments & patients/show_patient_details_withimg.dart';
 import 'package:tlbisibida_doc/domain/models/appoinments & patients/all_patients.dart';
 import 'package:tlbisibida_doc/domain/models/dentist sessions/show_patient_treatments.dart';
@@ -101,4 +103,9 @@ class PatientsPaymentsFromToError extends PatientsState {
   final StackTrace? stackTrace;
   const PatientsPaymentsFromToError(this.message,
       {this.errorCode, this.stackTrace});
+}
+
+class ImagesLoaded extends PatientsState {
+  final List<Uint8List> images;
+  ImagesLoaded(this.images);
 }

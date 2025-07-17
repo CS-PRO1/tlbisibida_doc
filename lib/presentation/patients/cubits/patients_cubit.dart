@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tlbisibida_doc/domain/models/appoinments & patients/show_patient_details_withimg.dart';
 import 'package:tlbisibida_doc/domain/models/appoinments & patients/all_patients.dart';
@@ -244,4 +246,44 @@ class PatientsCubit extends Cubit<PatientsState> {
         break;
     }
   }
+
+  List<Uint8List> imgList = [];
+  Future<void> getPatientSessionImages(int id) async {
+    var image = await repo.getPatientSessionPix(id);
+    if (image != null) imgList.add(image);
+    emit(ImagesLoaded(imgList));
+  }
+
+  // Future<void> fetchPatientTreatments(int patientId) async {
+  //   emit(PatientTreatmentsLoading());
+  //   try {
+  //     await repo.getPatientTreatment(patientId);
+  //     final treatments = repo.dbPatientTreatmentsResponse?.patientTreatments;
+  //     if (treatments != null && treatments.isNotEmpty) {
+  //       emit(PatientTreatmentsLoaded(
+  //           treatments.map((e) => e.toDomain()).toList()));
+  //     } else {
+  //       emit(PatientTreatmentsError('لا يوجد علاجات لهذا المريض.'));
+  //     }
+  //   } catch (e, stack) {
+  //     emit(PatientTreatmentsError('حدث خطأ أثناء جلب العلاجات.',
+  //         stackTrace: stack));
+  //   }
+  // }
+
+  // Future<void> fetchTreatmentDetails(int treatmentId) async {
+  //   emit(TreatmentDetailsLoading());
+  //   try {
+  //     await repo.getTreatmentDetails(treatmentId);
+  //     final details = repo.dbTreatmentDetailsResponse?.treatmentDetails;
+  //     if (details != null) {
+  //       emit(TreatmentDetailsLoaded(details.toDomain()));
+  //     } else {
+  //       emit(TreatmentDetailsError('لم يتم العثور على تفاصيل العلاج.'));
+  //     }
+  //   } catch (e, stack) {
+  //     emit(TreatmentDetailsError('حدث خطأ أثناء جلب تفاصيل العلاج.',
+  //         stackTrace: stack));
+  //   }
+  // }
 }
